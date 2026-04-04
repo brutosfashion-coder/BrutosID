@@ -1,76 +1,90 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import ScrollReveal from "@/components/ui/ScrollReveal";
-import AnimatedText from "@/components/ui/AnimatedText";
-import { ArrowRight, Check } from "lucide-react";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Newsletter() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.nl-blur-reveal',
+        { opacity: 0, filter: 'blur(10px)', y: 30 },
+        {
+          opacity: 1,
+          filter: 'blur(0px)',
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.nl-blur-reveal',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      gsap.fromTo(
+        '.nl-slide-up',
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="py-24 md:py-32 bg-charcoal relative overflow-hidden">
-      {/* Subtle decorative elements */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-camel/5 rounded-full blur-[150px]" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-mist/5 rounded-full blur-[120px]" />
+    <section ref={sectionRef} className="px-4 md:px-8 pb-6">
+      <div className="bg-white rounded-[24px] px-6 md:px-12 py-16 md:py-20 overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+          {/* Left - Heading */}
+          <div>
+            <h2 className="nl-blur-reveal font-heading text-4xl md:text-5xl lg:text-6xl text-[#363636] leading-[1.1]">
+              Your Style Matters<br />
+              <span className="text-[#C8B89A]">Connect</span> With<br />
+              Us Today
+            </h2>
+          </div>
 
-      <div className="max-w-[700px] mx-auto px-6 lg:px-10 text-center relative">
-        <ScrollReveal>
-          <span className="section-label text-camel">Stay Connected</span>
-        </ScrollReveal>
-
-        <h2 className="heading-lg text-white mt-4 mb-6">
-          <AnimatedText text="Join the Inner Circle" delay={0.1} />
-        </h2>
-
-        <ScrollReveal delay={0.3}>
-          <p className="text-white/50 text-lg mb-10 max-w-md mx-auto">
-            Exclusive access to new drops, style guides, and member-only offers.
-          </p>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.4}>
-          {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+          {/* Right - Form */}
+          <div>
+            <p className="nl-slide-up text-[#363636]/60 text-base leading-relaxed mb-8 max-w-md">
+              Subscribe to our newsletter and be the first to discover new collections,
+              exclusive offers, and style insights curated for the modern gentleman.
+            </p>
+            <div className="nl-slide-up flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email address"
-                className="flex-1 px-6 py-4 bg-white/10 border border-white/10 rounded-full text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-camel/50 transition-colors"
-                required
+                placeholder="Enter your email"
+                className="flex-1 px-5 py-3.5 rounded-full border border-[#363636]/15 bg-transparent text-sm text-[#363636] placeholder:text-[#363636]/30 focus:outline-none focus:border-[#C8B89A] transition-colors"
               />
-              <button type="submit" className="btn-primary !py-4 group whitespace-nowrap">
+              <button className="bg-[#C8B89A] text-white rounded-full px-7 py-3.5 text-sm font-medium hover:bg-[#b8a78a] transition-colors duration-300 whitespace-nowrap">
                 Subscribe
-                <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
-            </form>
-          ) : (
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="flex items-center justify-center gap-3 text-camel"
-            >
-              <div className="w-10 h-10 bg-camel/20 rounded-full flex items-center justify-center">
-                <Check size={18} />
-              </div>
-              <span className="text-white text-sm">Welcome to the inner circle.</span>
-            </motion.div>
-          )}
-        </ScrollReveal>
+            </div>
+            <p className="nl-slide-up text-[10px] text-[#363636]/30 mt-3 tracking-wide">
+              By subscribing you agree to our Privacy Policy. Unsubscribe anytime.
+            </p>
+          </div>
+        </div>
 
-        <ScrollReveal delay={0.5}>
-          <p className="text-white/20 text-xs mt-6">
-            No spam. Unsubscribe anytime. We respect your inbox.
-          </p>
-        </ScrollReveal>
+        {/* Divider */}
+        <div className="nl-slide-up mt-16 border-t border-[#363636]/10" />
       </div>
     </section>
   );

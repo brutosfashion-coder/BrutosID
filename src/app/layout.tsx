@@ -1,13 +1,33 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import SmoothScroll from "@/components/home/SmoothScroll";
+import SmoothScroll from "@/components/ui/SmoothScroll";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "BRUTOS ID | Premium Men's Clothing",
-  description: "Elegant menswear for the quietly confident. Premium fabrics, tailored fit, timeless style.",
-  keywords: ["men's clothing", "premium fashion", "Indonesian menswear", "old money style"],
+  description:
+    "Dress the man you've become. Premium tailored menswear crafted for the modern gentleman who values quiet luxury and timeless style.",
+  keywords: [
+    "men's clothing",
+    "premium fashion",
+    "tailored menswear",
+    "quiet luxury",
+    "old money style",
+  ],
 };
 
 export default function RootLayout({
@@ -16,13 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
-      <body className="antialiased">
-        <SmoothScroll>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </SmoothScroll>
+    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+      <body>
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

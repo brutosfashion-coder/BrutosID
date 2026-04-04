@@ -1,112 +1,177 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import ScrollReveal from "@/components/ui/ScrollReveal";
-import AnimatedText from "@/components/ui/AnimatedText";
-import { ShoppingBag, Eye, ArrowRight } from "lucide-react";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const products = [
-  { id: 1, name: "Camel Wool Blazer", price: 1250000, image: "/images/products/blazer.jpg", tag: "Best Seller" },
-  { id: 2, name: "Charcoal Linen Shirt", price: 650000, image: "/images/products/shirt.jpg", tag: "New" },
-  { id: 3, name: "Earth Tone Chinos", price: 850000, image: "/images/products/chinos.jpg", tag: null },
-  { id: 4, name: "Merino Wool Polo", price: 550000, image: "/images/products/polo.jpg", tag: "Limited" },
+  {
+    name: 'Camel Overcoat',
+    price: 'Rp 4.850.000',
+    badge: 'Best Seller',
+    badgeColor: 'bg-[#C8B89A] text-white',
+    image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=400&h=500&fit=crop&q=80',
+  },
+  {
+    name: 'Charcoal Wool Suit',
+    price: 'Rp 7.250.000',
+    badge: 'New',
+    badgeColor: 'bg-[#363636] text-white',
+    image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop&q=80',
+  },
+  {
+    name: 'Linen Relaxed Shirt',
+    price: 'Rp 1.650.000',
+    badge: 'Limited',
+    badgeColor: 'bg-[#C8B89A]/20 text-[#363636]',
+    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=500&fit=crop&q=80',
+  },
+  {
+    name: 'Merino Turtleneck',
+    price: 'Rp 2.150.000',
+    badge: 'Best Seller',
+    badgeColor: 'bg-[#C8B89A] text-white',
+    image: 'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=400&h=500&fit=crop&q=80',
+  },
 ];
 
-function formatIDR(n: number) {
-  return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(n);
-}
-
 export default function FeaturedCollection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.fc-blur-reveal',
+        { opacity: 0, filter: 'blur(10px)', y: 30 },
+        {
+          opacity: 1,
+          filter: 'blur(0px)',
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.fc-blur-reveal',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      gsap.fromTo(
+        '.fc-slide-up',
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+          },
+        }
+      );
+
+      gsap.fromTo(
+        '.fc-stats-card',
+        { opacity: 0, scale: 0.9, y: 30 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'back.out(1.4)',
+          scrollTrigger: {
+            trigger: '.fc-stats-card',
+            start: 'top 90%',
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-24 md:py-32 bg-warmwhite">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+    <section ref={sectionRef} className="px-4 md:px-8 pb-6">
+      <div className="bg-white rounded-[24px] px-6 md:px-12 py-16 md:py-20 relative overflow-hidden">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+        <div className="flex items-start justify-between mb-12">
           <div>
-            <ScrollReveal>
-              <span className="section-label">Collection</span>
-            </ScrollReveal>
-            <h2 className="heading-lg text-charcoal mt-4">
-              <AnimatedText text="This Season's Finest" delay={0.1} />
+            <span className="fc-slide-up inline-block border border-[#363636]/20 rounded-full px-4 py-1.5 text-xs tracking-widest uppercase text-[#363636]/70 mb-6">
+              Collection
+            </span>
+            <h2 className="fc-blur-reveal font-heading text-4xl md:text-5xl lg:text-6xl text-[#363636] leading-[1.1]">
+              This Season&apos;s<br />Finest
             </h2>
           </div>
-          <ScrollReveal delay={0.3}>
-            <Link
-              href="/collection"
-              className="inline-flex items-center gap-2 text-sm tracking-wider uppercase text-charcoal hover:text-camel transition-colors mt-4 md:mt-0 group"
-            >
-              View All
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </ScrollReveal>
+          <a
+            href="#"
+            className="fc-slide-up hidden md:inline-flex items-center gap-2 border border-[#363636]/20 rounded-full px-5 py-2.5 text-sm text-[#363636] hover:bg-[#363636] hover:text-white transition-all duration-300 mt-2"
+          >
+            View All
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {products.map((product, i) => (
-            <ScrollReveal key={product.id} delay={i * 0.1}>
-              <motion.div
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
-                className="group cursor-pointer"
-              >
-                {/* Image */}
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-mist mb-4">
-                  <div
-                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
-                    style={{ backgroundImage: `url('${product.image}')` }}
+        <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {products.map((product, i) => (
+              <div key={i} className="fc-slide-up group cursor-pointer">
+                <div className="relative overflow-hidden rounded-[16px] mb-4 aspect-[4/5] bg-[#D6CEBE]/30">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   />
-
-                  {/* Tag */}
-                  {product.tag && (
-                    <span className="absolute top-3 left-3 px-3 py-1 text-[9px] tracking-[0.15em] uppercase bg-camel text-white rounded-full">
-                      {product.tag}
+                  <div className="absolute top-3 left-3">
+                    <span className={`${product.badgeColor} text-[10px] tracking-wider uppercase font-medium px-3 py-1 rounded-full`}>
+                      {product.badge}
                     </span>
-                  )}
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/30 transition-all duration-300 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100">
-                    <button className="w-11 h-11 bg-white rounded-full flex items-center justify-center hover:bg-camel hover:text-white transition-colors shadow-lg">
-                      <ShoppingBag size={16} />
-                    </button>
-                    <button className="w-11 h-11 bg-white rounded-full flex items-center justify-center hover:bg-camel hover:text-white transition-colors shadow-lg">
-                      <Eye size={16} />
-                    </button>
                   </div>
                 </div>
-
-                {/* Info */}
-                <h3 className="font-medium text-sm text-charcoal group-hover:text-camel-dark transition-colors">
-                  {product.name}
-                </h3>
-                <p className="text-muted text-sm mt-1">{formatIDR(product.price)}</p>
-              </motion.div>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        {/* Floating Stats Card */}
-        <ScrollReveal delay={0.4} direction="right">
-          <div className="mt-16 flex justify-center">
-            <div className="inline-flex items-center gap-8 bg-white rounded-full px-8 py-4 shadow-lg shadow-charcoal/5">
-              <div className="text-center">
-                <span className="block text-2xl font-serif italic text-charcoal">2,847</span>
-                <span className="text-[10px] uppercase tracking-wider text-muted">Pieces Sold</span>
+                <h3 className="font-heading text-lg text-[#363636] mb-1">{product.name}</h3>
+                <p className="text-sm text-[#363636]/60 font-body">{product.price}</p>
               </div>
-              <div className="w-px h-10 bg-mist" />
-              <div className="text-center">
-                <span className="block text-2xl font-serif italic text-charcoal">98%</span>
-                <span className="text-[10px] uppercase tracking-wider text-muted">Satisfaction</span>
+            ))}
+          </div>
+
+          {/* Floating Stats Card */}
+          <div className="fc-stats-card absolute -bottom-6 right-4 md:right-8 bg-white border border-[#D6CEBE]/50 rounded-[16px] px-5 py-4 shadow-lg backdrop-blur-sm z-10">
+            <div className="flex items-center gap-6">
+              <div>
+                <p className="text-2xl font-heading font-semibold text-[#363636]">2,847</p>
+                <p className="text-xs text-[#363636]/50 tracking-wide">Pieces Sold</p>
               </div>
-              <div className="w-px h-10 bg-mist" />
-              <div className="text-center">
-                <span className="block text-2xl font-serif italic text-camel">Free</span>
-                <span className="text-[10px] uppercase tracking-wider text-muted">Shipping</span>
+              <div className="w-px h-10 bg-[#D6CEBE]/50" />
+              <div>
+                <p className="text-2xl font-heading font-semibold text-[#C8B89A]">98%</p>
+                <p className="text-xs text-[#363636]/50 tracking-wide">Satisfaction</p>
               </div>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
+
+        {/* Mobile View All */}
+        <div className="md:hidden flex justify-center mt-10">
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 border border-[#363636]/20 rounded-full px-5 py-2.5 text-sm text-[#363636] hover:bg-[#363636] hover:text-white transition-all duration-300"
+          >
+            View All
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   );
