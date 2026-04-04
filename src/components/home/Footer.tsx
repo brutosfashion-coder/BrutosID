@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const footerLinks = {
   Company: ['Home', 'Collection', 'About', 'Contact'],
   Resources: ['Style Guide', 'Size Chart', 'FAQ', 'Blog'],
-  Legal: ['Privacy Policy', 'Terms', 'Returns', 'Shipping'],
+  Legal: ['Privacy Policy', 'Terms & Conditions', 'Returns', 'Shipping'],
 };
 
 const socialIcons = [
@@ -41,15 +41,8 @@ export default function Footer() {
         '.ft-slide-up',
         { opacity: 0, y: 40 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-          },
+          opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
         }
       );
 
@@ -58,36 +51,27 @@ export default function Footer() {
         '.ft-watermark',
         { y: 50 },
         {
-          y: -30,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.ft-watermark',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1,
-          },
+          y: -30, ease: 'none',
+          scrollTrigger: { trigger: '.ft-watermark', start: 'top bottom', end: 'bottom top', scrub: 1 },
         }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
-    <footer ref={sectionRef} className="px-4 md:px-8 pb-4">
-      <div className="bg-[#363636] rounded-[24px] px-6 md:px-12 pt-16 md:pt-20 pb-8 overflow-hidden relative">
+    <footer ref={sectionRef} className="px-3 md:px-4 pb-3 md:pb-4">
+      {/* Light background — Dentora style */}
+      <div className="bg-warm-white rounded-[24px] px-6 md:px-12 pt-16 md:pt-20 pb-8 overflow-hidden relative">
         {/* Top Section - Links */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-16">
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title} className="ft-slide-up">
-              <h4 className="font-heading text-white text-base mb-5">{title}</h4>
+              <h4 className="text-xs uppercase tracking-[0.15em] text-charcoal/40 font-medium mb-5">{title}</h4>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link}>
-                    <a
-                      href="#"
-                      className="text-white/40 text-sm hover:text-white transition-colors duration-300"
-                    >
+                    <a href="#" className="text-charcoal text-sm hover:text-camel transition-colors duration-300">
                       {link}
                     </a>
                   </li>
@@ -96,47 +80,27 @@ export default function Footer() {
             </div>
           ))}
 
-          {/* Contact Column */}
+          {/* Contact Column — Dentora style */}
           <div className="ft-slide-up">
-            <h4 className="font-heading text-white text-base mb-5">Contact</h4>
-            <ul className="space-y-3 mb-6">
-              <li>
-                <a
-                  href="mailto:hello@brutos.id"
-                  className="text-white/40 text-sm hover:text-white transition-colors duration-300"
-                >
-                  hello@brutos.id
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:+6281234567890"
-                  className="text-white/40 text-sm hover:text-white transition-colors duration-300"
-                >
-                  +62 812 3456 7890
-                </a>
-              </li>
-            </ul>
-
-            {/* Social Icons */}
+            <h4 className="text-xs uppercase tracking-[0.15em] text-charcoal/40 font-medium mb-5">
+              We&apos;d Love to Help
+            </h4>
+            <a
+              href="mailto:hello@brutos.id"
+              className="text-charcoal text-lg md:text-xl font-heading font-semibold hover:text-camel transition-colors block mb-6"
+            >
+              hello@brutos.id
+            </a>
+            <p className="text-xs text-charcoal/40 mb-3 uppercase tracking-wider">Follow Us</p>
             <div className="flex items-center gap-2">
               {socialIcons.map((icon) => (
                 <a
                   key={icon.name}
                   href="#"
-                  className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-white/40 transition-all duration-300"
+                  className="w-9 h-9 rounded-full border border-charcoal/10 flex items-center justify-center text-charcoal/40 hover:text-charcoal hover:border-charcoal/30 transition-all duration-300"
                   aria-label={icon.name}
                 >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d={icon.path} />
                     {icon.extra && <path d={icon.extra} />}
                   </svg>
@@ -146,25 +110,24 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Giant Watermark */}
-        <div className="ft-watermark relative flex justify-center mb-8 pointer-events-none select-none overflow-hidden">
-          <span className="font-heading text-[120px] sm:text-[180px] md:text-[240px] lg:text-[320px] font-bold text-white/[0.03] leading-none tracking-tight whitespace-nowrap">
+        {/* Giant Watermark — Dentora style huge faded text */}
+        <div className="ft-watermark relative flex justify-center mb-6 pointer-events-none select-none overflow-hidden">
+          <span
+            className="text-[100px] sm:text-[160px] md:text-[220px] lg:text-[300px] font-bold text-charcoal/[0.04] leading-none tracking-tight whitespace-nowrap"
+            style={{ fontFamily: 'var(--font-heading)' }}
+          >
             Brutos
           </span>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-white/10 mb-6" />
+        <div className="border-t border-charcoal/8 mb-6" />
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/30">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-charcoal/30">
           <p>&copy;2026 All Rights Reserved</p>
-          <a href="#" className="hover:text-white/60 transition-colors">
-            Terms &amp; Conditions
-          </a>
-          <a href="#" className="hover:text-white/60 transition-colors">
-            Privacy &amp; Policy
-          </a>
+          <a href="#" className="hover:text-charcoal/60 transition-colors">Terms &amp; Conditions</a>
+          <a href="#" className="hover:text-charcoal/60 transition-colors">Privacy &amp; Policy</a>
         </div>
       </div>
     </footer>

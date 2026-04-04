@@ -11,17 +11,19 @@ import Footer from '@/components/home/Footer';
 
 export default function Home() {
   return (
-    <main className="bg-[#f5f2ed] min-h-screen">
-      <Navbar />
-      <Hero />
-      <Marquee />
-      <About />
-      <FeaturedCollection />
-      <WhyChoose />
-      <Testimonial />
-      <Journal />
-      <Newsletter />
-      <Footer />
+    <main className="bg-[#e8e2d8] min-h-screen py-0 lg:py-4">
+      <div className="device-frame">
+        <Navbar />
+        <Hero />
+        <Marquee />
+        <About />
+        <FeaturedCollection />
+        <WhyChoose />
+        <Testimonial />
+        <Journal />
+        <Newsletter />
+        <Footer />
+      </div>
     </main>
   );
 }
