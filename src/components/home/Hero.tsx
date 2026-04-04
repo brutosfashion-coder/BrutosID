@@ -4,25 +4,15 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Star, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const categoryTags = [
-  'Tailored Suits',
-  'Casual Blazers',
-  'Premium Shirts',
-  'Luxury Trousers',
-  'Accessories',
-];
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const glassCardRef = useRef<HTMLDivElement>(null);
-  const tagsRef = useRef<HTMLDivElement>(null);
   const bottomBarRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +40,7 @@ export default function Hero() {
         headingEl.innerHTML = words
           .map(
             (word) =>
-              `<span class="inline-block overflow-hidden mr-[0.25em]"><span class="hero-word inline-block">${word}</span></span>`
+              '<span class="inline-block overflow-hidden mr-[0.25em]"><span class="hero-word inline-block">' + word + '</span></span>'
           )
           .join('');
 
@@ -81,28 +71,6 @@ export default function Hero() {
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
         '-=0.5'
-      );
-
-      // Glass card slide in from left
-      tl.fromTo(
-        glassCardRef.current,
-        { opacity: 0, x: -40 },
-        { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' },
-        '-=0.4'
-      );
-
-      // Category tags stagger in from right
-      tl.fromTo(
-        '.hero-tag',
-        { opacity: 0, x: 30 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.5,
-          ease: 'power3.out',
-          stagger: 0.1,
-        },
-        '-=0.6'
       );
 
       // Bottom bar
@@ -167,89 +135,27 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Bottom Elements */}
-          <div className="flex flex-col gap-6">
-            {/* Glass Card + Tags Row */}
-            <div className="flex flex-col lg:flex-row items-end justify-between gap-6">
-              {/* Glass Card - Bottom Left */}
-              <div
-                ref={glassCardRef}
-                className="glass-dark rounded-2xl p-4 pr-8 flex items-center gap-4 opacity-0"
-              >
-                <div className="w-16 h-20 rounded-xl overflow-hidden relative flex-shrink-0">
-                  <Image
-                    src="/hero-model.png"
-                    alt="Featured product"
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
-                </div>
-                <div>
-                  <p className="text-white/50 text-xs uppercase tracking-wider mb-1">
-                    Featured Piece
-                  </p>
-                  <p
-                    className="text-white text-sm font-medium"
-                    style={{ fontFamily: 'var(--font-heading)' }}
-                  >
-                    Camel Wool Blazer
-                  </p>
-                  <div className="flex items-center gap-1 mt-1.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={12}
-                        className="fill-camel text-camel"
-                      />
-                    ))}
-                    <span className="text-white/50 text-xs ml-1.5">4.9</span>
-                  </div>
-                </div>
-              </div>
+          {/* Bottom Bar */}
+          <div
+            ref={bottomBarRef}
+            className="flex items-center justify-between border-t border-white/10 pt-5 opacity-0"
+          >
+            <p
+              className="text-white/60 text-sm hidden sm:block"
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
+              Your Style, Our Craft
+            </p>
 
-              {/* Category Tags - Bottom Right */}
-              <div
-                ref={tagsRef}
-                className="flex flex-wrap gap-2 justify-end max-w-[500px]"
-              >
-                {categoryTags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="hero-tag px-5 py-2.5 rounded-full border border-white/20 text-white/80 text-xs md:text-sm font-medium backdrop-blur-sm bg-white/5 hover:bg-white/15 hover:border-white/40 transition-all duration-300 cursor-pointer opacity-0"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+            <div className="flex items-center gap-3 text-white/50 text-sm">
+              <span className="text-white font-medium">01</span>
+              <span>/</span>
+              <span>08</span>
             </div>
 
-            {/* Bottom Bar */}
-            <div
-              ref={bottomBarRef}
-              className="flex items-center justify-between border-t border-white/10 pt-5 opacity-0"
-            >
-              <p
-                className="text-white/60 text-sm hidden sm:block"
-                style={{ fontFamily: 'var(--font-heading)' }}
-              >
-                Your Style, Our Craft
-              </p>
-
-              <div className="flex items-center gap-3 text-white/50 text-sm">
-                <span className="text-white font-medium">01</span>
-                <span>/</span>
-                <span>08</span>
-                <span className="mx-2 text-white/20">|</span>
-                <span className="hidden sm:inline">Preview</span>
-                <span className="text-white/30">→</span>
-                <span>Next</span>
-              </div>
-
-              <div className="flex items-center gap-2 text-white/50 text-sm">
-                <ChevronDown className="w-4 h-4 animate-bounce" />
-                <span className="hidden sm:inline">Scroll for More</span>
-              </div>
+            <div className="flex items-center gap-2 text-white/50 text-sm">
+              <ChevronDown className="w-4 h-4 animate-bounce" />
+              <span className="hidden sm:inline">Scroll for More</span>
             </div>
           </div>
         </div>

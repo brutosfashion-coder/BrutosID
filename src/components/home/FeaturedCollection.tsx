@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,28 +12,28 @@ const products = [
     price: 'Rp 4.850.000',
     badge: 'Best Seller',
     badgeColor: 'bg-[#C8B89A] text-white',
-    image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=400&h=500&fit=crop&q=80',
+    gradient: 'from-[#D6CEBE] to-[#C8B89A]',
   },
   {
     name: 'Charcoal Wool Suit',
     price: 'Rp 7.250.000',
     badge: 'New',
     badgeColor: 'bg-[#363636] text-white',
-    image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop&q=80',
+    gradient: 'from-[#363636] to-[#4a4a4a]',
   },
   {
     name: 'Linen Relaxed Shirt',
     price: 'Rp 1.650.000',
     badge: 'Limited',
     badgeColor: 'bg-[#C8B89A]/20 text-[#363636]',
-    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=500&fit=crop&q=80',
+    gradient: 'from-[#C8B89A] to-[#D6CEBE]',
   },
   {
     name: 'Merino Turtleneck',
     price: 'Rp 2.150.000',
     badge: 'Best Seller',
     badgeColor: 'bg-[#C8B89A] text-white',
-    image: 'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=400&h=500&fit=crop&q=80',
+    gradient: 'from-[#4a4a4a] to-[#363636]',
   },
 ];
 
@@ -75,22 +74,6 @@ export default function FeaturedCollection() {
           },
         }
       );
-
-      gsap.fromTo(
-        '.fc-stats-card',
-        { opacity: 0, scale: 0.9, y: 30 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'back.out(1.4)',
-          scrollTrigger: {
-            trigger: '.fc-stats-card',
-            start: 'top 90%',
-          },
-        }
-      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -98,7 +81,7 @@ export default function FeaturedCollection() {
 
   return (
     <section ref={sectionRef} className="px-4 md:px-8 pb-6">
-      <div className="bg-white rounded-[24px] px-6 md:px-12 py-16 md:py-20 relative overflow-hidden">
+      <div className="bg-white rounded-[24px] px-6 md:px-12 py-16 md:py-20 overflow-hidden">
         {/* Header */}
         <div className="flex items-start justify-between mb-12">
           <div>
@@ -121,17 +104,16 @@ export default function FeaturedCollection() {
         </div>
 
         {/* Product Grid */}
-        <div className="relative">
+        <div className="pb-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {products.map((product, i) => (
               <div key={i} className="fc-slide-up group cursor-pointer">
-                <div className="relative overflow-hidden rounded-[16px] mb-4 aspect-[4/5] bg-[#D6CEBE]/30">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  />
+                <div className={`relative overflow-hidden rounded-[16px] mb-4 aspect-[4/5] bg-gradient-to-br ${product.gradient} flex items-center justify-center transition-transform duration-700 ease-out group-hover:scale-[1.03]`}>
+                  {/* Hanger icon placeholder */}
+                  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/10">
+                    <path d="M12 2a3 3 0 0 0-3 3c0 1.1.6 2 1.5 2.5L3 14h18l-7.5-6.5A3 3 0 0 0 15 5a3 3 0 0 0-3-3z" />
+                    <path d="M3 14v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2" />
+                  </svg>
                   <div className="absolute top-3 left-3">
                     <span className={`${product.badgeColor} text-[10px] tracking-wider uppercase font-medium px-3 py-1 rounded-full`}>
                       {product.badge}
@@ -142,21 +124,6 @@ export default function FeaturedCollection() {
                 <p className="text-sm text-[#363636]/60 font-body">{product.price}</p>
               </div>
             ))}
-          </div>
-
-          {/* Floating Stats Card */}
-          <div className="fc-stats-card absolute -bottom-6 right-4 md:right-8 bg-white border border-[#D6CEBE]/50 rounded-[16px] px-5 py-4 shadow-lg backdrop-blur-sm z-10">
-            <div className="flex items-center gap-6">
-              <div>
-                <p className="text-2xl font-heading font-semibold text-[#363636]">2,847</p>
-                <p className="text-xs text-[#363636]/50 tracking-wide">Pieces Sold</p>
-              </div>
-              <div className="w-px h-10 bg-[#D6CEBE]/50" />
-              <div>
-                <p className="text-2xl font-heading font-semibold text-[#C8B89A]">98%</p>
-                <p className="text-xs text-[#363636]/50 tracking-wide">Satisfaction</p>
-              </div>
-            </div>
           </div>
         </div>
 

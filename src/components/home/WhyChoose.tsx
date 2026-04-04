@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -133,26 +132,32 @@ export default function WhyChoose() {
           className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-2 px-2"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {/* Card 1 - Image Card with Overlay */}
+          {/* Card 1 - Curated Selection (clean, no photo) */}
           <div className="wc-slide-up flex-shrink-0 w-[300px] md:w-[340px] snap-start">
-            <div className="relative h-[400px] rounded-[16px] overflow-hidden group cursor-pointer">
-              <Image
-                src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400&h=500&fit=crop&q=80"
-                alt="Curated Selection"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-[10px] tracking-widest uppercase px-3 py-1 rounded-full mb-3">
+            <div className="h-[400px] rounded-[16px] border border-[#363636]/10 bg-white p-7 flex flex-col justify-between">
+              <div>
+                <div className="w-12 h-12 rounded-full bg-[#D6CEBE]/30 flex items-center justify-center mb-5">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C8B89A" strokeWidth="1.5">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg>
+                </div>
+                <span className="inline-block bg-[#D6CEBE]/20 text-[#363636]/60 text-[10px] tracking-widest uppercase px-3 py-1 rounded-full mb-4">
                   Curated
                 </span>
-                <h3 className="font-heading text-2xl text-white leading-tight">
-                  Curated<br />Selection
+                <h3 className="font-heading text-2xl text-[#363636] leading-tight mb-3">
+                  Curated Selection
                 </h3>
-                <p className="text-white/70 text-sm mt-2">
-                  Hand-picked pieces from the world&apos;s finest ateliers.
+                <p className="text-[#363636]/50 text-sm leading-relaxed">
+                  Hand-picked pieces from the world&apos;s finest ateliers. Every garment is chosen with intention and care.
                 </p>
+              </div>
+              <div className="flex items-center gap-2 text-[#C8B89A] text-sm font-medium">
+                <span>Learn more</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </div>
             </div>
           </div>
@@ -163,7 +168,7 @@ export default function WhyChoose() {
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
               <div>
                 <span className="inline-block bg-white/20 text-white text-[10px] tracking-widest uppercase px-3 py-1 rounded-full mb-5">
-                  🏆 Member Rewards
+                  &#127942; Member Rewards
                 </span>
                 <h3 className="font-heading text-5xl text-white font-semibold leading-none mb-2">15%</h3>
                 <p className="text-white/80 text-lg font-heading">off your first order</p>
@@ -189,23 +194,30 @@ export default function WhyChoose() {
             </div>
           </div>
 
-          {/* Card 3 - Lifestyle Photo */}
+          {/* Card 3 - Timeless Quality (clean, no photo) */}
           <div className="wc-slide-up flex-shrink-0 w-[300px] md:w-[340px] snap-start">
-            <div className="relative h-[400px] rounded-[16px] overflow-hidden group cursor-pointer">
-              <Image
-                src="https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=400&h=500&fit=crop&q=80"
-                alt="Lifestyle"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="font-heading text-2xl text-white leading-tight">
-                  Timeless<br />Elegance
+            <div className="h-[400px] rounded-[16px] border border-[#363636]/10 bg-white p-7 flex flex-col justify-between">
+              <div>
+                <div className="w-12 h-12 rounded-full bg-[#D6CEBE]/30 flex items-center justify-center mb-5">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C8B89A" strokeWidth="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <span className="inline-block bg-[#D6CEBE]/20 text-[#363636]/60 text-[10px] tracking-widest uppercase px-3 py-1 rounded-full mb-4">
+                  Quality
+                </span>
+                <h3 className="font-heading text-2xl text-[#363636] leading-tight mb-3">
+                  Timeless Quality
                 </h3>
-                <p className="text-white/70 text-sm mt-2">
-                  Designed for the modern gentleman.
+                <p className="text-[#363636]/50 text-sm leading-relaxed">
+                  Designed for the modern gentleman. Built to last with premium fabrics and meticulous attention to detail.
                 </p>
+              </div>
+              <div className="flex items-center gap-2 text-[#C8B89A] text-sm font-medium">
+                <span>Learn more</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </div>
             </div>
           </div>

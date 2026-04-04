@@ -3,13 +3,12 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const posts = [
   {
-    image: 'https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=500&h=350&fit=crop&q=80',
+    gradient: 'from-[#D6CEBE] to-[#C8B89A]',
     category: 'Style Guide',
     author: 'Arief R.',
     readTime: '5 min read',
@@ -17,7 +16,7 @@ const posts = [
     title: 'The Art of Building a Capsule Wardrobe for Every Season',
   },
   {
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&h=350&fit=crop&q=80',
+    gradient: 'from-[#363636] to-[#4a4a4a]',
     category: 'Fabric',
     author: 'Daniel H.',
     readTime: '4 min read',
@@ -25,7 +24,7 @@ const posts = [
     title: 'Understanding Premium Fabrics: A Gentleman\'s Essential Knowledge',
   },
   {
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&h=350&fit=crop&q=80',
+    gradient: 'from-[#C8B89A] to-[#D6CEBE]',
     category: 'Trends',
     author: 'Kevin S.',
     readTime: '6 min read',
@@ -109,14 +108,15 @@ export default function Journal() {
         <div className="jn-cards-grid grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((post, i) => (
             <article key={i} className="jn-card group cursor-pointer">
-              {/* Image */}
-              <div className="relative overflow-hidden rounded-[16px] mb-5 aspect-[4/3] bg-[#D6CEBE]/30">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+              {/* Gradient Placeholder */}
+              <div className={`relative overflow-hidden rounded-[16px] mb-5 aspect-[4/3] bg-gradient-to-br ${post.gradient} flex items-center justify-center transition-transform duration-700 group-hover:scale-[1.03]`}>
+                {/* Book/article icon */}
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/10">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  <line x1="8" y1="7" x2="16" y2="7" />
+                  <line x1="8" y1="11" x2="13" y2="11" />
+                </svg>
                 <div className="absolute top-3 left-3">
                   <span className="bg-[#363636]/80 backdrop-blur-sm text-white text-[10px] tracking-wider uppercase px-3 py-1 rounded-full">
                     {post.category}
@@ -130,9 +130,9 @@ export default function Journal() {
                   {post.author.charAt(0)}
                 </div>
                 <span className="text-xs text-[#363636]/60">{post.author}</span>
-                <span className="text-[#363636]/20">·</span>
+                <span className="text-[#363636]/20">&middot;</span>
                 <span className="text-xs text-[#363636]/40">{post.readTime}</span>
-                <span className="text-[#363636]/20">·</span>
+                <span className="text-[#363636]/20">&middot;</span>
                 <span className="text-xs text-[#363636]/40">{post.date}</span>
               </div>
 
