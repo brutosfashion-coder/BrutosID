@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
-import gsap from 'gsap';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { label: 'Home', href: '#', active: true },
@@ -14,105 +13,99 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const navRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+  const handleScroll = useCallback(() => {
+    setScrolled(window.scrollY > 50);
   }, []);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.3 });
-      tl.fromTo(logoRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
-      tl.fromTo(linksRef.current, { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.5');
-      tl.fromTo(ctaRef.current, { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4');
-    }, navRef);
-    return () => ctx.revert();
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
 
   return (
     <>
       <nav
-        ref={navRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-warm-white/90 backdrop-blur-xl shadow-sm border-b border-mist/30'
+            ? 'bg-white/90 backdrop-blur-xl shadow-sm'
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div ref={logoRef} className="flex-shrink-0 opacity-0">
-              <a href="#" className="flex items-center gap-3">
-                <Image
-                  src="/logo-brutos.png"
-                  alt="BRUTOS ID"
-                  width={140}
-                  height={48}
-                  className={`h-10 w-auto transition-all duration-300 ${
-                    scrolled ? 'brightness-0' : 'brightness-0 invert'
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 md:px-10 lg:px-14 py-4">
+          {/* Logo */}
+          <a href="#" className="relative z-10 flex-shrink-0">
+            <Image
+              src="/logo-brutos.png"
+              alt="Brutos ID"
+              width={120}
+              height={36}
+              className={`h-9 w-auto transition-all duration-300 ${
+                scrolled ? '' : 'brightness-0 invert'
+              }`}
+              priority
+            />
+          </a>
+
+          {/* Center pill nav - desktop */}
+          <div className="hidden lg:flex items-center">
+            <div
+              className={`flex items-center gap-1 rounded-full border px-1.5 py-1.5 transition-all duration-500 ${
+                scrolled
+                  ? 'border-mist bg-warm-white'
+                  : 'border-white/20 bg-white/10 backdrop-blur-md'
+              }`}
+            >
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    item.active
+                      ? scrolled
+                        ? 'bg-charcoal text-white'
+                        : 'bg-white text-charcoal'
+                      : scrolled
+                        ? 'text-charcoal hover:bg-cream'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
                   }`}
-                  priority
-                />
-              </a>
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
+          </div>
 
-            {/* Center Nav Links - Dentora pill container with active state */}
-            <div ref={linksRef} className="hidden lg:flex opacity-0">
-              <div
-                className={`flex items-center gap-1 px-2 py-1.5 rounded-full border transition-all duration-500 ${
-                  scrolled
-                    ? 'border-charcoal/10 bg-cream'
-                    : 'border-white/20 bg-white/10 backdrop-blur-md'
-                }`}
-              >
-                {navItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                      item.active
-                        ? scrolled
-                          ? 'bg-charcoal text-white'
-                          : 'bg-white/20 text-white'
-                        : scrolled
-                          ? 'text-charcoal hover:text-warm-black hover:bg-camel/10'
-                          : 'text-white/80 hover:text-white hover:bg-white/10'
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
+          {/* Right side - Shop Now + hamburger */}
+          <div className="flex items-center gap-4">
+            <a
+              href="#collection"
+              className={`hidden md:inline-flex items-center px-6 py-2.5 rounded-full text-sm font-medium border transition-all duration-300 ${
+                scrolled
+                  ? 'border-charcoal text-charcoal hover:bg-charcoal hover:text-white'
+                  : 'border-white/40 text-white hover:bg-white hover:text-charcoal'
+              }`}
+            >
+              Shop Now
+            </a>
 
-            {/* Right CTA - Dentora style with border */}
-            <div ref={ctaRef} className="hidden lg:flex items-center gap-4 opacity-0">
-              <a
-                href="#collection"
-                className={`group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
-                  scrolled
-                    ? 'border-charcoal/20 text-charcoal hover:bg-charcoal hover:text-white'
-                    : 'border-white/30 text-white hover:bg-white/15'
-                }`}
-              >
-                Shop Now
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
-            </div>
-
-            {/* Mobile Hamburger */}
+            {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`lg:hidden p-2 rounded-full transition-colors ${
+              className={`lg:hidden relative z-10 p-2 rounded-full transition-colors ${
                 scrolled ? 'text-charcoal' : 'text-white'
               }`}
               aria-label="Toggle menu"
@@ -123,43 +116,48 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
-      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${mobileOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+      {/* Mobile drawer */}
+      <div
+        className={`fixed inset-0 z-40 transition-all duration-500 lg:hidden ${
+          mobileOpen ? 'visible' : 'invisible'
+        }`}
+      >
+        {/* Overlay */}
         <div
-          className={`absolute inset-0 bg-warm-black/60 backdrop-blur-sm transition-opacity duration-500 ${mobileOpen ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 bg-black/50 transition-opacity duration-500 ${
+            mobileOpen ? 'opacity-100' : 'opacity-0'
+          }`}
           onClick={() => setMobileOpen(false)}
         />
+
+        {/* Drawer */}
         <div
-          className={`absolute right-0 top-0 bottom-0 w-[320px] bg-warm-white shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-cream shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            mobileOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
         >
-          <div className="flex flex-col h-full pt-24 px-8 pb-8">
-            <div className="flex flex-col gap-2">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3.5 text-lg font-medium rounded-xl transition-colors ${
-                    item.active
-                      ? 'bg-charcoal text-white'
-                      : 'text-charcoal hover:bg-cream'
-                  }`}
-                  style={{ fontFamily: 'var(--font-heading)' }}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-            <div className="mt-auto">
+          <div className="flex flex-col pt-24 px-8">
+            {navItems.map((item, i) => (
               <a
-                href="#collection"
+                key={item.label}
+                href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-camel text-white font-semibold rounded-full hover:bg-camel-dark transition-all"
+                className={`py-4 text-2xl font-heading font-medium border-b border-mist/50 transition-colors ${
+                  item.active ? 'text-camel' : 'text-charcoal hover:text-camel'
+                }`}
+                style={{ transitionDelay: mobileOpen ? `${i * 60}ms` : '0ms' }}
               >
-                Shop Now
-                <ArrowRight className="w-4 h-4" />
+                {item.label}
               </a>
-            </div>
+            ))}
+
+            <a
+              href="#collection"
+              onClick={() => setMobileOpen(false)}
+              className="mt-8 inline-flex items-center justify-center px-8 py-3.5 bg-charcoal text-white rounded-full text-sm font-medium"
+            >
+              Shop Now
+            </a>
           </div>
         </div>
       </div>

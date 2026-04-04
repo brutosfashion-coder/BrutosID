@@ -1,161 +1,236 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import gsap from 'gsap';
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const testimonials = [
+interface TestimonialData {
+  quote: string;
+  name: string;
+  role: string;
+  initial: string;
+  portraitInitial: string;
+}
+
+const testimonials: TestimonialData[] = [
   {
-    quote: 'Brutos has completely transformed how I approach dressing. Every piece feels intentional, luxurious, and perfectly crafted for the modern gentleman who values substance.',
-    name: 'Arief Rachman',
+    quote:
+      'Brutos has completely redefined my wardrobe. The attention to detail in every piece is remarkable — from the stitching to the fabric weight, everything feels intentional and luxurious.',
+    name: 'Alexander Whitmore',
     role: 'Creative Director',
     initial: 'A',
+    portraitInitial: 'W',
   },
   {
-    quote: 'The quality is unmatched. I have never felt more confident walking into a room. Brutos understands what quiet luxury truly means for a discerning man.',
-    name: 'Daniel Hartono',
-    role: 'Managing Partner',
+    quote:
+      'I\'ve never felt more confident in what I wear. Their blazers fit like they were made just for me. The quality is unmatched at this price point — true quiet luxury.',
+    name: 'Daniel Harrington',
+    role: 'Investment Analyst',
     initial: 'D',
+    portraitInitial: 'H',
   },
   {
-    quote: 'From the fabric to the fit, everything about Brutos speaks to a man who values substance over flash. It has become my go-to brand for every occasion.',
-    name: 'Kevin Sugiarto',
-    role: 'Architect',
-    initial: 'K',
+    quote:
+      'What sets Brutos apart is their understanding of timeless style. These aren\'t trend pieces — they\'re wardrobe foundations you\'ll wear for years to come.',
+    name: 'Marcus Chen',
+    role: 'Architect & Designer',
+    initial: 'M',
+    portraitInitial: 'C',
   },
 ];
 
 export default function Testimonial() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [index, setIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const quoteRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const isAnimating = useRef(false);
 
-  const animateChange = useCallback((newIndex: number) => {
-    if (isAnimating) return;
-    setIsAnimating(true);
+  const navigate = useCallback(
+    (direction: 'prev' | 'next') => {
+      if (isAnimating.current) return;
+      isAnimating.current = true;
 
-    const tl = gsap.timeline({ onComplete: () => setIsAnimating(false) });
+      const nextIndex =
+        direction === 'next'
+          ? (active + 1) % testimonials.length
+          : (active - 1 + testimonials.length) % testimonials.length;
 
-    tl.to('.tm-quote-text', {
-      opacity: 0, y: -20, filter: 'blur(5px)', duration: 0.3, ease: 'power2.in',
-    })
-      .to('.tm-author', { opacity: 0, duration: 0.2, ease: 'power2.in' }, '<')
-      .call(() => setIndex(newIndex))
-      .fromTo('.tm-quote-text',
-        { opacity: 0, y: 20, filter: 'blur(5px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power2.out' }
-      )
-      .fromTo('.tm-author',
-        { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: 'power2.out' },
-        '<0.1'
-      );
-  }, [isAnimating]);
-
-  const goNext = () => animateChange((index + 1) % testimonials.length);
-  const goPrev = () => animateChange((index - 1 + testimonials.length) % testimonials.length);
+      // Animate out
+      gsap.to(quoteRef.current, {
+        opacity: 0,
+        filter: 'blur(6px)',
+        y: direction === 'next' ? -20 : 20,
+        duration: 0.4,
+        ease: 'power2.in',
+        onComplete: () => {
+          setActive(nextIndex);
+          // Animate in
+          gsap.fromTo(
+            quoteRef.current,
+            {
+              opacity: 0,
+              filter: 'blur(6px)',
+              y: direction === 'next' ? 20 : -20,
+            },
+            {
+              opacity: 1,
+              filter: 'blur(0px)',
+              y: 0,
+              duration: 0.5,
+              ease: 'power2.out',
+              onComplete: () => {
+                isAnimating.current = false;
+              },
+            }
+          );
+        },
+      });
+    },
+    [active]
+  );
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Badge
       gsap.fromTo(
-        '.tm-blur-reveal',
-        { opacity: 0, filter: 'blur(10px)', y: 30 },
+        badgeRef.current,
+        { opacity: 0, y: 30 },
         {
-          opacity: 1, filter: 'blur(0px)', y: 0, duration: 1.2, ease: 'power3.out',
-          scrollTrigger: { trigger: '.tm-blur-reveal', start: 'top 80%', toggleActions: 'play none none reverse' },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: badgeRef.current, start: 'top 85%', toggleActions: 'play none none reverse' },
         }
       );
 
+      // Content
       gsap.fromTo(
-        '.tm-slide-up',
-        { opacity: 0, y: 50 },
+        contentRef.current,
+        { opacity: 0, filter: 'blur(10px)', y: 30 },
         {
-          opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
+          opacity: 1,
+          filter: 'blur(0px)',
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: contentRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+        }
+      );
+
+      // Stats
+      gsap.fromTo(
+        statsRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.3,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: statsRef.current, start: 'top 85%', toggleActions: 'play none none reverse' },
         }
       );
     }, sectionRef);
+
     return () => ctx.revert();
   }, []);
 
-  const current = testimonials[index];
+  const current = testimonials[active];
 
   return (
-    <section ref={sectionRef} className="px-3 md:px-4 pb-3 md:pb-4">
-      <div className="bg-warm-white rounded-[24px] px-6 md:px-12 py-16 md:py-20 overflow-hidden">
-        {/* Header Row: Badge + Happy Customers stat */}
-        <div className="flex items-start justify-between mb-12">
-          <span className="tm-slide-up pill-badge">
-            <span className="w-1.5 h-1.5 rounded-full bg-camel" />
+    <section ref={sectionRef} className="py-20 md:py-28">
+      {/* Divider top */}
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 mb-16">
+        <div className="h-px bg-gradient-to-r from-transparent via-mist to-transparent" />
+      </div>
+
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16">
+        {/* Badge */}
+        <div ref={badgeRef} className="mb-12">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-mist text-sm font-body text-charcoal/70">
+            <span className="w-2 h-2 rounded-full bg-camel" />
             Testimonials
           </span>
-          <div className="tm-slide-up text-right hidden md:block">
-            <p className="text-xs text-charcoal/40 uppercase tracking-wider">Happy Customers</p>
-            <p className="text-4xl font-heading font-bold text-charcoal mt-1">2,852</p>
+        </div>
+
+        {/* 3-column layout */}
+        <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-[180px_1fr_160px] gap-8 lg:gap-12 items-start">
+          {/* LEFT: Author photo + stats */}
+          <div className="hidden lg:flex flex-col gap-8">
+            {/* Author photo */}
+            <div className="w-[160px] h-[160px] rounded-2xl bg-gradient-to-br from-camel/30 to-camel/10 flex items-center justify-center">
+              <span className="font-heading text-4xl text-camel/60 font-medium">{current.initial}</span>
+            </div>
+
+            {/* Stats */}
+            <div ref={statsRef}>
+              <p className="font-body text-charcoal/50 text-sm mb-1">Happy Customers</p>
+              <p className="font-heading text-4xl text-charcoal font-semibold">2,852</p>
+            </div>
+          </div>
+
+          {/* CENTER: Quote */}
+          <div ref={quoteRef} className="flex flex-col justify-center min-h-[280px]">
+            {/* Decorative quote mark */}
+            <span className="font-heading text-7xl text-camel/30 leading-none mb-4 select-none">
+              &#x275D;
+            </span>
+
+            {/* Quote text */}
+            <blockquote className="font-heading text-2xl md:text-3xl lg:text-4xl text-charcoal font-medium leading-[1.3] mb-8">
+              {current.quote}
+            </blockquote>
+
+            {/* Author info */}
+            <div>
+              <p className="font-body text-charcoal font-medium text-base">{current.name}</p>
+              <p className="font-body text-charcoal/50 text-sm">{current.role}</p>
+            </div>
+
+            {/* Mobile stats */}
+            <div className="lg:hidden mt-8 flex items-center gap-6">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-camel/30 to-camel/10 flex items-center justify-center">
+                <span className="font-heading text-xl text-camel/60 font-medium">{current.initial}</span>
+              </div>
+              <div>
+                <p className="font-body text-charcoal/50 text-xs">Happy Customers</p>
+                <p className="font-heading text-2xl text-charcoal font-semibold">2,852</p>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: Portrait + nav */}
+          <div className="hidden lg:flex flex-col items-end gap-8">
+            {/* Portrait */}
+            <div className="w-[140px] h-[140px] rounded-2xl bg-gradient-to-br from-mist/60 to-mist/30 flex items-center justify-center">
+              <span className="font-heading text-3xl text-charcoal/30 font-medium">{current.portraitInitial}</span>
+            </div>
           </div>
         </div>
 
-        {/* Wide Dentora-style Layout: Quote Left + Visual Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
-          {/* Left — Quote */}
-          <div className="tm-slide-up">
-            <div className="tm-blur-reveal">
-              <span className="font-heading text-7xl md:text-8xl text-camel/30 leading-none select-none block mb-4">
-                &ldquo;
-              </span>
-            </div>
-            <p className="tm-quote-text font-heading text-2xl md:text-3xl lg:text-4xl text-charcoal leading-[1.3] max-w-2xl">
-              {current.quote}
-            </p>
-
-            {/* Author */}
-            <div className="tm-author mt-10 flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-camel flex items-center justify-center text-white font-heading text-xl font-semibold shadow-md">
-                {current.initial}
-              </div>
-              <div>
-                <p className="font-medium text-charcoal text-base">{current.name}</p>
-                <p className="text-sm text-charcoal/50 mt-0.5">{current.role}</p>
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex items-center gap-2 mt-8">
-              <button
-                onClick={goPrev}
-                className="w-11 h-11 rounded-full border border-charcoal/15 flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-white transition-all duration-300"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={goNext}
-                className="w-11 h-11 rounded-full bg-camel text-white flex items-center justify-center hover:bg-camel-dark transition-all duration-300"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
-              <span className="ml-3 text-sm text-charcoal/40">
-                {String(index + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
-              </span>
-            </div>
-          </div>
-
-          {/* Right — Decorative Portrait (Dentora style) */}
-          <div className="tm-slide-up hidden lg:block">
-            <div className="w-48 h-64 rounded-[20px] bg-gradient-to-b from-mist to-camel/30 flex items-end justify-center overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 to-transparent" />
-              <div className="relative z-10 text-center pb-6">
-                <div className="w-20 h-20 mx-auto rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3">
-                  <span className="text-3xl font-heading font-bold text-white">{current.initial}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Navigation arrows */}
+        <div className="flex items-center justify-end gap-3 mt-10">
+          <button
+            onClick={() => navigate('prev')}
+            className="w-11 h-11 rounded-full border border-charcoal/20 flex items-center justify-center text-charcoal hover:border-charcoal/40 transition-colors"
+            aria-label="Previous testimonial"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => navigate('next')}
+            className="w-11 h-11 rounded-full bg-camel flex items-center justify-center text-white hover:bg-camel/90 transition-colors"
+            aria-label="Next testimonial"
+          >
+            <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>

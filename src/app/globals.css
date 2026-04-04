@@ -102,7 +102,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
 }
 
-/* Device Frame - Dentora style container */
+/* Device Frame - Dentora style continuous container */
 .device-frame {
   max-width: 1440px;
   margin: 0 auto;
@@ -123,26 +123,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Glass morphism utility */
-.glass {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.glass-dark {
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Marquee hover pause */
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
 /* Pill badge - Dentora style */
 .pill-badge {
   display: inline-flex;
@@ -157,6 +137,11 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   color: var(--color-charcoal);
   background: transparent;
+}
+
+/* Marquee hover pause */
+.marquee-track:hover {
+  animation-play-state: paused;
 }
 
 /* Progressive text reveal - Dentora signature animation */
