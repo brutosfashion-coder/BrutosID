@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const revealText =
-  'We blend traditional craftsmanship with contemporary design, creating pieces that transcend seasons and trends. For the man who dresses not to impress, but to express.';
+  'We blend traditional craftsmanship with contemporary design, creating pieces that transcend seasons and trends. For the man who dresses not to impress — but to express.';
 
 const stats = [
   { value: 98, suffix: '%', label: 'Satisfaction' },
@@ -21,28 +21,27 @@ export default function About() {
   const textRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const statNumRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const numRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
-  const setStatRef = useCallback(
-    (el: HTMLSpanElement | null, i: number) => {
-      statNumRefs.current[i] = el;
-    },
-    []
-  );
+  const setNumRef = useCallback((el: HTMLSpanElement | null, i: number) => {
+    numRefs.current[i] = el;
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* ── Progressive text reveal ── */
+      // Progressive text reveal — the signature Dentora effect
       if (textRef.current) {
         const chars = textRef.current.querySelectorAll('.text-reveal-char');
         ScrollTrigger.create({
           trigger: textRef.current,
-          start: 'top 75%',
-          end: 'bottom 40%',
-          scrub: 0.5,
+          start: 'top 72%',
+          end: 'bottom 35%',
+          scrub: 0.3,
           onUpdate: (self) => {
+            const progress = self.progress;
             chars.forEach((char, i) => {
-              if (self.progress > i / chars.length) {
+              const threshold = i / chars.length;
+              if (progress > threshold) {
                 char.classList.add('revealed');
               } else {
                 char.classList.remove('revealed');
@@ -52,15 +51,15 @@ export default function About() {
         });
       }
 
-      /* ── Stats fade ── */
+      // Stats count-up
       if (statsRef.current) {
         gsap.fromTo(
           statsRef.current,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 25 },
           {
             opacity: 1,
             y: 0,
-            duration: 1,
+            duration: 0.8,
             ease: 'power3.out',
             scrollTrigger: {
               trigger: statsRef.current,
@@ -70,14 +69,13 @@ export default function About() {
           }
         );
 
-        /* Animate numbers */
-        statNumRefs.current.forEach((el, i) => {
+        numRefs.current.forEach((el, i) => {
           if (!el) return;
-          const stat = stats[i];
-          const target = { val: 0 };
-          gsap.to(target, {
-            val: stat.value,
-            duration: 2,
+          const s = stats[i];
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: s.value,
+            duration: 2.2,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: statsRef.current,
@@ -87,23 +85,24 @@ export default function About() {
             onUpdate: () => {
               if (el) {
                 el.textContent =
-                  stat.value % 1 !== 0
-                    ? target.val.toFixed(1)
-                    : Math.round(target.val).toLocaleString();
+                  s.value % 1 !== 0
+                    ? obj.val.toFixed(1)
+                    : Math.round(obj.val).toLocaleString();
               }
             },
           });
         });
       }
 
-      /* ── Image reveal ── */
+      // Image reveal
       if (imageRef.current) {
         gsap.fromTo(
           imageRef.current,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 30, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
+            scale: 1,
             duration: 1,
             ease: 'power3.out',
             scrollTrigger: {
@@ -120,19 +119,19 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-20 md:py-28 px-6 lg:px-12">
+    <section ref={sectionRef} id="about" className="py-24 md:py-32 px-6 lg:px-14">
       <div className="max-w-[1100px] mx-auto">
         {/* Badge */}
-        <div className="mb-10">
-          <span className="inline-flex items-center gap-2 text-[11px] font-body tracking-[0.15em] uppercase text-charcoal/50">
-            <span className="w-6 h-px bg-camel" />
+        <div className="flex items-center gap-3 mb-12">
+          <span className="w-8 h-px bg-camel" />
+          <span className="text-[11px] tracking-[0.2em] uppercase text-stone">
             Our Story
           </span>
         </div>
 
         {/* Progressive text reveal */}
-        <div ref={textRef} className="mb-16 md:mb-20">
-          <p className="font-heading text-[28px] md:text-4xl lg:text-[44px] leading-[1.35] font-medium">
+        <div ref={textRef} className="mb-20 max-w-4xl">
+          <p className="font-heading text-[26px] md:text-[36px] lg:text-[44px] leading-[1.4] font-medium text-charcoal">
             {revealText.split('').map((char, i) => (
               <span key={i} className="text-reveal-char">
                 {char}
@@ -141,28 +140,29 @@ export default function About() {
           </p>
         </div>
 
-        {/* Stats + Image */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
-          {/* Stats */}
+        {/* Stats + Image grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-end">
+          {/* Left: stats */}
           <div ref={statsRef}>
-            <h3 className="font-heading text-xl md:text-2xl text-charcoal mb-8">
-              Thousands Trust Our Craft
-            </h3>
+            <p className="text-charcoal/40 text-[14px] leading-relaxed mb-10 max-w-sm">
+              Thousands of gentlemen trust Brutos for their everyday elegance.
+              Our numbers tell the story of quiet confidence.
+            </p>
             <div className="grid grid-cols-3 gap-6">
               {stats.map((s, i) => (
                 <div key={s.label}>
-                  <div className="flex items-baseline gap-0.5 mb-1">
+                  <div className="flex items-baseline gap-0.5 mb-1.5">
                     <span
-                      ref={(el) => setStatRef(el, i)}
-                      className="font-heading text-4xl md:text-5xl font-medium text-charcoal"
+                      ref={(el) => setNumRef(el, i)}
+                      className="font-heading text-[40px] md:text-[48px] font-semibold text-charcoal leading-none"
                     >
                       0
                     </span>
-                    <span className="font-heading text-xl text-camel">
+                    <span className="font-heading text-lg text-camel">
                       {s.suffix}
                     </span>
                   </div>
-                  <span className="text-[11px] text-charcoal/40 font-body tracking-wide">
+                  <span className="text-[11px] text-charcoal/30 tracking-[0.1em] uppercase">
                     {s.label}
                   </span>
                 </div>
@@ -170,14 +170,14 @@ export default function About() {
             </div>
           </div>
 
-          {/* Image — properly contained */}
+          {/* Right: image */}
           <div
             ref={imageRef}
-            className="relative overflow-hidden rounded-2xl aspect-[4/3]"
+            className="img-container rounded-2xl aspect-[4/3]"
           >
             <Image
-              src="/images/about-brand.svg"
-              alt="Craftsmanship"
+              src="/images/about.jpg"
+              alt="Our atelier"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

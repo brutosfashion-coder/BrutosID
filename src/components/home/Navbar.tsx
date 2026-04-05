@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
-const navItems = [
+const links = [
   { label: 'Home', href: '#', active: true },
   { label: 'Collection', href: '#collection' },
   { label: 'About', href: '#about' },
@@ -14,60 +14,58 @@ const navItems = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 50);
-  }, []);
+  const onScroll = useCallback(() => setScrolled(window.scrollY > 60), []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [onScroll]);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
+  }, [open]);
 
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[var(--ease-smooth)] ${
           scrolled
-            ? 'bg-cream/95 backdrop-blur-md border-b border-mist/30'
+            ? 'bg-cream/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.04)]'
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 lg:px-12 py-4">
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between h-16 md:h-20 px-6 lg:px-14">
           {/* Logo */}
-          <a href="#" className="flex-shrink-0 relative z-10">
+          <a href="#" className="relative z-10 flex-shrink-0">
             <Image
               src="/logo-brutos.png"
               alt="Brutos ID"
-              width={110}
-              height={32}
-              className={`h-8 w-auto transition-all duration-300 ${
+              width={100}
+              height={28}
+              className={`h-7 w-auto transition-all duration-500 ${
                 scrolled ? '' : 'brightness-0 invert'
               }`}
               priority
             />
           </a>
 
-          {/* Desktop nav links */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
+          {/* Center nav */}
+          <div className="hidden lg:flex items-center gap-1 bg-white/0 rounded-full px-1 py-1">
+            {links.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className={`text-[13px] font-body tracking-[0.08em] uppercase transition-colors duration-300 ${
+                className={`px-4 py-2 rounded-full text-[12px] tracking-[0.1em] uppercase transition-all duration-300 ${
                   item.active
                     ? scrolled
-                      ? 'text-charcoal font-semibold'
-                      : 'text-white font-semibold'
+                      ? 'bg-charcoal text-white'
+                      : 'bg-white/15 text-white backdrop-blur-sm'
                     : scrolled
-                      ? 'text-charcoal/50 hover:text-charcoal'
-                      : 'text-white/60 hover:text-white'
+                      ? 'text-charcoal/40 hover:text-charcoal'
+                      : 'text-white/50 hover:text-white'
                 }`}
               >
                 {item.label}
@@ -75,57 +73,47 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Right side */}
-          <div className="flex items-center gap-4">
+          {/* Right */}
+          <div className="flex items-center gap-3">
             <a
               href="#collection"
-              className={`hidden md:inline-flex px-6 py-2.5 rounded-full text-[13px] font-body font-medium tracking-wide border transition-all duration-300 ${
+              className={`hidden md:inline-flex px-5 py-2 rounded-full text-[12px] tracking-[0.06em] uppercase border transition-all duration-300 ${
                 scrolled
-                  ? 'border-charcoal text-charcoal hover:bg-charcoal hover:text-white'
-                  : 'border-white/30 text-white hover:bg-white hover:text-charcoal'
+                  ? 'border-charcoal/20 text-charcoal hover:bg-charcoal hover:text-white hover:border-charcoal'
+                  : 'border-white/25 text-white/80 hover:bg-white hover:text-charcoal hover:border-white'
               }`}
             >
               Shop Now
             </a>
 
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className={`lg:hidden p-2 relative z-10 ${
-                scrolled || mobileOpen ? 'text-charcoal' : 'text-white'
+              onClick={() => setOpen(!open)}
+              className={`lg:hidden relative z-10 p-2 ${
+                scrolled || open ? 'text-charcoal' : 'text-white'
               }`}
-              aria-label="Menu"
+              aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              {open ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile drawer */}
-      <div
-        className={`fixed inset-0 z-40 transition-all duration-500 lg:hidden ${
-          mobileOpen ? 'visible' : 'invisible pointer-events-none'
-        }`}
-      >
-        <div
-          className={`absolute inset-0 bg-black/40 transition-opacity duration-500 ${
-            mobileOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          onClick={() => setMobileOpen(false)}
-        />
-        <div
-          className={`absolute top-0 right-0 h-full w-72 bg-cream shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            mobileOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          <div className="flex flex-col pt-20 px-8">
-            {navItems.map((item) => (
+      {/* Mobile overlay */}
+      {open && (
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div
+            className="absolute inset-0 bg-charcoal/30 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
+          <div className="absolute top-0 right-0 h-full w-72 bg-cream shadow-2xl pt-20 px-8">
+            {links.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`py-4 text-lg font-heading border-b border-mist/30 transition-colors ${
-                  item.active ? 'text-camel' : 'text-charcoal hover:text-camel'
+                onClick={() => setOpen(false)}
+                className={`block py-4 font-heading text-lg border-b border-sand/40 transition-colors ${
+                  item.active ? 'text-camel' : 'text-charcoal/70 hover:text-camel'
                 }`}
               >
                 {item.label}
@@ -133,14 +121,14 @@ export default function Navbar() {
             ))}
             <a
               href="#collection"
-              onClick={() => setMobileOpen(false)}
-              className="mt-8 text-center px-6 py-3 bg-charcoal text-white rounded-full text-sm font-body font-medium"
+              onClick={() => setOpen(false)}
+              className="mt-8 block text-center py-3 bg-charcoal text-white rounded-full text-[13px] tracking-wide"
             >
               Shop Now
             </a>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

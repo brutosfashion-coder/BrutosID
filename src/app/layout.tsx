@@ -6,21 +6,21 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-heading",
+  variable: "--font-playfair-display",
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-body",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-inter",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "BRUTOS ID | Premium Men's Clothing",
+  title: "BRUTOS ID — Premium Menswear",
   description:
-    "Dress the man you've become. Premium tailored menswear crafted for the modern gentleman who values quiet luxury and timeless style.",
+    "Dress the man you've become. Premium tailored menswear for the modern gentleman.",
 };
 
 export default function RootLayout({

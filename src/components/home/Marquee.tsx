@@ -10,20 +10,24 @@ const items = [
 ];
 
 export default function Marquee() {
-  const content = items.map((item, i) => (
-    <span key={i} className="flex items-center flex-shrink-0">
-      <span className="text-[15px] md:text-base font-body text-charcoal/35 whitespace-nowrap tracking-wide">
+  const track = items.map((item, i) => (
+    <span key={i} className="flex items-center gap-8 flex-shrink-0">
+      <span className="text-[14px] text-charcoal/30 tracking-[0.08em] uppercase whitespace-nowrap">
         {item}
       </span>
-      <span className="mx-6 w-1 h-1 rounded-full bg-camel/30 flex-shrink-0" />
+      <span className="flex gap-[3px] flex-shrink-0">
+        <span className="w-[5px] h-[5px] rounded-[1px] bg-camel/25" />
+        <span className="w-[5px] h-[5px] rounded-[1px] bg-camel/25" />
+        <span className="w-[5px] h-[5px] rounded-[1px] bg-camel/25" />
+      </span>
     </span>
   ));
 
   return (
-    <div className="py-5 border-y border-mist/30 overflow-hidden">
-      <div className="marquee-track flex animate-marquee">
-        {content}
-        {content}
+    <div className="py-5 border-y border-sand/50 overflow-hidden">
+      <div className="marquee-track flex items-center gap-8 animate-marquee">
+        {track}
+        {track}
       </div>
     </div>
   );

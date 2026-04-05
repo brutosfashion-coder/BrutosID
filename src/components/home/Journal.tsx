@@ -4,28 +4,28 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const posts = [
   {
-    image: '/images/journal/post-1.svg',
+    image: '/images/journal/post-1.jpg',
     category: 'Style Guide',
     date: 'Mar 15, 2026',
-    title: 'The Art of Building a Capsule Wardrobe for Every Season',
+    title: 'The Art of Building a Capsule Wardrobe',
   },
   {
-    image: '/images/journal/post-2.svg',
+    image: '/images/journal/post-2.jpg',
     category: 'Craftsmanship',
     date: 'Mar 10, 2026',
-    title: 'Behind the Seams: How Our Blazers Are Handcrafted in Italy',
+    title: 'Behind the Seams: Our Italian Workshop',
   },
   {
-    image: '/images/journal/post-3.svg',
+    image: '/images/journal/post-3.jpg',
     category: 'Lifestyle',
     date: 'Mar 05, 2026',
-    title: 'Quiet Luxury: Why Understated Style Speaks the Loudest',
+    title: 'Quiet Luxury: Understated Style That Speaks',
   },
 ];
 
@@ -36,12 +36,12 @@ export default function Journal() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         '.journal-card',
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 35 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.12,
+          duration: 0.7,
+          stagger: 0.1,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: '.journal-card',
@@ -55,35 +55,36 @@ export default function Journal() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="journal" className="py-20 md:py-28 px-6 lg:px-12">
+    <section ref={sectionRef} id="journal" className="py-24 md:py-32 px-6 lg:px-14">
       <div className="max-w-[1100px] mx-auto">
-        <div className="h-px bg-mist/40 mb-16" />
+        <div className="h-px bg-sand/60 mb-16" />
 
         {/* Header */}
-        <div className="flex items-end justify-between mb-12">
+        <div className="flex items-end justify-between mb-14">
           <div>
-            <span className="inline-flex items-center gap-2 text-[11px] font-body tracking-[0.15em] uppercase text-charcoal/50 mb-4 block">
-              <span className="w-6 h-px bg-camel inline-block" />
-              Our Insights
-            </span>
-            <h2 className="font-heading text-4xl md:text-5xl text-charcoal font-medium leading-[1.05]">
-              The Gentleman&apos;s Journal
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-8 h-px bg-camel" />
+              <span className="text-[11px] tracking-[0.2em] uppercase text-stone">
+                Our Insights
+              </span>
+            </div>
+            <h2 className="font-heading text-[36px] md:text-[48px] text-charcoal font-medium leading-[1.05]">
+              The Journal
             </h2>
           </div>
           <a
             href="#"
-            className="hidden md:inline-flex items-center gap-2 text-sm font-body text-charcoal/50 hover:text-camel transition-colors"
+            className="hidden md:inline-flex items-center gap-2 text-[13px] text-charcoal/40 hover:text-camel transition-colors"
           >
             View All <ArrowRight size={14} />
           </a>
         </div>
 
-        {/* Cards grid */}
+        {/* 3-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, i) => (
-            <div key={i} className="journal-card group cursor-pointer">
-              {/* Image — properly contained */}
-              <div className="relative overflow-hidden rounded-2xl aspect-[4/3] mb-4">
+            <article key={i} className="journal-card group cursor-pointer">
+              <div className="img-container rounded-2xl aspect-[4/3] mb-4">
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -92,19 +93,22 @@ export default function Journal() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute top-3 left-3">
-                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[11px] font-body text-charcoal">
+                  <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-[10px] tracking-[0.1em] uppercase text-charcoal/70">
                     {post.category}
                   </span>
                 </div>
               </div>
 
-              <p className="font-body text-charcoal/35 text-[11px] tracking-wide mb-2">
+              <p className="text-charcoal/25 text-[11px] tracking-wider mb-2">
                 {post.date}
               </p>
-              <h3 className="font-heading text-xl text-charcoal font-medium leading-snug group-hover:text-camel transition-colors duration-300">
+              <h3 className="font-heading text-[18px] md:text-[20px] text-charcoal font-medium leading-snug group-hover:text-camel transition-colors duration-300 mb-3">
                 {post.title}
               </h3>
-            </div>
+              <span className="inline-flex items-center gap-1.5 text-[12px] text-charcoal/30 group-hover:text-camel transition-colors">
+                Read More <ArrowUpRight size={12} />
+              </span>
+            </article>
           ))}
         </div>
       </div>

@@ -10,21 +10,24 @@ gsap.registerPlugin(ScrollTrigger);
 const testimonials = [
   {
     quote:
-      'Brutos has completely redefined my wardrobe. The attention to detail in every piece is remarkable — from the stitching to the fabric weight, everything feels intentional and luxurious.',
+      'Brutos has completely redefined my wardrobe. The attention to detail in every piece is remarkable — from the stitching to the fabric weight, everything feels intentional.',
     name: 'Alexander Whitmore',
     role: 'Creative Director',
+    initial: 'A',
   },
   {
     quote:
       "I've never felt more confident in what I wear. Their blazers fit like they were made just for me. True quiet luxury at its finest.",
     name: 'Daniel Harrington',
     role: 'Investment Analyst',
+    initial: 'D',
   },
   {
     quote:
       "What sets Brutos apart is their understanding of timeless style. These aren't trend pieces — they're wardrobe foundations you'll wear for years.",
     name: 'Marcus Chen',
     role: 'Architect',
+    initial: 'M',
   },
 ];
 
@@ -34,10 +37,11 @@ export default function Testimonial() {
   const [active, setActive] = useState(0);
   const animating = useRef(false);
 
-  const nav = useCallback(
+  const go = useCallback(
     (dir: 'prev' | 'next') => {
       if (animating.current) return;
       animating.current = true;
+
       const next =
         dir === 'next'
           ? (active + 1) % testimonials.length
@@ -45,18 +49,18 @@ export default function Testimonial() {
 
       gsap.to(quoteRef.current, {
         opacity: 0,
-        y: -15,
-        duration: 0.3,
+        y: -12,
+        duration: 0.25,
         ease: 'power2.in',
         onComplete: () => {
           setActive(next);
           gsap.fromTo(
             quoteRef.current,
-            { opacity: 0, y: 15 },
+            { opacity: 0, y: 12 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.4,
+              duration: 0.35,
               ease: 'power2.out',
               onComplete: () => {
                 animating.current = false;
@@ -76,7 +80,7 @@ export default function Testimonial() {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 1,
+          duration: 0.8,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -92,74 +96,84 @@ export default function Testimonial() {
   const t = testimonials[active];
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-28 px-6 lg:px-12">
+    <section ref={sectionRef} className="py-24 md:py-32 px-6 lg:px-14">
       <div className="max-w-[1100px] mx-auto">
-        <div className="h-px bg-mist/40 mb-16" />
+        <div className="h-px bg-sand/60 mb-16" />
 
-        {/* Header + nav */}
-        <div className="flex items-end justify-between mb-10">
-          <span className="inline-flex items-center gap-2 text-[11px] font-body tracking-[0.15em] uppercase text-charcoal/50">
-            <span className="w-6 h-px bg-camel" />
-            Testimonials
-          </span>
+        {/* Top: badge + nav */}
+        <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center gap-3">
+            <span className="w-8 h-px bg-camel" />
+            <span className="text-[11px] tracking-[0.2em] uppercase text-stone">
+              Testimonials
+            </span>
+          </div>
           <div className="flex gap-2">
             <button
-              onClick={() => nav('prev')}
-              className="w-10 h-10 rounded-full border border-mist flex items-center justify-center text-charcoal/40 hover:border-charcoal/30 transition-colors"
+              onClick={() => go('prev')}
+              className="w-10 h-10 rounded-full border border-sand flex items-center justify-center text-charcoal/30 hover:border-charcoal/30 hover:text-charcoal/60 transition-all"
               aria-label="Previous"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={16} />
             </button>
             <button
-              onClick={() => nav('next')}
-              className="w-10 h-10 rounded-full bg-charcoal flex items-center justify-center text-white hover:bg-charcoal/90 transition-colors"
+              onClick={() => go('next')}
+              className="w-10 h-10 rounded-full bg-charcoal flex items-center justify-center text-white hover:bg-charcoal/85 transition-colors"
               aria-label="Next"
             >
-              <ArrowRight size={18} />
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
 
-        {/* Quote */}
+        {/* Quote area */}
         <div ref={quoteRef} className="max-w-3xl">
-          <span className="font-heading text-6xl text-camel/20 leading-none select-none block mb-2">
-            &#x201C;
+          <span className="font-heading text-[72px] text-camel/15 leading-none select-none block -mb-6">
+            &ldquo;
           </span>
-          <blockquote className="font-heading text-2xl md:text-3xl lg:text-[38px] text-charcoal font-medium leading-[1.3] mb-8">
+          <blockquote className="font-heading text-[24px] md:text-[32px] lg:text-[40px] text-charcoal font-medium leading-[1.35] mb-10">
             {t.quote}
           </blockquote>
+
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-mist/60 flex items-center justify-center">
-              <span className="font-heading text-sm text-charcoal/50">
-                {t.name[0]}
+            <div className="w-11 h-11 rounded-full bg-cream-dark flex items-center justify-center">
+              <span className="font-heading text-[14px] text-charcoal/40">
+                {t.initial}
               </span>
             </div>
             <div>
-              <p className="font-body text-charcoal font-medium text-sm">
-                {t.name}
-              </p>
-              <p className="font-body text-charcoal/40 text-xs">{t.role}</p>
+              <p className="text-charcoal text-[14px] font-medium">{t.name}</p>
+              <p className="text-charcoal/30 text-[12px]">{t.role}</p>
             </div>
           </div>
         </div>
 
-        {/* Stats row */}
-        <div className="mt-14 flex items-center gap-8">
+        {/* Stats strip */}
+        <div className="mt-16 pt-10 border-t border-sand/40 flex items-center gap-10">
           <div>
-            <p className="font-heading text-3xl md:text-4xl text-charcoal font-semibold">
+            <p className="font-heading text-[36px] md:text-[44px] text-charcoal font-semibold leading-none">
               2,852
             </p>
-            <p className="font-body text-charcoal/35 text-[11px] tracking-wide">
+            <p className="text-charcoal/25 text-[11px] tracking-[0.1em] uppercase mt-1">
               Happy Customers
             </p>
           </div>
-          <div className="w-px h-10 bg-mist/40" />
+          <div className="w-px h-12 bg-sand/40" />
           <div>
-            <p className="font-heading text-3xl md:text-4xl text-charcoal font-semibold">
+            <p className="font-heading text-[36px] md:text-[44px] text-charcoal font-semibold leading-none">
               4.9
             </p>
-            <p className="font-body text-charcoal/35 text-[11px] tracking-wide">
+            <p className="text-charcoal/25 text-[11px] tracking-[0.1em] uppercase mt-1">
               Average Rating
+            </p>
+          </div>
+          <div className="w-px h-12 bg-sand/40 hidden sm:block" />
+          <div className="hidden sm:block">
+            <p className="font-heading text-[36px] md:text-[44px] text-charcoal font-semibold leading-none">
+              12
+            </p>
+            <p className="text-charcoal/25 text-[11px] tracking-[0.1em] uppercase mt-1">
+              Countries
             </p>
           </div>
         </div>
