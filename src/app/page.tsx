@@ -1,8 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Categories from "@/components/Categories";
-import DiscoverCollection from "@/components/DiscoverCollection";
-import QuoteBanner from "@/components/QuoteBanner";
+import DiscoverQuote from "@/components/DiscoverQuote";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -11,8 +10,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Categories />
-      <DiscoverCollection />
-      <QuoteBanner />
+      <DiscoverQuote />
       <Footer />
     </main>
   );

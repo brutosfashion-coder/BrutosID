@@ -1,40 +1,29 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 
-function GentlemanLogo({ className = "", size = 40 }: { className?: string; size?: number }) {
+function GentlemanLogo() {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      {/* Circular frame */}
-      <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2" fill="none" />
+    <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="47" stroke="#3B2F2F" strokeWidth="1.8" fill="none"/>
       {/* Head */}
-      <ellipse cx="50" cy="32" rx="14" ry="16" fill="currentColor" />
-      {/* Hair detail - swept back */}
-      <path d="M36 28C36 20 42 14 50 14C58 14 64 20 64 28C64 24 58 18 50 18C42 18 36 24 36 28Z" fill="currentColor" />
+      <ellipse cx="50" cy="30" rx="13" ry="15" fill="#3B2F2F"/>
+      {/* Hair swept back */}
+      <path d="M37 26C37 18 42 13 50 13C58 13 63 18 63 26C63 22 58 16 50 16C42 16 37 22 37 26Z" fill="#3B2F2F"/>
       {/* Beard */}
-      <path d="M40 38C40 38 42 48 50 48C58 48 60 38 60 38" fill="currentColor" />
+      <path d="M40 36C40 36 43 46 50 46C57 46 60 36 60 36" fill="#3B2F2F"/>
       {/* Suit body */}
-      <path d="M30 60C30 52 38 48 50 48C62 48 70 52 70 60L72 88L28 88L30 60Z" fill="currentColor" />
-      {/* Suit lapels */}
-      <path d="M50 48L42 62L50 58L58 62L50 48Z" fill="white" opacity="0.3" />
-      {/* Suit collar */}
-      <path d="M46 48L50 56L54 48" stroke="white" strokeWidth="1.5" fill="none" opacity="0.4" />
+      <path d="M30 58C30 50 38 46 50 46C62 46 70 50 70 58L72 90L28 90L30 58Z" fill="#3B2F2F"/>
+      {/* Suit V-neck / lapels */}
+      <path d="M50 46L41 62L50 57L59 62L50 46Z" fill="#F5F0EB" opacity="0.25"/>
+      <path d="M46 46L50 55L54 46" stroke="#F5F0EB" strokeWidth="1.5" fill="none" opacity="0.3"/>
     </svg>
   );
 }
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const links = [
     { label: "Home", href: "/" },
     { label: "Shop", href: "/shop" },
@@ -44,21 +33,27 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-[72px]">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-200/60">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8">
+        <div className="flex items-center justify-between h-[68px]">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <GentlemanLogo className="text-brand-brown" size={38} />
-            <span className="font-serif text-xl lg:text-[22px] font-bold text-brand-brown tracking-[0.12em]">
+            <GentlemanLogo />
+            <span className="font-serif text-[21px] font-bold text-brand-charcoal tracking-[0.1em]">
               BRUTOS ID
             </span>
           </Link>
 
-          {/* Desktop Navigation - centered */}
-          <div className="hidden lg:flex items-center gap-10">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-9">
             {links.map((link) => (
-              <Link key={link.href} href={link.href} className="nav-link pb-1">
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`font-serif text-[15px] text-brand-charcoal hover:text-brand-gold transition-colors duration-300 ${
+                  link.label === "Home" ? "underline underline-offset-4 decoration-brand-charcoal decoration-1" : ""
+                }`}
+              >
                 {link.label}
               </Link>
             ))}
@@ -66,64 +61,30 @@ export default function Navbar() {
 
           {/* Desktop Icons */}
           <div className="hidden lg:flex items-center gap-5">
-            <button
-              aria-label="Search"
-              className="text-brand-charcoal hover:text-brand-gold transition-colors duration-300"
-            >
-              <FiSearch size={19} />
-            </button>
-            <button
-              aria-label="Account"
-              className="text-brand-charcoal hover:text-brand-gold transition-colors duration-300"
-            >
-              <FiUser size={19} />
-            </button>
-            <button
-              aria-label="Cart"
-              className="text-brand-charcoal hover:text-brand-gold transition-colors duration-300"
-            >
-              <FiShoppingCart size={19} />
-            </button>
+            <button aria-label="Search" className="text-brand-charcoal hover:text-brand-gold transition-colors"><FiSearch size={18} strokeWidth={1.8}/></button>
+            <button aria-label="Account" className="text-brand-charcoal hover:text-brand-gold transition-colors"><FiUser size={18} strokeWidth={1.8}/></button>
+            <button aria-label="Cart" className="text-brand-charcoal hover:text-brand-gold transition-colors"><FiShoppingCart size={18} strokeWidth={1.8}/></button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            aria-label="Toggle menu"
-            className="lg:hidden text-brand-charcoal"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          {/* Mobile Toggle */}
+          <button aria-label="Menu" className="lg:hidden text-brand-charcoal" onClick={() => setOpen(!open)}>
+            {open ? <FiX size={24}/> : <FiMenu size={24}/>}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ${
-          mobileOpen ? "max-h-96 border-t border-gray-100" : "max-h-0"
-        }`}
-      >
-        <div className="px-4 py-4 bg-white space-y-3">
+      <div className={`lg:hidden overflow-hidden transition-all duration-300 bg-white ${open ? "max-h-96 border-t border-stone-200/60" : "max-h-0"}`}>
+        <div className="px-5 py-4 space-y-2">
           {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="block py-2 text-brand-charcoal hover:text-brand-gold font-medium transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
+            <Link key={link.href} href={link.href} className="block py-2.5 font-serif text-brand-charcoal hover:text-brand-gold transition-colors" onClick={() => setOpen(false)}>
               {link.label}
             </Link>
           ))}
-          <div className="flex gap-5 pt-3 border-t border-gray-100">
-            <button aria-label="Search" className="text-brand-charcoal hover:text-brand-gold transition-colors">
-              <FiSearch size={20} />
-            </button>
-            <button aria-label="Account" className="text-brand-charcoal hover:text-brand-gold transition-colors">
-              <FiUser size={20} />
-            </button>
-            <button aria-label="Cart" className="text-brand-charcoal hover:text-brand-gold transition-colors">
-              <FiShoppingCart size={20} />
-            </button>
+          <div className="flex gap-5 pt-3 border-t border-stone-100">
+            <button aria-label="Search" className="text-brand-charcoal"><FiSearch size={20}/></button>
+            <button aria-label="Account" className="text-brand-charcoal"><FiUser size={20}/></button>
+            <button aria-label="Cart" className="text-brand-charcoal"><FiShoppingCart size={20}/></button>
           </div>
         </div>
       </div>

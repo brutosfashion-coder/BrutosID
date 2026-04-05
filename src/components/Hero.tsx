@@ -3,35 +3,28 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[85vh] flex flex-col lg:flex-row mt-16 lg:mt-[72px]">
-      {/* Image Side - Left 55% */}
-      <div className="relative w-full lg:w-[55%] h-[50vh] lg:h-auto min-h-[400px]">
+    <section className="mt-[68px] flex flex-col lg:flex-row min-h-[calc(100vh-68px)]">
+      {/* Left: Image */}
+      <div className="relative w-full lg:w-[55%] h-[55vh] sm:h-[60vh] lg:h-auto">
         <Image
           src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=1200&q=80"
-          alt="Gentleman in tan blazer seated in leather chair"
+          alt="Man in tan blazer"
           fill
-          className="object-cover object-center"
+          className="object-cover object-top"
           priority
-          sizes="(max-width: 1024px) 100vw, 55vw"
+          sizes="(max-width:1024px) 100vw, 55vw"
         />
       </div>
-
-      {/* Text Side - Right 45% with warm textured background */}
-      <div className="relative w-full lg:w-[45%] bg-brand-beige bg-textured flex items-center">
-        <div className="px-8 sm:px-12 lg:px-16 xl:px-20 py-16 lg:py-0">
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-[52px] leading-[1.15] font-bold text-brand-brown mb-6">
-            Elevate Your
-            <br />
-            Style
+      {/* Right: Text */}
+      <div className="w-full lg:w-[45%] bg-brand-beige flex items-center justify-center">
+        <div className="px-8 sm:px-12 lg:px-14 xl:px-20 py-14 lg:py-0 max-w-lg">
+          <h1 className="font-serif text-[40px] sm:text-[48px] lg:text-[54px] font-bold text-brand-charcoal leading-[1.1] mb-5">
+            Elevate Your<br/>Style
           </h1>
-          <p className="text-brand-charcoal/60 text-base sm:text-lg leading-relaxed mb-10 max-w-md font-light">
-            Timeless attire for the modern man who values sophistication and
-            class.
+          <p className="text-brand-muted text-[15px] sm:text-base leading-relaxed mb-9 max-w-sm">
+            Timeless attire for the modern man who values sophistication and class.
           </p>
-          <Link
-            href="/shop"
-            className="btn-gold rounded-[4px] px-10 py-3.5 tracking-[0.2em]"
-          >
+          <Link href="/shop" className="btn-gold px-10 py-3.5 rounded-sm">
             SHOP NOW
           </Link>
         </div>
