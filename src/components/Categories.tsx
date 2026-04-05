@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const cats = [
+const CATS = [
   {
     title: "Signature Shirts",
     desc: "Finest cotton shirts crafted with precision and timeless appeal.",
@@ -21,33 +21,17 @@ const cats = [
 
 export default function Categories() {
   return (
-    <section className="bg-brand-beige bg-textured py-14 sm:py-18 lg:py-20">
-      <div className="max-w-[1060px] mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-10">
-          {cats.map((c) => (
+    <section className="bg-[#EDE6DD] py-12 sm:py-16 lg:py-20">
+      <div className="max-w-[980px] mx-auto px-5 sm:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-7 lg:gap-9">
+          {CATS.map((c) => (
             <div key={c.title} className="text-center">
-              {/* Image — landscape, thin border */}
-              <div className="relative w-full aspect-[4/3] mb-5 border border-stone-300/50 overflow-hidden">
-                <Image
-                  src={c.img}
-                  alt={c.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                />
+              <div className="relative w-full aspect-[4/3] mb-5 border border-[#C5B9A8]/60 overflow-hidden">
+                <Image src={c.img} alt={c.title} fill className="object-cover" sizes="(max-width:640px) 100vw, 33vw" />
               </div>
-              {/* Title */}
-              <h3 className="font-serif text-[20px] sm:text-[22px] font-semibold text-brand-charcoal mb-2">
-                {c.title}
-              </h3>
-              {/* Desc */}
-              <p className="text-brand-muted text-[13px] sm:text-[14px] leading-relaxed mb-5 px-2">
-                {c.desc}
-              </p>
-              {/* Button */}
-              <Link href="/shop" className="btn-gold text-[11px] px-7 py-2.5">
-                SHOP NOW
-              </Link>
+              <h3 className="font-serif text-[20px] lg:text-[22px] font-semibold text-[#3B2F2F] mb-2">{c.title}</h3>
+              <p className="text-[#8C7E74] text-[13px] lg:text-[14px] leading-[1.6] mb-5 px-1">{c.desc}</p>
+              <Link href="/shop" className="btn-gold">SHOP NOW</Link>
             </div>
           ))}
         </div>

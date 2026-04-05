@@ -3,58 +3,53 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative mt-[60px] lg:mt-[64px] bg-brand-beige bg-textured overflow-hidden">
-      <div className="relative min-h-[420px] sm:min-h-[520px] lg:min-h-[85vh]">
-        {/* Background image — covers entire section, man on left */}
-        <div className="absolute inset-y-0 left-0 w-full lg:w-[68%]">
+    <section className="relative mt-[54px] lg:mt-[58px]">
+      {/* DESKTOP — photo is full-width, man on left, beige wall on right, text on wall */}
+      <div className="hidden md:block relative w-full" style={{ height: "clamp(480px, 68vh, 720px)" }}>
+        <Image
+          src="/hero.jpg"
+          alt="Gentleman in tan blazer"
+          fill
+          priority
+          className="object-cover"
+          style={{ objectPosition: "25% center" }}
+          sizes="100vw"
+        />
+        {/* Text positioned on the right side (sits on the beige wall of the photo) */}
+        <div className="absolute inset-0 flex items-center">
+          <div className="ml-auto w-[40%] max-w-[440px] pr-[4%] xl:pr-[6%]">
+            <h1 className="font-serif text-[42px] lg:text-[48px] xl:text-[54px] font-bold italic text-[#3B2F2F] leading-[1.06] mb-4">
+              Elevate Your Style
+            </h1>
+            <p className="text-[#8C7E74] text-[14.5px] lg:text-[15.5px] leading-[1.65] mb-7 max-w-[340px]">
+              Timeless attire for the modern man who values sophistication and class.
+            </p>
+            <Link href="/shop" className="btn-dark">SHOP NOW</Link>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE — stacked: photo on top, text below */}
+      <div className="md:hidden">
+        <div className="relative w-full" style={{ height: "55vw", maxHeight: "320px" }}>
           <Image
-            src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=1400&q=90"
+            src="/hero.jpg"
             alt="Gentleman in tan blazer"
             fill
             priority
-            className="object-cover object-top"
-            sizes="(max-width: 1024px) 100vw, 68vw"
-          />
-          {/* Gradient fade: image blends smoothly into cream bg */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to right, transparent 15%, rgba(237,230,221,0.15) 35%, rgba(237,230,221,0.5) 55%, rgba(237,230,221,0.85) 70%, #EDE6DD 85%)",
-            }}
+            className="object-cover"
+            style={{ objectPosition: "30% center" }}
+            sizes="100vw"
           />
         </div>
-
-        {/* Paper texture overlay on right area (blends with bg) */}
-        <div className="absolute inset-y-0 right-0 w-[50%] bg-textured hidden lg:block pointer-events-none" />
-
-        {/* Text content — right side */}
-        <div className="relative z-10 h-full min-h-[420px] sm:min-h-[520px] lg:min-h-[85vh] flex items-center">
-          {/* Mobile: overlay on image */}
-          <div className="lg:hidden w-full px-6 sm:px-10 py-16 bg-brand-beige/80 bg-textured">
-            <h1 className="font-serif text-[34px] sm:text-[42px] font-bold text-brand-charcoal leading-[1.06] italic mb-4">
-              Elevate Your Style
-            </h1>
-            <p className="text-brand-muted text-[14px] sm:text-[15px] leading-relaxed mb-8 max-w-[320px]">
-              Timeless attire for the modern man who values sophistication and class.
-            </p>
-            <Link href="/shop" className="btn-dark">
-              SHOP NOW
-            </Link>
-          </div>
-
-          {/* Desktop: positioned right */}
-          <div className="hidden lg:block ml-auto mr-[6%] xl:mr-[8%] w-full max-w-[400px] xl:max-w-[420px]">
-            <h1 className="font-serif text-[48px] xl:text-[54px] font-bold text-brand-charcoal leading-[1.06] italic mb-5">
-              Elevate Your{"\u00A0"}Style
-            </h1>
-            <p className="text-brand-muted text-[15px] xl:text-[16px] leading-relaxed mb-9 max-w-[340px]">
-              Timeless attire for the modern man who values sophistication and class.
-            </p>
-            <Link href="/shop" className="btn-dark">
-              SHOP NOW
-            </Link>
-          </div>
+        <div className="bg-[#EDE6DD] px-6 py-8">
+          <h1 className="font-serif text-[30px] font-bold italic text-[#3B2F2F] leading-[1.08] mb-3">
+            Elevate Your Style
+          </h1>
+          <p className="text-[#8C7E74] text-[14px] leading-[1.65] mb-6 max-w-[280px]">
+            Timeless attire for the modern man who values sophistication and class.
+          </p>
+          <Link href="/shop" className="btn-dark text-[12px] px-6 py-2.5">SHOP NOW</Link>
         </div>
       </div>
     </section>
