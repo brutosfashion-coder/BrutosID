@@ -1,17 +1,19 @@
-import Hero from '@/components/home/Hero';
-import Categories from '@/components/home/Categories';
-import DiscoverCollection from '@/components/home/DiscoverCollection';
-import FeaturedCollection from '@/components/home/FeaturedCollection';
-import QuoteSection from '@/components/home/QuoteSection';
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Categories from "@/components/Categories";
+import DiscoverCollection from "@/components/DiscoverCollection";
+import QuoteBanner from "@/components/QuoteBanner";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <main>
+      <Navbar />
       <Hero />
       <Categories />
       <DiscoverCollection />
-      <FeaturedCollection />
-      <QuoteSection />
-    </>
+      <QuoteBanner />
+      <Footer />
+    </main>
   );
 }

@@ -1,87 +1,88 @@
-'use client';
-
-import Image from 'next/image';
-import { motion } from 'framer-motion';
+import Image from "next/image";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function AboutPage() {
   return (
-    <div className="pt-24 md:pt-28 pb-20 bg-cream">
-      {/* Hero Section */}
-      <div className="px-6 lg:px-10 mb-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6 leading-tight">
-              Our Story
-            </h1>
-            <p className="text-stone text-base md:text-lg leading-relaxed mb-6">
-              Founded with a vision to redefine men&apos;s fashion, Brutos ID brings
-              together timeless craftsmanship and modern sensibility. Every piece
-              in our collection reflects our commitment to quality, sustainability,
-              and the art of dressing well.
-            </p>
-            <p className="text-stone text-base md:text-lg leading-relaxed">
-              We believe that clothing is more than fabric — it&apos;s an expression
-              of character, confidence, and purpose. From carefully sourced
-              materials to expert tailoring, each garment tells a story of
-              dedication and refinement.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="relative aspect-[4/5] rounded-xl overflow-hidden"
-          >
-            <Image
-              src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&q=80"
-              alt="About Brutos ID"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </motion.div>
+    <main>
+      <Navbar />
+      <div className="pt-20 lg:pt-24 bg-brand-beige">
+        {/* Hero */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            <div className="w-full lg:w-1/2">
+              <h1 className="font-serif text-4xl sm:text-5xl font-bold text-brand-brown mb-6 leading-tight">
+                Our Story
+              </h1>
+              <p className="text-brand-charcoal/70 leading-relaxed mb-6">
+                Founded with a passion for timeless menswear, Brutos ID was born
+                from a belief that every gentleman deserves clothing that
+                reflects his character and ambition. We craft each piece with
+                meticulous attention to detail, using the finest materials
+                sourced from around the world.
+              </p>
+              <p className="text-brand-charcoal/70 leading-relaxed mb-6">
+                Our journey began in a small atelier, driven by the desire to
+                bridge classic tailoring with modern sensibility. Today, Brutos
+                ID stands as a testament to the enduring power of well-made
+                clothing — pieces that transcend trends and become trusted
+                companions in a man&apos;s wardrobe.
+              </p>
+              <p className="text-brand-charcoal/70 leading-relaxed">
+                We believe in sustainability, ethical craftsmanship, and the
+                quiet confidence that comes from wearing something truly
+                exceptional.
+              </p>
+            </div>
+            <div className="w-full lg:w-1/2">
+              <div className="relative h-80 sm:h-96 lg:h-[500px] rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&q=80"
+                  alt="Brutos ID brand story"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Values */}
-      <div className="bg-warm-bg py-20 px-6 lg:px-10">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-heading text-3xl md:text-4xl text-charcoal text-center mb-14">
-            Our Values
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {[
-              {
-                title: 'Craftsmanship',
-                desc: 'Every stitch, every seam — meticulously crafted to meet the highest standards of quality.',
-              },
-              {
-                title: 'Sustainability',
-                desc: 'We source responsibly, produce ethically, and design pieces that stand the test of time.',
-              },
-              {
-                title: 'Timeless Style',
-                desc: 'Fashion fades, but style endures. We create pieces that transcend trends and seasons.',
-              },
-            ].map((value, i) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + i * 0.15, duration: 0.6 }}
-                className="text-center"
-              >
-                <h3 className="font-heading text-xl text-charcoal mb-3">{value.title}</h3>
-                <p className="text-stone text-sm leading-relaxed">{value.desc}</p>
-              </motion.div>
-            ))}
+        {/* Values */}
+        <div className="bg-brand-cream py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-brand-brown text-center mb-14">
+              Our Values
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {[
+                {
+                  title: "Craftsmanship",
+                  desc: "Every stitch, every seam, every detail is executed with precision and pride by skilled artisans.",
+                },
+                {
+                  title: "Timelessness",
+                  desc: "We design beyond trends, creating pieces that remain elegant and relevant season after season.",
+                },
+                {
+                  title: "Sustainability",
+                  desc: "Responsibly sourced materials and ethical production practices guide everything we do.",
+                },
+              ].map((val) => (
+                <div key={val.title} className="text-center">
+                  <h3 className="font-serif text-xl font-semibold text-brand-brown mb-3">
+                    {val.title}
+                  </h3>
+                  <p className="text-brand-charcoal/60 leading-relaxed">
+                    {val.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </main>
   );
 }

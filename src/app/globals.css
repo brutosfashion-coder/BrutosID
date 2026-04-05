@@ -1,87 +1,41 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
 
-@theme {
-  --color-charcoal: #1a1a1a;
-  --color-stone: #8a8578;
-  --color-camel: #b8a080;
-  --color-camel-light: #c8b494;
-  --color-cream: #f7f5f0;
-  --color-cream-dark: #ece8e0;
-  --color-sand: #d6cfc3;
-  --color-warm-bg: #ebe7df;
-  --color-dark-brown: #3d2e1e;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  --font-heading: var(--font-playfair-display), "Georgia", serif;
-  --font-body: var(--font-inter), "Helvetica Neue", sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  body {
+    @apply font-sans text-brand-charcoal bg-brand-cream antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
 }
 
-/* ─── Reset ─── */
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@layer components {
+  .btn-gold-outline {
+    @apply border border-brand-gold text-brand-gold uppercase tracking-wider px-8 py-3 text-sm font-medium transition-all duration-300 hover:bg-brand-gold hover:text-white;
+  }
 
-html {
-  scroll-behavior: auto;
-}
+  .btn-gold-filled {
+    @apply bg-brand-gold text-white uppercase tracking-wider px-8 py-3 text-sm font-medium transition-all duration-300 hover:bg-opacity-90;
+  }
 
-html.lenis,
-html.lenis body {
-  height: auto;
-}
+  .nav-link {
+    @apply relative text-brand-charcoal font-medium text-sm tracking-wide transition-colors duration-300 hover:text-brand-gold;
+  }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
+  .nav-link::after {
+    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-brand-gold transition-all duration-300 content-[''];
+  }
 
-body {
-  font-family: var(--font-body);
-  background: var(--color-cream);
-  color: var(--color-charcoal);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 500;
-  line-height: 1.1;
-}
-
-/* ─── Scrollbar ─── */
-::-webkit-scrollbar {
-  width: 3px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-sand);
-  border-radius: 99px;
-}
-
-::selection {
-  background: var(--color-camel);
-  color: white;
-}
-
-/* ─── Image containers ─── */
-.img-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.img-container img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  .nav-link:hover::after {
+    @apply w-full;
+  }
 }
