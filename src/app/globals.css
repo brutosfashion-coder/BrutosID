@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
   body {
     @apply font-sans text-brand-charcoal antialiased;
     background-color: #F5F0EB;
@@ -16,12 +14,15 @@
 }
 
 @layer components {
-  .btn-gold {
-    @apply bg-brand-gold text-white uppercase tracking-[0.15em] text-sm font-medium
-           transition-all duration-300 hover:bg-brand-gold-dark inline-block text-center;
+  .bg-textured {
+    background-image: url('/texture.png');
+    background-repeat: repeat;
   }
-  .btn-gold-outline {
-    @apply border-2 border-brand-gold text-brand-gold uppercase tracking-[0.15em] text-sm font-medium
-           transition-all duration-300 hover:bg-brand-gold hover:text-white inline-block text-center;
+  .btn-gold {
+    @apply inline-flex items-center justify-center
+           bg-brand-gold text-white font-medium
+           uppercase tracking-[0.18em] text-[13px]
+           px-8 py-3 transition-all duration-300
+           hover:bg-brand-gold-dark cursor-pointer;
   }
 }
