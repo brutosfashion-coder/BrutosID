@@ -4,30 +4,30 @@ import Link from "next/link";
 const cats = [
   {
     title: "Signature Shirts",
-    desc: "Firesh you chippols oilt wher and segnislt ntee.",
-    img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80",
+    desc: "Finest cotton shirts crafted with precision and timeless appeal.",
+    img: "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=600&q=80",
   },
   {
     title: "Refined Outerwear",
-    desc: "Planellt your hailiter MCle te and ti ibaus hurttons.",
-    img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80",
+    desc: "Premium jackets and coats for the sophisticated gentleman.",
+    img: "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&q=80",
   },
   {
     title: "Elegant Accessories",
-    desc: "Frash ad alizap elle wnitm a bou dancessories.",
-    img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80",
+    desc: "Complete your look with our curated accessories collection.",
+    img: "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=600&q=80",
   },
 ];
 
 export default function Categories() {
   return (
-    <section className="bg-brand-beige bg-textured py-16 sm:py-20 lg:py-24">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
+    <section className="bg-brand-beige bg-textured py-14 sm:py-18 lg:py-20">
+      <div className="max-w-[1060px] mx-auto px-5 sm:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-10">
           {cats.map((c) => (
             <div key={c.title} className="text-center">
-              {/* Image — landscape ~5:3, thin subtle border */}
-              <div className="relative w-full aspect-[5/3] mb-5 border-[1.5px] border-stone-400/40 overflow-hidden">
+              {/* Image — landscape, thin border */}
+              <div className="relative w-full aspect-[4/3] mb-5 border border-stone-300/50 overflow-hidden">
                 <Image
                   src={c.img}
                   alt={c.title}
@@ -37,15 +37,15 @@ export default function Categories() {
                 />
               </div>
               {/* Title */}
-              <h3 className="font-serif text-[20px] sm:text-[22px] font-semibold text-brand-charcoal mb-1.5">
+              <h3 className="font-serif text-[20px] sm:text-[22px] font-semibold text-brand-charcoal mb-2">
                 {c.title}
               </h3>
               {/* Desc */}
-              <p className="text-brand-muted text-[13px] leading-relaxed mb-4 px-2">
+              <p className="text-brand-muted text-[13px] sm:text-[14px] leading-relaxed mb-5 px-2">
                 {c.desc}
               </p>
               {/* Button */}
-              <Link href="/shop" className="btn-gold text-[11px] px-6 py-2">
+              <Link href="/shop" className="btn-gold text-[11px] px-7 py-2.5">
                 SHOP NOW
               </Link>
             </div>
