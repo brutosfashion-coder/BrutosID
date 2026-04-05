@@ -1,134 +1,149 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, User, ShoppingBag, Menu, X } from 'lucide-react';
 
-const links = [
-  { label: 'Home', href: '#', active: true },
-  { label: 'Collection', href: '#collection' },
-  { label: 'About', href: '#about' },
-  { label: 'Journal', href: '#journal' },
-  { label: 'Contact', href: '#contact' },
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/shop', label: 'Shop' },
+  { href: '/about', label: 'About' },
+  { href: '/journal', label: 'Journal' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  const onScroll = useCallback(() => setScrolled(window.scrollY > 60), []);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, [onScroll]);
+  }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [open]);
+    setMobileOpen(false);
+  }, [pathname]);
 
   return (
-    <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[var(--ease-smooth)] ${
-          scrolled
-            ? 'bg-cream/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.04)]'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between h-16 md:h-20 px-6 lg:px-14">
-          {/* Logo */}
-          <a href="#" className="relative z-10 flex-shrink-0">
-            <Image
-              src="/logo-brutos.png"
-              alt="Brutos ID"
-              width={100}
-              height={28}
-              className={`h-7 w-auto transition-all duration-500 ${
-                scrolled ? '' : 'brightness-0 invert'
-              }`}
-              priority
-            />
-          </a>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-cream/95 backdrop-blur-md shadow-sm'
+          : 'bg-cream'
+      }`}
+    >
+      <nav className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image
+            src="/logo-brutos.png"
+            alt="Brutos ID"
+            width={36}
+            height={36}
+            className="w-8 h-8 md:w-9 md:h-9"
+          />
+          <span className="font-heading text-lg md:text-xl tracking-wider text-charcoal font-semibold">
+            BRUTOS ID
+          </span>
+        </Link>
 
-          {/* Center nav */}
-          <div className="hidden lg:flex items-center gap-1 bg-white/0 rounded-full px-1 py-1">
-            {links.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`px-4 py-2 rounded-full text-[12px] tracking-[0.1em] uppercase transition-all duration-300 ${
-                  item.active
-                    ? scrolled
-                      ? 'bg-charcoal text-white'
-                      : 'bg-white/15 text-white backdrop-blur-sm'
-                    : scrolled
-                      ? 'text-charcoal/40 hover:text-charcoal'
-                      : 'text-white/50 hover:text-white'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+        {/* Desktop Nav */}
+        <ul className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={`relative text-sm tracking-wide transition-colors duration-200 ${
+                    isActive
+                      ? 'text-charcoal font-medium'
+                      : 'text-stone hover:text-charcoal'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-camel"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
 
-          {/* Right */}
-          <div className="flex items-center gap-3">
-            <a
-              href="#collection"
-              className={`hidden md:inline-flex px-5 py-2 rounded-full text-[12px] tracking-[0.06em] uppercase border transition-all duration-300 ${
-                scrolled
-                  ? 'border-charcoal/20 text-charcoal hover:bg-charcoal hover:text-white hover:border-charcoal'
-                  : 'border-white/25 text-white/80 hover:bg-white hover:text-charcoal hover:border-white'
-              }`}
-            >
-              Shop Now
-            </a>
-
-            <button
-              onClick={() => setOpen(!open)}
-              className={`lg:hidden relative z-10 p-2 ${
-                scrolled || open ? 'text-charcoal' : 'text-white'
-              }`}
-              aria-label="Toggle menu"
-            >
-              {open ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+        {/* Desktop Icons */}
+        <div className="hidden md:flex items-center gap-5">
+          <button aria-label="Search" className="text-stone hover:text-charcoal transition-colors">
+            <Search size={20} strokeWidth={1.5} />
+          </button>
+          <button aria-label="Account" className="text-stone hover:text-charcoal transition-colors">
+            <User size={20} strokeWidth={1.5} />
+          </button>
+          <button aria-label="Cart" className="text-stone hover:text-charcoal transition-colors relative">
+            <ShoppingBag size={20} strokeWidth={1.5} />
+          </button>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="md:hidden text-charcoal"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </nav>
 
-      {/* Mobile overlay */}
-      {open && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div
-            className="absolute inset-0 bg-charcoal/30 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
-          />
-          <div className="absolute top-0 right-0 h-full w-72 bg-cream shadow-2xl pt-20 px-8">
-            {links.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className={`block py-4 font-heading text-lg border-b border-sand/40 transition-colors ${
-                  item.active ? 'text-camel' : 'text-charcoal/70 hover:text-camel'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-            <a
-              href="#collection"
-              onClick={() => setOpen(false)}
-              className="mt-8 block text-center py-3 bg-charcoal text-white rounded-full text-[13px] tracking-wide"
-            >
-              Shop Now
-            </a>
-          </div>
-        </div>
-      )}
-    </>
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="md:hidden overflow-hidden bg-cream border-t border-sand/50"
+          >
+            <div className="px-6 py-6 space-y-4">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`block text-base tracking-wide ${
+                      isActive ? 'text-charcoal font-medium' : 'text-stone'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+              <div className="flex items-center gap-5 pt-4 border-t border-sand/30">
+                <button aria-label="Search" className="text-stone">
+                  <Search size={20} strokeWidth={1.5} />
+                </button>
+                <button aria-label="Account" className="text-stone">
+                  <User size={20} strokeWidth={1.5} />
+                </button>
+                <button aria-label="Cart" className="text-stone">
+                  <ShoppingBag size={20} strokeWidth={1.5} />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }
