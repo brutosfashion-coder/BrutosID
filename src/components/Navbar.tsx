@@ -4,6 +4,34 @@ import { useState } from "react";
 import Link from "next/link";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 
+function GentlemanLogo({ className = "", size = 40 }: { className?: string; size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Circular frame */}
+      <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2" fill="none" />
+      {/* Head */}
+      <ellipse cx="50" cy="32" rx="14" ry="16" fill="currentColor" />
+      {/* Hair detail - swept back */}
+      <path d="M36 28C36 20 42 14 50 14C58 14 64 20 64 28C64 24 58 18 50 18C42 18 36 24 36 28Z" fill="currentColor" />
+      {/* Beard */}
+      <path d="M40 38C40 38 42 48 50 48C58 48 60 38 60 38" fill="currentColor" />
+      {/* Suit body */}
+      <path d="M30 60C30 52 38 48 50 48C62 48 70 52 70 60L72 88L28 88L30 60Z" fill="currentColor" />
+      {/* Suit lapels */}
+      <path d="M50 48L42 62L50 58L58 62L50 48Z" fill="white" opacity="0.3" />
+      {/* Suit collar */}
+      <path d="M46 48L50 56L54 48" stroke="white" strokeWidth="1.5" fill="none" opacity="0.4" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -16,36 +44,19 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-16 lg:h-[72px]">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            {/* Gentleman Silhouette SVG */}
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 64 64"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-brand-brown"
-            >
-              <path
-                d="M32 4C26 4 22 9 22 15C22 21 26 26 32 26C38 26 42 21 42 15C42 9 38 4 32 4Z"
-                fill="currentColor"
-              />
-              <path
-                d="M20 28C16 28 12 32 12 38L12 42L16 60L28 56L32 60L36 56L48 60L52 42L52 38C52 32 48 28 44 28L40 34L32 38L24 34L20 28Z"
-                fill="currentColor"
-              />
-            </svg>
-            <span className="font-serif text-xl lg:text-2xl font-bold text-brand-brown tracking-wide">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <GentlemanLogo className="text-brand-brown" size={38} />
+            <span className="font-serif text-xl lg:text-[22px] font-bold text-brand-brown tracking-[0.12em]">
               BRUTOS ID
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation - centered */}
+          <div className="hidden lg:flex items-center gap-10">
             {links.map((link) => (
               <Link key={link.href} href={link.href} className="nav-link pb-1">
                 {link.label}
@@ -59,19 +70,19 @@ export default function Navbar() {
               aria-label="Search"
               className="text-brand-charcoal hover:text-brand-gold transition-colors duration-300"
             >
-              <FiSearch size={20} />
+              <FiSearch size={19} />
             </button>
             <button
               aria-label="Account"
               className="text-brand-charcoal hover:text-brand-gold transition-colors duration-300"
             >
-              <FiUser size={20} />
+              <FiUser size={19} />
             </button>
             <button
               aria-label="Cart"
               className="text-brand-charcoal hover:text-brand-gold transition-colors duration-300"
             >
-              <FiShoppingCart size={20} />
+              <FiShoppingCart size={19} />
             </button>
           </div>
 

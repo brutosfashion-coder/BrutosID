@@ -1,5 +1,27 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
+
+function FooterLogo() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="text-brand-cream"
+    >
+      <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2" fill="none" />
+      <ellipse cx="50" cy="32" rx="14" ry="16" fill="currentColor" />
+      <path d="M36 28C36 20 42 14 50 14C58 14 64 20 64 28C64 24 58 18 50 18C42 18 36 24 36 28Z" fill="currentColor" />
+      <path d="M40 38C40 38 42 48 50 48C58 48 60 38 60 38" fill="currentColor" />
+      <path d="M30 60C30 52 38 48 50 48C62 48 70 52 70 60L72 88L28 88L30 60Z" fill="currentColor" />
+      <path d="M50 48L42 62L50 58L58 62L50 48Z" fill="white" opacity="0.3" />
+      <path d="M46 48L50 56L54 48" stroke="white" strokeWidth="1.5" fill="none" opacity="0.4" />
+    </svg>
+  );
+}
 
 export default function Footer() {
   const navLinks = [
@@ -10,30 +32,14 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-brand-brown text-brand-cream">
-      {/* Top Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <footer className="bg-[#3C2A21] text-brand-cream">
+      {/* Top Section: Logo + Nav + Social */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-16">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 pb-10 border-b border-white/10">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 64 64"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-brand-cream"
-            >
-              <path
-                d="M32 4C26 4 22 9 22 15C22 21 26 26 32 26C38 26 42 21 42 15C42 9 38 4 32 4Z"
-                fill="currentColor"
-              />
-              <path
-                d="M20 28C16 28 12 32 12 38L12 42L16 60L28 56L32 60L36 56L48 60L52 42L52 38C52 32 48 28 44 28L40 34L32 38L24 34L20 28Z"
-                fill="currentColor"
-              />
-            </svg>
-            <span className="font-serif text-xl font-bold tracking-wide">
+          <Link href="/" className="flex items-center gap-2.5">
+            <FooterLogo />
+            <span className="font-serif text-xl font-bold tracking-[0.12em]">
               BRUTOS ID
             </span>
           </Link>
@@ -77,25 +83,39 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 pt-10">
-          <div className="text-center lg:text-left">
+        {/* Newsletter Section + Image */}
+        <div className="flex flex-col lg:flex-row items-center gap-10 py-10 lg:py-12">
+          {/* Left: Newsletter */}
+          <div className="w-full lg:w-1/2">
             <h3 className="font-serif text-xl sm:text-2xl font-semibold text-white mb-2">
               Subscribe to Our Newsletter
             </h3>
-            <p className="text-sm text-brand-cream/60">
+            <p className="text-sm text-brand-cream/60 mb-6">
               Get the latest updates and exclusive offers.
             </p>
+            <div className="flex w-full max-w-md">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 bg-transparent border border-brand-cream/25 text-brand-cream placeholder-brand-cream/40 px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+              />
+              <button className="bg-[#C9A96E] text-white uppercase tracking-[0.15em] px-6 py-3 text-sm font-medium hover:bg-[#B8944D] transition-all duration-300 shrink-0">
+                Subscribe
+              </button>
+            </div>
           </div>
-          <div className="flex w-full max-w-md">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 bg-white/10 border border-white/20 text-brand-cream placeholder-brand-cream/40 px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
-            />
-            <button className="bg-brand-gold text-white uppercase tracking-wider px-6 py-3 text-sm font-medium hover:bg-opacity-90 transition-all duration-300 shrink-0">
-              Subscribe
-            </button>
+
+          {/* Right: Clothing Image */}
+          <div className="w-full lg:w-1/2">
+            <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden rounded-sm">
+              <Image
+                src="https://images.unsplash.com/photo-1489370603040-dc6c28bc1a95?w=600&q=80"
+                alt="Clothing flat lay"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
           </div>
         </div>
       </div>

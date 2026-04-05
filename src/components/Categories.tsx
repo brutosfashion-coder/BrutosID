@@ -5,46 +5,36 @@ const categories = [
   {
     name: "Signature Shirts",
     description:
-      "Expertly tailored shirts crafted from the finest fabrics for impeccable style.",
+      "Finest quality shirts crafted with precision and elegant flair.",
     image:
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80",
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&q=80",
   },
   {
     name: "Refined Outerwear",
     description:
-      "Sophisticated coats and jackets designed to make a lasting impression.",
+      "Premium layering pieces designed for timeless sophistication.",
     image:
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80",
+      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
   },
   {
     name: "Elegant Accessories",
     description:
-      "Curated accessories that add the perfect finishing touch to any ensemble.",
+      "Curated accessories to complete your distinguished look.",
     image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80",
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
   },
 ];
 
 export default function Categories() {
   return (
-    <section className="bg-brand-beige py-20 lg:py-28">
+    <section className="bg-brand-beige bg-textured py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-brand-brown mb-4">
-            Shop by Category
-          </h2>
-          <p className="text-brand-charcoal/60 max-w-xl mx-auto">
-            Explore our curated collections designed for the modern gentleman.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+        {/* No section header - goes straight to items as per reference */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
           {categories.map((cat) => (
-            <div
-              key={cat.name}
-              className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-500"
-            >
-              <div className="relative h-72 sm:h-80 overflow-hidden">
+            <div key={cat.name} className="group text-center">
+              {/* Landscape image with warm frame - NO white card */}
+              <div className="relative aspect-[4/3] overflow-hidden img-frame mb-6">
                 <Image
                   src={cat.image}
                   alt={cat.name}
@@ -53,20 +43,21 @@ export default function Categories() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <div className="p-6 text-center">
-                <h3 className="font-serif text-xl font-semibold text-brand-brown mb-2">
-                  {cat.name}
-                </h3>
-                <p className="text-brand-charcoal/60 text-sm leading-relaxed mb-5">
-                  {cat.description}
-                </p>
-                <Link
-                  href="/shop"
-                  className="btn-gold-outline inline-block text-xs px-6 py-2.5"
-                >
-                  Shop Now
-                </Link>
-              </div>
+              {/* Category name in bold serif */}
+              <h3 className="font-serif text-xl lg:text-2xl font-bold text-brand-brown mb-2">
+                {cat.name}
+              </h3>
+              {/* Description */}
+              <p className="text-brand-charcoal/55 text-sm leading-relaxed mb-5 max-w-xs mx-auto">
+                {cat.description}
+              </p>
+              {/* Gold filled button */}
+              <Link
+                href="/shop"
+                className="btn-gold text-xs px-8 py-2.5 rounded-[3px]"
+              >
+                SHOP NOW
+              </Link>
             </div>
           ))}
         </div>
