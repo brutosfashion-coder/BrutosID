@@ -1,27 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-charcoal: #363636;
-  --color-charcoal-light: #4a4a4a;
-  --color-mist: #D6CEBE;
-  --color-mist-light: #e8e2d8;
-  --color-camel: #C8B89A;
-  --color-camel-dark: #b5a485;
-  --color-cream: #f5f2ed;
-  --color-cream-dark: #ebe6de;
-  --color-warm-white: #faf8f5;
-  --color-warm-black: #2a2a2a;
+  --color-charcoal: #1a1a1a;
+  --color-charcoal-light: #3a3a3a;
+  --color-mist: #D4CBC0;
+  --color-mist-light: #E8E0D4;
+  --color-camel: #B8A080;
+  --color-camel-dark: #9E8A6E;
+  --color-cream: #F8F6F2;
+  --color-cream-dark: #EDE9E3;
+  --color-warm-white: #FDFCFA;
+  --color-warm-black: #111111;
 
-  --font-heading: "Cormorant Garamond", "Georgia", serif;
+  --font-heading: "Playfair Display", "Georgia", serif;
   --font-body: "Inter", "Helvetica Neue", sans-serif;
 
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --animate-marquee: marquee 40s linear infinite;
-  --animate-marquee-reverse: marquee-reverse 40s linear infinite;
-  --animate-fade-in: fadeIn 0.8s var(--ease-smooth) forwards;
-  --animate-slide-up: slideUp 0.8s var(--ease-smooth) forwards;
-  --animate-blur-in: blurIn 1.2s var(--ease-smooth) forwards;
+  --animate-marquee: marquee 50s linear infinite;
 }
 
 @keyframes marquee {
@@ -29,37 +25,7 @@
   100% { transform: translateX(-50%); }
 }
 
-@keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0%); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes blurIn {
-  from { opacity: 0; filter: blur(10px); transform: translateY(20px); }
-  to { opacity: 1; filter: blur(0px); transform: translateY(0); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 184, 154, 0.3); }
-  50% { box-shadow: 0 0 20px 6px rgba(200, 184, 154, 0.15); }
-}
-
-/* Base styles */
+/* ── Base reset ── */
 * {
   margin: 0;
   padding: 0;
@@ -79,17 +45,13 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
 .lenis.lenis-stopped {
   overflow: hidden;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: #e8e2d8;
+  background-color: var(--color-mist-light);
   color: var(--color-charcoal);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -102,98 +64,66 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
 }
 
-/* Device Frame - Dentora style continuous container */
+/* ── Device frame ── */
 .device-frame {
   max-width: 1440px;
   margin: 0 auto;
   background: var(--color-cream);
-  border-radius: 32px;
   overflow: hidden;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.04),
-    0 25px 80px -12px rgba(0,0,0,0.12),
-    0 4px 24px -4px rgba(0,0,0,0.06);
   position: relative;
 }
 
 @media (min-width: 1024px) {
   .device-frame {
-    margin: 16px auto;
-    border-radius: 32px;
+    margin: 12px auto;
+    border-radius: 24px;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.03),
+      0 20px 60px -10px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* Pill badge - Dentora style */
-.pill-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  border: 1px solid var(--color-mist);
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  font-family: var(--font-body);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-charcoal);
-  background: transparent;
-}
-
-/* Marquee hover pause */
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-/* Progressive text reveal - Dentora signature animation */
+/* ── Progressive text reveal ── */
 .text-reveal-char {
   color: var(--color-charcoal);
-  opacity: 0.15;
-  transition: opacity 0.1s ease;
+  opacity: 0.12;
+  transition: opacity 0.15s ease;
 }
 
 .text-reveal-char.revealed {
   opacity: 1;
 }
 
-/* Floating animation */
-.float-animation {
-  animation: float 4s ease-in-out infinite;
+/* ── Marquee ── */
+.marquee-track:hover {
+  animation-play-state: paused;
 }
 
-/* Glow pulse */
-.glow-pulse {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-/* Selection color */
+/* ── Selection ── */
 ::selection {
   background-color: var(--color-camel);
   color: white;
 }
 
-/* Scrollbar styling */
+/* ── Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-cream);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-mist);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-camel);
-}
-
-/* Hide scrollbar for horizontal scroll */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

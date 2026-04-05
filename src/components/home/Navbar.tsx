@@ -6,10 +6,10 @@ import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { label: 'Home', href: '#', active: true },
-  { label: 'Collection', href: '#collection', active: false },
-  { label: 'About', href: '#about', active: false },
-  { label: 'Journal', href: '#journal', active: false },
-  { label: 'Contact', href: '#contact', active: false },
+  { label: 'Collection', href: '#collection' },
+  { label: 'About', href: '#about' },
+  { label: 'Journal', href: '#journal' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar() {
@@ -26,14 +26,8 @@ export default function Navbar() {
   }, [handleScroll]);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
   return (
@@ -41,76 +35,67 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/90 backdrop-blur-xl shadow-sm'
+            ? 'bg-cream/95 backdrop-blur-md border-b border-mist/30'
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 md:px-10 lg:px-14 py-4">
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 lg:px-12 py-4">
           {/* Logo */}
-          <a href="#" className="relative z-10 flex-shrink-0">
+          <a href="#" className="flex-shrink-0 relative z-10">
             <Image
               src="/logo-brutos.png"
               alt="Brutos ID"
-              width={120}
-              height={36}
-              className={`h-9 w-auto transition-all duration-300 ${
+              width={110}
+              height={32}
+              className={`h-8 w-auto transition-all duration-300 ${
                 scrolled ? '' : 'brightness-0 invert'
               }`}
               priority
             />
           </a>
 
-          {/* Center pill nav - desktop */}
-          <div className="hidden lg:flex items-center">
-            <div
-              className={`flex items-center gap-1 rounded-full border px-1.5 py-1.5 transition-all duration-500 ${
-                scrolled
-                  ? 'border-mist bg-warm-white'
-                  : 'border-white/20 bg-white/10 backdrop-blur-md'
-              }`}
-            >
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    item.active
-                      ? scrolled
-                        ? 'bg-charcoal text-white'
-                        : 'bg-white text-charcoal'
-                      : scrolled
-                        ? 'text-charcoal hover:bg-cream'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
+          {/* Desktop nav links */}
+          <div className="hidden lg:flex items-center gap-8">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`text-[13px] font-body tracking-[0.08em] uppercase transition-colors duration-300 ${
+                  item.active
+                    ? scrolled
+                      ? 'text-charcoal font-semibold'
+                      : 'text-white font-semibold'
+                    : scrolled
+                      ? 'text-charcoal/50 hover:text-charcoal'
+                      : 'text-white/60 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
 
-          {/* Right side - Shop Now + hamburger */}
+          {/* Right side */}
           <div className="flex items-center gap-4">
             <a
               href="#collection"
-              className={`hidden md:inline-flex items-center px-6 py-2.5 rounded-full text-sm font-medium border transition-all duration-300 ${
+              className={`hidden md:inline-flex px-6 py-2.5 rounded-full text-[13px] font-body font-medium tracking-wide border transition-all duration-300 ${
                 scrolled
                   ? 'border-charcoal text-charcoal hover:bg-charcoal hover:text-white'
-                  : 'border-white/40 text-white hover:bg-white hover:text-charcoal'
+                  : 'border-white/30 text-white hover:bg-white hover:text-charcoal'
               }`}
             >
               Shop Now
             </a>
 
-            {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`lg:hidden relative z-10 p-2 rounded-full transition-colors ${
-                scrolled ? 'text-charcoal' : 'text-white'
+              className={`lg:hidden p-2 relative z-10 ${
+                scrolled || mobileOpen ? 'text-charcoal' : 'text-white'
               }`}
-              aria-label="Toggle menu"
+              aria-label="Menu"
             >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -119,42 +104,37 @@ export default function Navbar() {
       {/* Mobile drawer */}
       <div
         className={`fixed inset-0 z-40 transition-all duration-500 lg:hidden ${
-          mobileOpen ? 'visible' : 'invisible'
+          mobileOpen ? 'visible' : 'invisible pointer-events-none'
         }`}
       >
-        {/* Overlay */}
         <div
-          className={`absolute inset-0 bg-black/50 transition-opacity duration-500 ${
+          className={`absolute inset-0 bg-black/40 transition-opacity duration-500 ${
             mobileOpen ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={() => setMobileOpen(false)}
         />
-
-        {/* Drawer */}
         <div
-          className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-cream shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`absolute top-0 right-0 h-full w-72 bg-cream shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <div className="flex flex-col pt-24 px-8">
-            {navItems.map((item, i) => (
+          <div className="flex flex-col pt-20 px-8">
+            {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={`py-4 text-2xl font-heading font-medium border-b border-mist/50 transition-colors ${
+                className={`py-4 text-lg font-heading border-b border-mist/30 transition-colors ${
                   item.active ? 'text-camel' : 'text-charcoal hover:text-camel'
                 }`}
-                style={{ transitionDelay: mobileOpen ? `${i * 60}ms` : '0ms' }}
               >
                 {item.label}
               </a>
             ))}
-
             <a
               href="#collection"
               onClick={() => setMobileOpen(false)}
-              className="mt-8 inline-flex items-center justify-center px-8 py-3.5 bg-charcoal text-white rounded-full text-sm font-medium"
+              className="mt-8 text-center px-6 py-3 bg-charcoal text-white rounded-full text-sm font-body font-medium"
             >
               Shop Now
             </a>

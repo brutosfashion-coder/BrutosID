@@ -11,7 +11,7 @@ import Footer from '@/components/home/Footer';
 
 export default function Home() {
   return (
-    <main className="bg-mist-light min-h-screen py-0 lg:py-4">
+    <main className="min-h-screen">
       <div className="device-frame">
         <Navbar />
         <Hero />
