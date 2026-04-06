@@ -29,11 +29,11 @@ export default function Categories() {
         backgroundRepeat: "repeat",
       }}
     >
-      <div className="max-w-[1300px] mx-auto px-8 lg:px-12">
+      <div className="max-w-[960px] mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
-              {/* Image — 5:3 aspect ratio, generous rounding */}
+              {/* Image — 5:3 aspect ratio */}
               <div className="relative w-full aspect-[5/3] mb-6 rounded-xl overflow-hidden">
                 <Image
                   src={c.img}
@@ -43,18 +43,18 @@ export default function Categories() {
                   sizes="(max-width:640px) 100vw, 33vw"
                 />
               </div>
-              {/* Title — large serif italic like design */}
-              <h3 className="font-serif text-[26px] lg:text-[30px] italic font-semibold text-[#3B2F2F] mb-2">
+              {/* Title — large serif italic */}
+              <h3 className="font-serif text-[24px] lg:text-[28px] italic font-semibold text-[#3B2F2F] mb-2">
                 {c.title}
               </h3>
-              {/* Description — subtle, one line */}
-              <p className="text-[#9C8E82] text-[14px] lg:text-[15px] leading-[1.5] mb-6 px-2">
+              {/* Description */}
+              <p className="text-[#9C8E82] text-[13.5px] lg:text-[14.5px] leading-[1.5] mb-6 px-2">
                 {c.desc}
               </p>
-              {/* Button — wide gold, matching design exactly */}
+              {/* Button — wide gold */}
               <Link
                 href="/shop"
-                className="inline-block w-full max-w-[340px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[13.5px] tracking-[0.16em] font-medium py-[13px] transition-colors rounded-[4px]"
+                className="inline-block w-full max-w-[280px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[13px] tracking-[0.16em] font-medium py-[12px] transition-colors rounded-[4px]"
               >
                 SHOP NOW
               </Link>
