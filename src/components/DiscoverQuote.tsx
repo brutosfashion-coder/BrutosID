@@ -17,32 +17,22 @@ function CardBack() {
         transform: "rotateY(180deg)",
       }}
     >
-      {/* Corner ornaments */}
       <div className="card-corner tl" />
       <div className="card-corner tr" />
       <div className="card-corner bl" />
       <div className="card-corner br" />
-
-      {/* Geometric frame */}
       <div className="card-pattern" />
-
-      {/* Pulsing center glow */}
       <div className="card-center-glow" />
-
-      {/* Rotating diamond ring */}
       <div className="diamond-ring" />
 
-      {/* Center emblem — B monogram only, no text */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="flex flex-col items-center">
-          {/* Top ornament */}
           <div className="flex items-center gap-2 mb-4">
             <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
             <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
             <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
           </div>
 
-          {/* B monogram in double circle */}
           <div
             className="relative w-20 h-20 flex items-center justify-center"
             style={{
@@ -66,7 +56,6 @@ function CardBack() {
             </div>
           </div>
 
-          {/* Bottom ornament */}
           <div className="flex items-center gap-2 mt-4">
             <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
             <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
@@ -75,7 +64,6 @@ function CardBack() {
         </div>
       </div>
 
-      {/* Subtle diagonal line overlay */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -88,7 +76,7 @@ function CardBack() {
   );
 }
 
-/* ── Continuous Flip Card (CSS-driven, no bugs) ── */
+/* ── Continuous Flip Card ── */
 function FlipCard({
   src,
   alt,
@@ -134,7 +122,6 @@ function FlipCard({
             className={`absolute inset-0 ${flipActive ? "card-flip" : ""}`}
             style={{ transformStyle: "preserve-3d" }}
           >
-            {/* FRONT FACE */}
             <div
               className="absolute inset-0 overflow-hidden"
               style={{ backfaceVisibility: "hidden" }}
@@ -149,14 +136,11 @@ function FlipCard({
               />
               <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
             </div>
-
-            {/* BACK FACE */}
             <CardBack />
           </div>
         </motion.div>
       </div>
 
-      {/* Label strip */}
       <ScrollReveal direction="up" delay={delay + 1.4} distance={20} duration={0.8}>
         <Link
           href={href}
@@ -240,9 +224,9 @@ export default function DiscoverQuote() {
                     fontWeight: 400,
                   }}
                 >
-                  Discover the
+                  Jelajahi
                   <br />
-                  Collection
+                  Koleksi Kami
                 </h2>
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3} distance={50} blur>
@@ -254,8 +238,7 @@ export default function DiscoverQuote() {
                     maxWidth: "340px",
                   }}
                 >
-                  Premium menswear with a modern touch — crafted for the
-                  gentleman who values quality and style.
+                  Fashion pria premium dengan sentuhan modern — dirancang untuk pria Indonesia yang mengutamakan kualitas dan gaya berpakaian maskulin.
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="up" delay={0.55} distance={30}>
@@ -269,7 +252,7 @@ export default function DiscoverQuote() {
                       padding: "10px 22px",
                     }}
                   >
-                    SHOP COLLECTION
+                    LIHAT KOLEKSI
                   </Link>
                   <Link
                     href="/"
@@ -280,7 +263,7 @@ export default function DiscoverQuote() {
                       padding: "10px 22px",
                     }}
                   >
-                    ABOUT US
+                    TENTANG KAMI
                   </Link>
                 </div>
               </ScrollReveal>
@@ -311,9 +294,9 @@ export default function DiscoverQuote() {
                     color: "#F0EBE4",
                   }}
                 >
-                  &ldquo;Dress well, live well,
+                  &ldquo;Berpakaian baik, hidup lebih baik,
                   <br />
-                  be a gentleman.&rdquo;
+                  jadilah pria sejati.&rdquo;
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="up" delay={0.45} distance={25}>
@@ -327,7 +310,7 @@ export default function DiscoverQuote() {
                       padding: "10px 22px",
                     }}
                   >
-                    SHOP NOW
+                    BELANJA SEKARANG
                   </Link>
                 </div>
               </ScrollReveal>
@@ -338,16 +321,16 @@ export default function DiscoverQuote() {
           <div className="flex gap-4">
             <FlipCard
               src="/collection-model.jpg"
-              alt="Brutos ID premium menswear collection - Indonesian local clothing brand"
+              alt="Koleksi baju pria premium Brutos ID — outfit pria keren brand lokal Indonesia"
               href="/"
-              label="SHOP COLLECTION"
+              label="LIHAT KOLEKSI"
               delay={0.4}
             />
             <FlipCard
               src="/collection-flatlay.jpg"
-              alt="Brutos ID outfit flatlay - modern menswear styling"
+              alt="Flatlay pakaian pria Brutos ID — fashion pria modern Indonesia"
               href="/"
-              label="ABOUT US"
+              label="TENTANG KAMI"
               delay={0.7}
             />
           </div>
@@ -379,7 +362,7 @@ export default function DiscoverQuote() {
               className="font-serif italic gold-shimmer-text mb-3"
               style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
             >
-              Discover the Collection
+              Jelajahi Koleksi Kami
             </h2>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.15} blur>
@@ -387,8 +370,7 @@ export default function DiscoverQuote() {
               className="text-[#7D7168] mb-5"
               style={{ fontSize: "14px", lineHeight: 1.6, maxWidth: "300px" }}
             >
-              Premium menswear with a modern touch — crafted for the gentleman
-              who values quality and style.
+              Fashion pria premium dengan sentuhan modern — dirancang untuk pria yang mengutamakan kualitas dan gaya.
             </p>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.3}>
@@ -398,14 +380,14 @@ export default function DiscoverQuote() {
                 className="btn-glass-gold"
                 style={{ fontSize: "11px", padding: "9px 16px" }}
               >
-                SHOP COLLECTION
+                LIHAT KOLEKSI
               </Link>
               <Link
                 href="/"
                 className="btn-glass-gold"
                 style={{ fontSize: "11px", padding: "9px 16px" }}
               >
-                ABOUT US
+                TENTANG KAMI
               </Link>
             </div>
           </ScrollReveal>
@@ -421,16 +403,16 @@ export default function DiscoverQuote() {
           <div className="grid grid-cols-2 gap-3">
             <FlipCard
               src="/collection-model.jpg"
-              alt="Brutos ID premium menswear collection"
+              alt="Koleksi baju pria premium Brutos ID — brand fashion pria Indonesia"
               href="/"
-              label="SHOP COLLECTION"
+              label="LIHAT KOLEKSI"
               delay={0.2}
             />
             <FlipCard
               src="/collection-flatlay.jpg"
-              alt="Brutos ID outfit flatlay"
+              alt="Outfit pria modern Brutos ID — pakaian pria berkualitas"
               href="/"
-              label="ABOUT US"
+              label="TENTANG KAMI"
               delay={0.5}
             />
           </div>
@@ -459,7 +441,7 @@ export default function DiscoverQuote() {
               className="font-serif italic quote-glow mb-5"
               style={{ fontSize: "22px", lineHeight: 1.35, color: "#F0EBE4" }}
             >
-              &ldquo;Dress well, live well, be a gentleman.&rdquo;
+              &ldquo;Berpakaian baik, hidup lebih baik, jadilah pria sejati.&rdquo;
             </p>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.15}>
@@ -468,7 +450,7 @@ export default function DiscoverQuote() {
               className="btn-glass-gold-light"
               style={{ fontSize: "11px", padding: "9px 20px" }}
             >
-              SHOP NOW
+              BELANJA SEKARANG
             </Link>
           </ScrollReveal>
         </div>

@@ -1,14 +1,12 @@
 import type { MetadataRoute } from "next";
 
-const BASE = "https://brutos-id.vercel.app";
-
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: BASE,
+      url: "https://brutos-id.vercel.app",
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 1.0,
+      priority: 1,
     },
   ];
 }

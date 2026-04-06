@@ -142,7 +142,7 @@ export default function LoadingScreen() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.6, duration: 1.3, ease: lux }}
             >
-              ELEVATE YOUR STYLE
+              WUJUDKAN GAYA TERBAIKMU
             </motion.p>
 
             {/* Gold loading bar — scales from left */}

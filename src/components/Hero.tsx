@@ -19,18 +19,16 @@ export default function Hero() {
         className="hidden md:block relative w-full overflow-hidden"
         style={{ aspectRatio: "16/10", maxHeight: "48vh" }}
       >
-        {/* Image with entrance zoom + continuous Ken Burns */}
         <motion.div
           className="absolute inset-0"
           initial={{ scale: 1.25, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 4.2, duration: 3.5, ease: lux }}
         >
-          {/* The hero-ken-burns class adds continuous slow zoom/pan after entrance */}
           <div className="absolute inset-0 hero-ken-burns" style={{ animationDelay: "7.7s" }}>
             <Image
               src="/hero.jpg"
-              alt="Gentleman in tan blazer"
+              alt="Koleksi fashion pria premium Brutos ID — brand pakaian pria terbaik Indonesia"
               fill
               priority
               className="object-cover"
@@ -40,7 +38,6 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Cinematic vignette overlay */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
           initial={{ opacity: 0 }}
@@ -52,7 +49,6 @@ export default function Hero() {
           }}
         />
 
-        {/* Text overlay */}
         <div className="absolute inset-0 flex items-center">
           <div className="ml-auto w-[48%] max-w-[540px] pr-[5%] xl:pr-[7%]">
             <motion.div
@@ -68,21 +64,20 @@ export default function Hero() {
               className="font-serif text-[42px] lg:text-[48px] xl:text-[54px] font-bold italic text-[#3B2F2F] leading-[1.08] mb-4"
               {...appear(0)}
             >
-              Elevate Your Style
+              Wujudkan Gaya Terbaikmu
             </motion.h1>
             <motion.p
               className="text-[#6B5E54] text-[15px] lg:text-[16px] leading-[1.7] mb-7 max-w-[400px]"
               {...appear(0.3)}
             >
-              Timeless attire for the modern man who values sophistication and
-              class.
+              Pakaian pria premium dengan sentuhan modern — dirancang khusus untuk pria Indonesia yang menghargai kualitas dan gaya berpakaian elegan.
             </motion.p>
             <motion.div {...appear(0.6)}>
               <Link
                 href="/"
                 className="btn-gold px-10 py-[13px] text-[13px]"
               >
-                SHOP NOW
+                BELANJA SEKARANG
               </Link>
             </motion.div>
           </div>
@@ -101,7 +96,7 @@ export default function Hero() {
           <div className="absolute inset-0 hero-ken-burns" style={{ animationDelay: "6.7s" }}>
             <Image
               src="/hero.jpg"
-              alt="Gentleman in tan blazer"
+              alt="Baju pria premium Brutos ID — fashion pria Indonesia berkualitas"
               fill
               priority
               className="object-cover"
@@ -124,18 +119,17 @@ export default function Hero() {
             className="font-serif text-[30px] font-bold italic text-[#3B2F2F] leading-[1.08] mb-3"
             {...appear(0)}
           >
-            Elevate Your Style
+            Wujudkan Gaya Terbaikmu
           </motion.h1>
           <motion.p
             className="text-[#6B5E54] text-[14px] leading-[1.65] mb-6 max-w-[300px]"
             {...appear(0.25)}
           >
-            Timeless attire for the modern man who values sophistication and
-            class.
+            Pakaian pria premium dengan sentuhan modern — dirancang untuk pria yang menghargai kualitas dan penampilan.
           </motion.p>
           <motion.div {...appear(0.5)}>
             <Link href="/" className="btn-gold text-[12px] px-8 py-3">
-              SHOP NOW
+              BELANJA SEKARANG
             </Link>
           </motion.div>
         </div>

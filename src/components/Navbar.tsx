@@ -5,13 +5,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 
-const NAV = ["HOME", "SHOP", "ABOUT", "JOURNAL", "CONTACT"];
+const NAV = ["BERANDA", "KOLEKSI", "TENTANG", "JURNAL", "KONTAK"];
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("HOME");
+  const [active, setActive] = useState("BERANDA");
 
   return (
     <motion.header
@@ -24,7 +24,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
-            alt="Brutos ID"
+            alt="Brutos ID — Brand Fashion Pria Premium Indonesia"
             width={34}
             height={44}
             className="w-[30px] h-[40px] lg:w-[34px] lg:h-[44px]"
