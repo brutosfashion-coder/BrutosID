@@ -22,8 +22,8 @@ const CATS = [
 export default function Categories() {
   return (
     <section className="bg-[#F8F5F1] py-12 lg:py-16">
-      <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-10">
+      <div className="max-w-[1000px] mx-auto px-6 sm:px-10 lg:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-7 lg:gap-9">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
               <div className="relative w-full aspect-[5/3] mb-5 rounded-lg overflow-hidden">
