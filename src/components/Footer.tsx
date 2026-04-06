@@ -13,14 +13,14 @@ export default function Footer() {
   return (
     <footer className="bg-[#2C1E16]">
       <div className="max-w-[1100px] mx-auto px-5 h-[68px] lg:h-[76px] flex items-center justify-between">
-        {/* Logo — inverted for dark bg */}
-        <Link href="/" className="flex items-center gap-2">
+        {/* Logo — using high-res logo-head.png, inverted for dark bg */}
+        <Link href="/" className="flex items-center gap-2.5">
           <Image
-            src="/logo-footer.png"
+            src="/logo-head.png"
             alt="Brutos ID"
-            width={30}
-            height={30}
-            className="w-7 h-7 brightness-0 invert opacity-80"
+            width={24}
+            height={32}
+            className="w-[22px] h-[29px] lg:w-[24px] lg:h-[32px] brightness-0 invert opacity-85"
           />
           <span className="font-serif text-[16px] font-bold text-[#E8DFD4] tracking-[0.02em]">
             BRUTOS ID

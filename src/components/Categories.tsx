@@ -21,12 +21,13 @@ const CATS = [
 
 export default function Categories() {
   return (
-    <section className="bg-[#F2EDE7] py-14 lg:py-18">
+    <section className="bg-[#F5F2EE] py-14 lg:py-18">
       <div className="max-w-[1100px] mx-auto px-6 sm:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-7 lg:gap-9">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
-              <div className="relative w-full aspect-[5/3] mb-5 rounded-lg overflow-hidden">
+              {/* Image — 5:3 aspect ratio, generous rounding */}
+              <div className="relative w-full aspect-[5/3] mb-5 rounded-xl overflow-hidden">
                 <Image
                   src={c.img}
                   alt={c.title}
@@ -35,13 +36,21 @@ export default function Categories() {
                   sizes="(max-width:640px) 100vw, 33vw"
                 />
               </div>
-              <h3 className="font-serif text-[20px] lg:text-[22px] italic font-semibold text-[#3B2F2F] mb-2">
+              {/* Title — serif italic, larger */}
+              <h3 className="font-serif text-[22px] lg:text-[25px] italic font-semibold text-[#3B2F2F] mb-2">
                 {c.title}
               </h3>
+              {/* Description */}
               <p className="text-[#8C7E74] text-[13px] lg:text-[14px] leading-[1.6] mb-5 px-1">
                 {c.desc}
               </p>
-              <Link href="/shop" className="btn-gold">SHOP NOW</Link>
+              {/* Button — wide, matching design proportions */}
+              <Link
+                href="/shop"
+                className="inline-block w-full max-w-[280px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[13px] tracking-[0.14em] font-medium py-3 transition-colors rounded-sm"
+              >
+                SHOP NOW
+              </Link>
             </div>
           ))}
         </div>
