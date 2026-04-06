@@ -132,17 +132,14 @@ export default function DiscoverQuote() {
             className="absolute inset-x-0 top-0"
             style={{
               height: "55%",
-              backgroundImage: "url('/paper-texture.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              background: "#F5F0EB",
             }}
           />
           <div
-            className="absolute inset-x-0 bottom-0 texture-drift"
+            className="absolute inset-x-0 bottom-0"
             style={{
               height: "45%",
-              backgroundImage: "url('/brown-texture.jpg')",
-              backgroundSize: "120% 120%",
+              background: "#3B2F2F",
             }}
           />
         </div>
@@ -276,11 +273,7 @@ export default function DiscoverQuote() {
         {/* ── Section 1: Discover Header on Cream ── */}
         <div
           className="relative px-6 pt-10 pb-7"
-          style={{
-            backgroundImage: "url('/paper-texture.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          style={{ background: "#F5F0EB" }}
         >
           <div className="relative">
             <motion.div
@@ -325,11 +318,7 @@ export default function DiscoverQuote() {
         {/* ── Section 2: Flip Cards ── */}
         <div
           className="relative px-4 py-5"
-          style={{
-            backgroundImage: "url('/brown-texture.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          style={{ background: "#3B2F2F" }}
         >
           <div className="relative flex gap-2.5">
             <FlipCard
@@ -356,11 +345,7 @@ export default function DiscoverQuote() {
         {/* ── Section 3: Quote ── */}
         <div
           className="relative px-6 pt-8 pb-10 overflow-hidden"
-          style={{
-            backgroundImage: "url('/brown-texture.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          style={{ background: "#3B2F2F" }}
         >
           <div className="relative">
             <motion.div

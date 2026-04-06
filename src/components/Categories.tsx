@@ -75,11 +75,7 @@ export default function Categories() {
   return (
     <section
       className="py-10 sm:py-16 lg:py-20"
-      style={{
-        backgroundImage: "url('/paper-texture.jpg')",
-        backgroundSize: "600px 600px",
-        backgroundRepeat: "repeat",
-      }}
+      style={{ background: "#F5F0EB" }}
     >
       {/* ── DESKTOP ── */}
       <div className="hidden sm:block w-[90%] lg:w-[70%] mx-auto">
