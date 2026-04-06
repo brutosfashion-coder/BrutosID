@@ -112,58 +112,62 @@ export default function Hero() {
           }}
         />
 
-        {/* Text content — positioned right side, vertically centered */}
+        {/* Text content — right side, vertically centered */}
         <div className="absolute inset-0 flex items-center justify-end">
           <div className="w-[55%] sm:w-[50%] pr-5 sm:pr-8">
-            {/* Gold accent line */}
-            <motion.div
-              className="h-[1px] mb-4 gpu-layer"
-              style={{
-                background: "linear-gradient(90deg, #C9A96E, transparent)",
-              }}
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 35, opacity: 1 }}
-              transition={{ delay: 4.6, duration: 0.8, ease: lux }}
-            />
-
-            {/* H1 — dark text, serif, elegant */}
-            <motion.h1
-              className="font-serif text-[28px] sm:text-[34px] font-bold italic text-[#2A2020] leading-[1.1] mb-3 gpu-layer"
-              style={{ textShadow: "0 1px 8px rgba(245,240,235,0.8), 0 0 20px rgba(245,240,235,0.5)" }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 4.7, duration: 1, ease: lux }}
+            {/* Subtle solid backdrop behind text — no blur, no glow, just clean */}
+            <div
+              className="rounded-sm px-5 py-6"
+              style={{ backgroundColor: "rgba(245,240,235,0.45)" }}
             >
-              Elegance is
-              <br />
-              Never Loud
-            </motion.h1>
+              {/* Gold accent line */}
+              <motion.div
+                className="h-[1px] mb-4 gpu-layer"
+                style={{
+                  background: "linear-gradient(90deg, #C9A96E, transparent)",
+                }}
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: 35, opacity: 1 }}
+                transition={{ delay: 4.6, duration: 0.8, ease: lux }}
+              />
 
-            {/* Description — dark muted text */}
-            <motion.p
-              className="text-[#4A3F37] text-[12px] sm:text-[13px] leading-[1.65] mb-5 max-w-[220px] font-medium gpu-layer"
-              style={{ textShadow: "0 1px 6px rgba(245,240,235,0.7)" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 5.0, duration: 0.8, ease: lux }}
-            >
-              Pakaian premium dengan sentuhan modern — dirancang untuk mereka yang menghargai kualitas dan penampilan.
-            </motion.p>
-
-            {/* CTA — solid muted brown button */}
-            <motion.div
-              className="gpu-layer"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 5.2, duration: 0.8, ease: lux }}
-            >
-              <Link
-                href="/"
-                className="inline-block bg-[#B8956A] text-white text-[10px] sm:text-[11px] tracking-[0.2em] px-6 py-3 uppercase hover:bg-[#A07D55] transition-colors duration-300"
+              {/* H1 — near-black, no shadow, no glow */}
+              <motion.h1
+                className="font-serif text-[28px] sm:text-[34px] font-bold italic text-[#1A1412] leading-[1.1] mb-3 gpu-layer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 4.7, duration: 1, ease: lux }}
               >
-                BELANJA SEKARANG
-              </Link>
-            </motion.div>
+                Elegance is
+                <br />
+                Never Loud
+              </motion.h1>
+
+              {/* Description — dark, clean */}
+              <motion.p
+                className="text-[#3B3029] text-[12px] sm:text-[13px] leading-[1.65] mb-5 max-w-[220px] font-medium gpu-layer"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 5.0, duration: 0.8, ease: lux }}
+              >
+                Pakaian premium dengan sentuhan modern — dirancang untuk mereka yang menghargai kualitas dan penampilan.
+              </motion.p>
+
+              {/* CTA button */}
+              <motion.div
+                className="gpu-layer"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 5.2, duration: 0.8, ease: lux }}
+              >
+                <Link
+                  href="/"
+                  className="inline-block bg-[#B8956A] text-white text-[10px] sm:text-[11px] tracking-[0.2em] px-6 py-3 uppercase hover:bg-[#A07D55] transition-colors duration-300"
+                >
+                  BELANJA SEKARANG
+                </Link>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
