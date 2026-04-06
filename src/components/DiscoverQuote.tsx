@@ -171,8 +171,13 @@ export default function DiscoverQuote() {
       {/* ═══════════════ DESKTOP (md+) ═══════════════ */}
       <section className="hidden md:block relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute inset-x-0 top-0" style={{ height: "55%", background: "#F5F0EB" }} />
-          <div className="absolute inset-x-0 bottom-0" style={{ height: "45%", background: "#3B2F2F" }} />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, #F5F0EB 0%, #F5F0EB 46%, #3B2F2F 60%, #3B2F2F 100%)",
+            }}
+          />
         </div>
 
         <div
@@ -259,6 +264,14 @@ export default function DiscoverQuote() {
             </div>
           </div>
         </div>
+
+        {/* Gradient transition — cream to dark brown */}
+        <div
+          style={{
+            height: "48px",
+            background: "linear-gradient(to bottom, #F5F0EB, #3B2F2F)",
+          }}
+        />
 
         {/* ── Flip Cards — no Framer, pure CSS ── */}
         <div className="relative px-4 py-5" style={{ background: "#3B2F2F" }}>

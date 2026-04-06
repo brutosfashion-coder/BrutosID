@@ -84,12 +84,12 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ====== MOBILE — FULL VIEWPORT, TEXT ON RIGHT ====== */}
-      <div className="md:hidden relative w-full overflow-hidden" style={{ height: "calc(100svh - 60px)" }}>
-        {/* Background image — model on the left */}
+      {/* ====== MOBILE — SHORTER VIEWPORT, TEXT ON RIGHT ====== */}
+      <div className="md:hidden relative w-full overflow-hidden" style={{ height: "calc(82svh - 60px)" }}>
+        {/* Background image — model on the left, rescaled for mobile */}
         <motion.div
           className="absolute inset-0 gpu-layer"
-          initial={{ scale: 1.05, opacity: 0 }}
+          initial={{ scale: 1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 4.2, duration: 2, ease: lux }}
         >
@@ -99,7 +99,7 @@ export default function Hero() {
             fill
             priority
             className="object-cover"
-            style={{ objectPosition: "25% 15%" }}
+            style={{ objectPosition: "center 20%" }}
             sizes="100vw"
           />
         </motion.div>
