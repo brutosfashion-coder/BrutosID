@@ -21,13 +21,20 @@ const CATS = [
 
 export default function Categories() {
   return (
-    <section className="bg-[#F5F2EE] py-14 lg:py-18">
-      <div className="max-w-[1100px] mx-auto px-6 sm:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-7 lg:gap-9">
+    <section
+      className="py-16 lg:py-20"
+      style={{
+        backgroundImage: "url('/paper-texture.jpg')",
+        backgroundSize: "600px 600px",
+        backgroundRepeat: "repeat",
+      }}
+    >
+      <div className="max-w-[1300px] mx-auto px-8 lg:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
               {/* Image — 5:3 aspect ratio, generous rounding */}
-              <div className="relative w-full aspect-[5/3] mb-5 rounded-xl overflow-hidden">
+              <div className="relative w-full aspect-[5/3] mb-6 rounded-xl overflow-hidden">
                 <Image
                   src={c.img}
                   alt={c.title}
@@ -36,18 +43,18 @@ export default function Categories() {
                   sizes="(max-width:640px) 100vw, 33vw"
                 />
               </div>
-              {/* Title — serif italic, larger */}
-              <h3 className="font-serif text-[22px] lg:text-[25px] italic font-semibold text-[#3B2F2F] mb-2">
+              {/* Title — large serif italic like design */}
+              <h3 className="font-serif text-[26px] lg:text-[30px] italic font-semibold text-[#3B2F2F] mb-2">
                 {c.title}
               </h3>
-              {/* Description */}
-              <p className="text-[#8C7E74] text-[13px] lg:text-[14px] leading-[1.6] mb-5 px-1">
+              {/* Description — subtle, one line */}
+              <p className="text-[#9C8E82] text-[14px] lg:text-[15px] leading-[1.5] mb-6 px-2">
                 {c.desc}
               </p>
-              {/* Button — wide, matching design proportions */}
+              {/* Button — wide gold, matching design exactly */}
               <Link
                 href="/shop"
-                className="inline-block w-full max-w-[280px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[13px] tracking-[0.14em] font-medium py-3 transition-colors rounded-sm"
+                className="inline-block w-full max-w-[340px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[13.5px] tracking-[0.16em] font-medium py-[13px] transition-colors rounded-[4px]"
               >
                 SHOP NOW
               </Link>
