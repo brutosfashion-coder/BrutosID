@@ -14,17 +14,18 @@ export default function LoadingScreen() {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     const t = setTimeout(() => {
-      setShow(false);
+      onLoadComplete();          // Signal content to animate NOW — while screen slides up
+      setShow(false);            // Start exit animation
       document.body.style.overflow = "";
     }, 4200);
     return () => {
       clearTimeout(t);
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [onLoadComplete]);
 
   return (
-    <AnimatePresence onExitComplete={onLoadComplete}>
+    <AnimatePresence>
       {show && (
         <motion.div
           key="loader"
