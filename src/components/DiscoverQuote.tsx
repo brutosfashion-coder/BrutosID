@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import ScrollReveal from "./ScrollReveal";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -22,7 +23,7 @@ function CardBack() {
       <div className="card-corner bl" />
       <div className="card-corner br" />
 
-      {/* Geometric frame pattern */}
+      {/* Geometric frame */}
       <div className="card-pattern" />
 
       {/* Pulsing center glow */}
@@ -31,26 +32,26 @@ function CardBack() {
       {/* Rotating diamond ring */}
       <div className="diamond-ring" />
 
-      {/* Center emblem */}
+      {/* Center emblem — B monogram only, no text */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="flex flex-col items-center">
-          {/* Top ornament line */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
+          {/* Top ornament */}
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
             <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
-            <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
+            <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
           </div>
 
-          {/* Logo mark — stylized B monogram */}
+          {/* B monogram in double circle */}
           <div
-            className="relative w-16 h-16 flex items-center justify-center mb-2"
+            className="relative w-20 h-20 flex items-center justify-center"
             style={{
-              border: "1px solid rgba(201,169,110,0.3)",
+              border: "1px solid rgba(201,169,110,0.35)",
               borderRadius: "50%",
             }}
           >
             <div
-              className="absolute inset-[3px] flex items-center justify-center"
+              className="absolute inset-[4px] flex items-center justify-center"
               style={{
                 border: "1px solid rgba(201,169,110,0.15)",
                 borderRadius: "50%",
@@ -58,35 +59,23 @@ function CardBack() {
             >
               <span
                 className="font-serif text-[#C9A96E] font-light"
-                style={{ fontSize: "28px", letterSpacing: "0.05em" }}
+                style={{ fontSize: "34px", letterSpacing: "0.05em" }}
               >
                 B
               </span>
             </div>
           </div>
 
-          {/* Brand text */}
-          <div className="flex items-center gap-2 mt-1">
-            <div className="w-5 h-[1px] bg-[#C9A96E]/40" />
-            <span
-              className="font-serif text-[#C9A96E]/90 tracking-[0.4em] font-light"
-              style={{ fontSize: "10px" }}
-            >
-              EST. 2024
-            </span>
-            <div className="w-5 h-[1px] bg-[#C9A96E]/40" />
-          </div>
-
-          {/* Bottom ornament line */}
-          <div className="flex items-center gap-2 mt-3">
-            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
+          {/* Bottom ornament */}
+          <div className="flex items-center gap-2 mt-4">
+            <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
             <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
-            <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
+            <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
           </div>
         </div>
       </div>
 
-      {/* Repeating subtle diagonal line pattern overlay */}
+      {/* Subtle diagonal line overlay */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -99,73 +88,71 @@ function CardBack() {
   );
 }
 
-/* ── Continuous Flip Card ── */
+/* ── Continuous Flip Card (CSS-driven, no bugs) ── */
 function FlipCard({
   src,
   alt,
   href,
   label,
-  flipFrom,
   delay,
 }: {
   src: string;
   alt: string;
   href: string;
   label: string;
-  flipFrom: number;
   delay: number;
 }) {
-  const direction = flipFrom < 0 ? -1 : 1;
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const [flipActive, setFlipActive] = useState(false);
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(
+        () => setFlipActive(true),
+        (delay + 1.8) * 1000
+      );
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, delay]);
 
   return (
     <div className="flex-1 flex flex-col">
       <div
+        ref={ref}
         className="relative group cursor-pointer card-glow"
         style={{ perspective: "1200px" }}
       >
         <motion.div
           className="relative w-full"
-          style={{ transformStyle: "preserve-3d", aspectRatio: "2 / 3" }}
-          initial={{ rotateY: direction * 180, opacity: 0 }}
-          whileInView={{
-            rotateY: [
-              direction * 180, 0, 0,
-              direction * 180, direction * 180,
-              direction * 360,
-            ],
-            opacity: [0, 1, 1, 1, 1, 1],
-          }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{
-            rotateY: {
-              delay,
-              duration: 12,
-              times: [0, 0.18, 0.52, 0.7, 0.82, 1],
-              ease: "easeInOut",
-              repeat: Infinity,
-              repeatDelay: 0,
-            },
-            opacity: { delay, duration: 0.01 },
-          }}
+          style={{ aspectRatio: "2 / 3" }}
+          initial={{ opacity: 0, y: 60, scale: 0.92 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ delay, duration: 1.6, ease: lux }}
         >
-          {/* ▸ FRONT FACE — Image */}
           <div
-            className="absolute inset-0 overflow-hidden"
-            style={{ backfaceVisibility: "hidden" }}
+            className={`absolute inset-0 ${flipActive ? "card-flip" : ""}`}
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              className="object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
-              sizes="(min-width:768px) 28vw, 50vw"
-              priority
-            />
-            <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
-          </div>
+            {/* FRONT FACE */}
+            <div
+              className="absolute inset-0 overflow-hidden"
+              style={{ backfaceVisibility: "hidden" }}
+            >
+              <Image
+                src={src}
+                alt={alt}
+                fill
+                className="object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+                sizes="(min-width:768px) 28vw, 50vw"
+                priority
+              />
+              <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
+            </div>
 
-          {/* ▸ BACK FACE — Luxury brand card */}
-          <CardBack />
+            {/* BACK FACE */}
+            <CardBack />
+          </div>
         </motion.div>
       </div>
 
@@ -229,12 +216,13 @@ export default function DiscoverQuote() {
         >
           {/* ─── LEFT COLUMN ─── */}
           <div className="flex flex-col self-stretch">
+            {/* Top half — cream */}
             <div
               className="flex flex-col justify-end"
               style={{ flex: "0 0 48%", paddingBottom: "28px" }}
             >
               <motion.div
-                className="h-[1px] mb-5"
+                className="h-[1px] mb-5 gold-line-pulse"
                 style={{
                   background: "linear-gradient(90deg, #C9A96E, transparent)",
                 }}
@@ -245,7 +233,7 @@ export default function DiscoverQuote() {
               />
               <ScrollReveal direction="left" delay={0.1} distance={70} blur>
                 <h2
-                  className="font-serif italic text-[#3B2F2F]"
+                  className="font-serif italic gold-shimmer-text"
                   style={{
                     fontSize: "clamp(32px, 3vw, 48px)",
                     lineHeight: 1.08,
@@ -274,7 +262,7 @@ export default function DiscoverQuote() {
                 <div className="flex gap-3 mt-6">
                   <Link
                     href="/shop"
-                    className="btn-gold"
+                    className="btn-glass-gold"
                     style={{
                       fontSize: "11.5px",
                       letterSpacing: "0.12em",
@@ -285,7 +273,7 @@ export default function DiscoverQuote() {
                   </Link>
                   <Link
                     href="/about"
-                    className="btn-gold"
+                    className="btn-glass-gold"
                     style={{
                       fontSize: "11.5px",
                       letterSpacing: "0.12em",
@@ -298,12 +286,13 @@ export default function DiscoverQuote() {
               </ScrollReveal>
             </div>
 
+            {/* Bottom half — brown */}
             <div
               className="flex flex-col justify-start"
               style={{ flex: "0 0 52%", paddingTop: "36px" }}
             >
               <motion.div
-                className="h-[1px] mb-5"
+                className="h-[1px] mb-5 gold-line-pulse"
                 style={{
                   background:
                     "linear-gradient(90deg, rgba(201,169,110,0.6), transparent)",
@@ -315,10 +304,11 @@ export default function DiscoverQuote() {
               />
               <ScrollReveal direction="left" delay={0.2} distance={60} blur>
                 <p
-                  className="font-serif italic text-[#F0EBE4]"
+                  className="font-serif italic quote-glow"
                   style={{
                     fontSize: "clamp(20px, 2vw, 32px)",
                     lineHeight: 1.35,
+                    color: "#F0EBE4",
                   }}
                 >
                   &ldquo;Dress well, live well,
@@ -330,7 +320,7 @@ export default function DiscoverQuote() {
                 <div className="mt-6">
                   <Link
                     href="/shop"
-                    className="btn-gold"
+                    className="btn-glass-gold-light"
                     style={{
                       fontSize: "11.5px",
                       letterSpacing: "0.12em",
@@ -351,7 +341,6 @@ export default function DiscoverQuote() {
               alt="Brutos ID premium menswear collection - Indonesian local clothing brand"
               href="/shop"
               label="SHOP COLLECTION"
-              flipFrom={-180}
               delay={0.4}
             />
             <FlipCard
@@ -359,7 +348,6 @@ export default function DiscoverQuote() {
               alt="Brutos ID outfit flatlay - modern menswear styling"
               href="/about"
               label="ABOUT US"
-              flipFrom={180}
               delay={0.7}
             />
           </div>
@@ -377,7 +365,7 @@ export default function DiscoverQuote() {
           }}
         >
           <motion.div
-            className="h-[1px] mb-4"
+            className="h-[1px] mb-4 gold-line-pulse"
             style={{
               background: "linear-gradient(90deg, #C9A96E, transparent)",
             }}
@@ -388,7 +376,7 @@ export default function DiscoverQuote() {
           />
           <ScrollReveal direction="up" delay={0} blur>
             <h2
-              className="font-serif italic text-[#3B2F2F] mb-3"
+              className="font-serif italic gold-shimmer-text mb-3"
               style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
             >
               Discover the Collection
@@ -407,14 +395,14 @@ export default function DiscoverQuote() {
             <div className="flex gap-3">
               <Link
                 href="/shop"
-                className="btn-gold"
+                className="btn-glass-gold"
                 style={{ fontSize: "11px", padding: "9px 16px" }}
               >
                 SHOP COLLECTION
               </Link>
               <Link
                 href="/about"
-                className="btn-gold"
+                className="btn-glass-gold"
                 style={{ fontSize: "11px", padding: "9px 16px" }}
               >
                 ABOUT US
@@ -436,7 +424,6 @@ export default function DiscoverQuote() {
               alt="Brutos ID premium menswear collection"
               href="/shop"
               label="SHOP COLLECTION"
-              flipFrom={180}
               delay={0.2}
             />
             <FlipCard
@@ -444,7 +431,6 @@ export default function DiscoverQuote() {
               alt="Brutos ID outfit flatlay"
               href="/about"
               label="ABOUT US"
-              flipFrom={180}
               delay={0.5}
             />
           </div>
@@ -458,7 +444,7 @@ export default function DiscoverQuote() {
           }}
         >
           <motion.div
-            className="h-[1px] mb-5"
+            className="h-[1px] mb-5 gold-line-pulse"
             style={{
               background:
                 "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
@@ -470,8 +456,8 @@ export default function DiscoverQuote() {
           />
           <ScrollReveal direction="up" delay={0} blur>
             <p
-              className="font-serif italic text-[#F0EBE4] mb-5"
-              style={{ fontSize: "22px", lineHeight: 1.35 }}
+              className="font-serif italic quote-glow mb-5"
+              style={{ fontSize: "22px", lineHeight: 1.35, color: "#F0EBE4" }}
             >
               &ldquo;Dress well, live well, be a gentleman.&rdquo;
             </p>
@@ -479,7 +465,7 @@ export default function DiscoverQuote() {
           <ScrollReveal direction="up" delay={0.15}>
             <Link
               href="/shop"
-              className="btn-gold"
+              className="btn-glass-gold-light"
               style={{ fontSize: "11px", padding: "9px 20px" }}
             >
               SHOP NOW

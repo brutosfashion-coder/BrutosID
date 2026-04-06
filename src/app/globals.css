@@ -22,6 +22,94 @@
   }
   .btn-dark:hover { background-color: #2C1A11; }
 
+  /* ═══ GLASS GOLD BUTTON — cream/light backgrounds ═══ */
+  .btn-glass-gold {
+    @apply inline-flex items-center justify-center font-semibold uppercase rounded-full cursor-pointer;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(201,169,110,0.25), rgba(201,169,110,0.12));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(201,169,110,0.45);
+    color: #3B2F2F;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    padding: 12px 28px;
+    box-shadow:
+      0 4px 20px rgba(201,169,110,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.3),
+      inset 0 -1px 0 rgba(201,169,110,0.08);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-glass-gold:hover {
+    background: linear-gradient(135deg, rgba(201,169,110,0.45), rgba(201,169,110,0.25));
+    border-color: rgba(201,169,110,0.75);
+    box-shadow:
+      0 8px 36px rgba(201,169,110,0.22),
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      inset 0 -1px 0 rgba(201,169,110,0.12);
+    transform: translateY(-2px);
+  }
+  /* Hover shine sweep */
+  .btn-glass-gold::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .btn-glass-gold:hover::before {
+    left: 100%;
+  }
+
+  /* ═══ GLASS GOLD BUTTON — brown/dark backgrounds ═══ */
+  .btn-glass-gold-light {
+    @apply inline-flex items-center justify-center font-semibold uppercase rounded-full cursor-pointer;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(201,169,110,0.2), rgba(201,169,110,0.08));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(201,169,110,0.4);
+    color: #F0EBE4;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    padding: 12px 28px;
+    box-shadow:
+      0 4px 20px rgba(0,0,0,0.12),
+      inset 0 1px 0 rgba(201,169,110,0.15),
+      inset 0 -1px 0 rgba(0,0,0,0.1);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-glass-gold-light:hover {
+    background: linear-gradient(135deg, rgba(201,169,110,0.35), rgba(201,169,110,0.15));
+    border-color: rgba(201,169,110,0.65);
+    box-shadow:
+      0 8px 36px rgba(201,169,110,0.15),
+      inset 0 1px 0 rgba(201,169,110,0.2),
+      inset 0 -1px 0 rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .btn-glass-gold-light::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.2), transparent);
+    transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .btn-glass-gold-light:hover::before {
+    left: 100%;
+  }
+
+  /* Keep legacy for other pages */
   .btn-gold {
     @apply inline-flex items-center justify-center font-medium uppercase rounded-full transition-colors duration-200 cursor-pointer;
     background-color: #C9A96E;
@@ -44,14 +132,17 @@
     animation: textureDrift 25s ease-in-out infinite alternate;
   }
 
+  /* ═══ CARD FLIP — CSS-based seamless loop ═══ */
+  .card-flip {
+    animation: cardFlip 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
   /* ═══ LUXURY CARD BACK ═══ */
   .luxury-card-back {
     position: relative;
     overflow: hidden;
     background: linear-gradient(160deg, #1A120D 0%, #3B2A1F 35%, #2C1E16 65%, #1A120D 100%);
   }
-
-  /* Animated shimmer sweep across the card */
   .luxury-card-back::before {
     content: '';
     position: absolute;
@@ -84,14 +175,8 @@
     position: absolute;
     background: linear-gradient(90deg, #C9A96E, rgba(201,169,110,0.3));
   }
-  .card-corner::before {
-    width: 100%;
-    height: 1px;
-  }
-  .card-corner::after {
-    width: 1px;
-    height: 100%;
-  }
+  .card-corner::before { width: 100%; height: 1px; }
+  .card-corner::after { width: 1px; height: 100%; }
   .card-corner.tl { top: 14px; left: 14px; }
   .card-corner.tl::before { top: 0; left: 0; }
   .card-corner.tl::after { top: 0; left: 0; }
@@ -105,7 +190,6 @@
   .card-corner.br::before { bottom: 0; right: 0; background: linear-gradient(270deg, #C9A96E, rgba(201,169,110,0.3)); }
   .card-corner.br::after { bottom: 0; right: 0; background: linear-gradient(180deg, rgba(201,169,110,0.3), #C9A96E); }
 
-  /* Geometric ornament pattern */
   .card-pattern {
     position: absolute;
     inset: 28px;
@@ -119,7 +203,6 @@
     border: 1px solid rgba(201, 169, 110, 0.06);
   }
 
-  /* Pulsing gold glow behind center emblem */
   .card-center-glow {
     position: absolute;
     top: 50%;
@@ -133,7 +216,6 @@
     pointer-events: none;
   }
 
-  /* Rotating diamond ring */
   .diamond-ring {
     position: absolute;
     top: 50%;
@@ -161,7 +243,36 @@
     animation: kenBurns 20s ease-in-out infinite alternate;
     will-change: transform;
   }
+
+  /* ═══ GOLD SHIMMER TEXT ═══ */
+  .gold-shimmer-text {
+    background: linear-gradient(
+      90deg,
+      #3B2F2F 0%,
+      #3B2F2F 35%,
+      #C9A96E 50%,
+      #3B2F2F 65%,
+      #3B2F2F 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShimmer 5s ease-in-out infinite;
+  }
+
+  /* ═══ QUOTE GLOW ═══ */
+  .quote-glow {
+    animation: quoteGlow 3s ease-in-out infinite alternate;
+  }
+
+  /* ═══ GOLD LINE PULSE ═══ */
+  .gold-line-pulse {
+    animation: goldLinePulse 2.5s ease-in-out infinite alternate;
+  }
 }
+
+/* ═══════════════ KEYFRAMES ═══════════════ */
 
 @keyframes textureDrift {
   0%   { background-position: 0% 0%; }
@@ -169,6 +280,13 @@
   50%  { background-position: 5% 18%; }
   75%  { background-position: 20% 5%; }
   100% { background-position: 10% 15%; }
+}
+
+/* Seamless: 0°=360° so CSS loops perfectly */
+@keyframes cardFlip {
+  0%, 37%  { transform: rotateY(0deg); }
+  50%, 87% { transform: rotateY(180deg); }
+  100%     { transform: rotateY(360deg); }
 }
 
 @keyframes shimmerSweep {
@@ -191,4 +309,19 @@
   30%  { transform: scale(1.08) translate(-1.5%, -0.5%); }
   60%  { transform: scale(1.05) translate(0.5%, -1%); }
   100% { transform: scale(1.1)  translate(-1%, 0.5%); }
+}
+
+@keyframes goldShimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+@keyframes quoteGlow {
+  0%   { text-shadow: 0 0 20px rgba(201,169,110,0.08), 0 0 40px rgba(201,169,110,0.04); }
+  100% { text-shadow: 0 0 30px rgba(201,169,110,0.25), 0 0 60px rgba(201,169,110,0.12); }
+}
+
+@keyframes goldLinePulse {
+  0%   { opacity: 0.6; }
+  100% { opacity: 1; }
 }
