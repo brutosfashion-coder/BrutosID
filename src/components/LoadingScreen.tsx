@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const exitEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
 export default function LoadingScreen() {
@@ -14,7 +14,7 @@ export default function LoadingScreen() {
     const t = setTimeout(() => {
       setShow(false);
       document.body.style.overflow = "";
-    }, 2800);
+    }, 4200);
     return () => {
       clearTimeout(t);
       document.body.style.overflow = "";
@@ -29,69 +29,146 @@ export default function LoadingScreen() {
           className="fixed inset-0 z-[200] flex items-center justify-center"
           style={{ backgroundColor: "#EDE6DD" }}
           exit={{ y: "-100%" }}
-          transition={{ duration: 0.85, ease: exitEase }}
+          transition={{ duration: 1.2, ease: exitEase }}
         >
-          <div className="flex flex-col items-center">
-            {/* Logo head icon */}
+          {/* Ambient golden glow */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 2.5 }}
+            style={{
+              background:
+                "radial-gradient(circle at 50% 42%, rgba(201,169,110,0.13) 0%, transparent 55%)",
+            }}
+          />
+
+          <div className="flex flex-col items-center relative">
+            {/* Top decorative gold line */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.7, filter: "blur(12px)" }}
+              className="h-[1px] mb-10"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent)",
+              }}
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 150, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 2, ease: lux }}
+            />
+
+            {/* Logo head with glow */}
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, scale: 0.5, filter: "blur(25px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              transition={{ duration: 1.3, ease }}
+              transition={{ duration: 2.2, ease: lux }}
             >
+              {/* Glow behind logo */}
+              <motion.div
+                className="absolute -inset-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0.7, 0.35] }}
+                transition={{ delay: 0.6, duration: 3 }}
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(201,169,110,0.3) 0%, transparent 65%)",
+                  filter: "blur(25px)",
+                }}
+              />
               <Image
                 src="/logo-head.png"
                 alt="Brutos ID"
-                width={100}
-                height={132}
+                width={120}
+                height={160}
                 priority
-                className="w-[70px] md:w-[90px] h-auto"
+                className="w-[85px] md:w-[110px] h-auto relative z-10"
               />
             </motion.div>
 
-            {/* BRUTOS text */}
-            <motion.h1
-              className="font-serif text-[28px] md:text-[36px] font-bold text-[#3B2F2F] tracking-[0.12em] mt-5"
-              initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.5, duration: 1, ease }}
-            >
-              BRUTOS
-            </motion.h1>
+            {/* BRUTOS — letter by letter with 3D rotateX */}
+            <div className="flex mt-7 overflow-hidden">
+              {"BRUTOS".split("").map((letter, i) => (
+                <motion.span
+                  key={i}
+                  className="font-serif text-[30px] md:text-[40px] font-bold text-[#3B2F2F]"
+                  style={{ letterSpacing: "0.16em", display: "inline-block" }}
+                  initial={{ opacity: 0, y: 50, rotateX: -90 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  transition={{
+                    delay: 0.7 + i * 0.13,
+                    duration: 1.1,
+                    ease: lux,
+                  }}
+                >
+                  {letter}
+                </motion.span>
+              ))}
+            </div>
 
-            {/* ── ID ── with animated lines */}
+            {/* ── ID ── with expanding lines + letter-spacing */}
             <motion.div
-              className="flex items-center gap-3 mt-1"
+              className="flex items-center gap-4 mt-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.8, ease }}
+              transition={{ delay: 1.6, duration: 1.3, ease: lux }}
             >
               <motion.div
-                className="h-[1px] bg-[#3B2F2F]/50"
+                className="h-[1px] bg-[#3B2F2F]/40"
                 initial={{ width: 0 }}
-                animate={{ width: 35 }}
-                transition={{ delay: 1.1, duration: 0.7, ease }}
+                animate={{ width: 50 }}
+                transition={{ delay: 1.8, duration: 1.3, ease: lux }}
               />
-              <span className="font-serif text-[15px] md:text-[18px] text-[#3B2F2F] tracking-[0.25em]">
+              <motion.span
+                className="font-serif text-[16px] md:text-[20px] text-[#3B2F2F]/60"
+                initial={{ opacity: 0, letterSpacing: "1em" }}
+                animate={{ opacity: 1, letterSpacing: "0.3em" }}
+                transition={{ delay: 1.8, duration: 1.5, ease: lux }}
+              >
                 ID
-              </span>
+              </motion.span>
               <motion.div
-                className="h-[1px] bg-[#3B2F2F]/50"
+                className="h-[1px] bg-[#3B2F2F]/40"
                 initial={{ width: 0 }}
-                animate={{ width: 35 }}
-                transition={{ delay: 1.1, duration: 0.7, ease }}
+                animate={{ width: 50 }}
+                transition={{ delay: 1.8, duration: 1.3, ease: lux }}
               />
             </motion.div>
 
-            {/* Gold loading bar */}
+            {/* Tagline */}
+            <motion.p
+              className="text-[#8C7E74] text-[10px] md:text-[11px] uppercase mt-8"
+              style={{ letterSpacing: "0.3em" }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.6, duration: 1.3, ease: lux }}
+            >
+              ELEVATE YOUR STYLE
+            </motion.p>
+
+            {/* Gold loading bar — scales from left */}
+            <div className="mt-8 overflow-hidden" style={{ width: 160 }}>
+              <motion.div
+                className="h-[1.5px] origin-left"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, #C9A96E, #C9A96E, transparent)",
+                }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ delay: 2.9, duration: 1.3, ease: lux }}
+              />
+            </div>
+
+            {/* Bottom decorative gold line */}
             <motion.div
-              className="mt-10 h-[1.5px] rounded-full"
+              className="h-[1px] mt-10"
               style={{
                 background:
-                  "linear-gradient(90deg, transparent, #C9A96E, transparent)",
+                  "linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent)",
               }}
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 100, opacity: 1 }}
-              transition={{ delay: 1.4, duration: 1.2, ease }}
+              animate={{ width: 150, opacity: 1 }}
+              transition={{ delay: 3.2, duration: 1.2, ease: lux }}
             />
           </div>
         </motion.div>

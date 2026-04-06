@@ -4,13 +4,120 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
+const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+/* ── Flip Card Component ── */
+function FlipCard({
+  src,
+  alt,
+  href,
+  label,
+  flipFrom,
+  delay,
+}: {
+  src: string;
+  alt: string;
+  href: string;
+  label: string;
+  flipFrom: number;
+  delay: number;
+}) {
+  return (
+    <div className="flex-1 flex flex-col">
+      {/* Card with perspective */}
+      <div
+        className="relative group cursor-pointer card-glow"
+        style={{ perspective: "1200px" }}
+      >
+        <motion.div
+          className="relative w-full"
+          style={{ transformStyle: "preserve-3d", aspectRatio: "2 / 3" }}
+          initial={{ rotateY: flipFrom, opacity: 0 }}
+          whileInView={{ rotateY: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{
+            rotateY: { delay, duration: 2.2, ease: lux },
+            opacity: { delay, duration: 0.01 },
+          }}
+        >
+          {/* ▸ FRONT FACE — Image */}
+          <div
+            className="absolute inset-0 overflow-hidden"
+            style={{ backfaceVisibility: "hidden" }}
+          >
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              className="object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+              sizes="(min-width:768px) 28vw, 50vw"
+            />
+            {/* Warm hover overlay */}
+            <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
+          </div>
+
+          {/* ▸ BACK FACE — Brand pattern */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              backfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+              background:
+                "linear-gradient(160deg, #2C1E16 0%, #4A3728 40%, #3B2F2F 100%)",
+            }}
+          >
+            <div className="flex flex-col items-center">
+              <div className="w-[1px] h-14 bg-gradient-to-b from-transparent via-[#C9A96E]/50 to-transparent" />
+              <div className="my-3 w-2 h-2 bg-[#C9A96E]/70 rotate-45" />
+              <span
+                className="font-serif text-[#C9A96E]/80 tracking-[0.3em]"
+                style={{ fontSize: "14px" }}
+              >
+                BRUTOS
+              </span>
+              <span
+                className="font-serif text-[#C9A96E]/50 tracking-[0.2em] mt-1"
+                style={{ fontSize: "10px" }}
+              >
+                ID
+              </span>
+              <div className="my-3 w-2 h-2 bg-[#C9A96E]/70 rotate-45" />
+              <div className="w-[1px] h-14 bg-gradient-to-b from-transparent via-[#C9A96E]/50 to-transparent" />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Label strip */}
+      <ScrollReveal direction="up" delay={delay + 1.4} distance={20} duration={0.8}>
+        <Link
+          href={href}
+          className="block bg-white text-center hover:bg-[#F8F5F1] transition-colors"
+          style={{ padding: "14px 0" }}
+        >
+          <span
+            className="text-[#3B2F2F] uppercase font-bold"
+            style={{ fontSize: "13px", letterSpacing: "0.14em" }}
+          >
+            {label}
+          </span>
+        </Link>
+      </ScrollReveal>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════ */
 export default function DiscoverQuote() {
   return (
     <>
-      {/* ═══════════════════════ DESKTOP (md+) ═══════════════════════ */}
+      {/* ═══════════════ DESKTOP (md+) ═══════════════ */}
       <section className="hidden md:block relative overflow-hidden">
-        {/* ── Full-width split background ── */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {/* Full-width split background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+        >
           <div
             className="absolute inset-x-0 top-0"
             style={{
@@ -31,7 +138,7 @@ export default function DiscoverQuote() {
           />
         </div>
 
-        {/* ── Content grid ── */}
+        {/* Content grid */}
         <div
           className="relative mx-auto"
           style={{
@@ -49,7 +156,20 @@ export default function DiscoverQuote() {
               className="flex flex-col justify-end"
               style={{ flex: "0 0 48%", paddingBottom: "28px" }}
             >
-              <ScrollReveal direction="left" delay={0} distance={50}>
+              {/* Gold accent line */}
+              <motion.div
+                className="h-[1px] mb-5"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #C9A96E, transparent)",
+                }}
+                initial={{ width: 0, opacity: 0 }}
+                whileInView={{ width: 70, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5, ease: lux }}
+              />
+
+              <ScrollReveal direction="left" delay={0.1} distance={70} blur>
                 <h2
                   className="font-serif italic text-[#3B2F2F]"
                   style={{
@@ -63,7 +183,8 @@ export default function DiscoverQuote() {
                   Collection
                 </h2>
               </ScrollReveal>
-              <ScrollReveal direction="left" delay={0.15} distance={40}>
+
+              <ScrollReveal direction="left" delay={0.3} distance={50} blur>
                 <p
                   className="text-[#7D7168] mt-3"
                   style={{
@@ -75,7 +196,8 @@ export default function DiscoverQuote() {
                   Sophisticated pieces crafted for the modern gentleman.
                 </p>
               </ScrollReveal>
-              <ScrollReveal direction="up" delay={0.3} distance={25}>
+
+              <ScrollReveal direction="up" delay={0.55} distance={30}>
                 <div className="flex gap-3 mt-6">
                   <Link
                     href="/shop"
@@ -108,7 +230,20 @@ export default function DiscoverQuote() {
               className="flex flex-col justify-start"
               style={{ flex: "0 0 52%", paddingTop: "36px" }}
             >
-              <ScrollReveal direction="left" delay={0.1}>
+              {/* Decorative gold line */}
+              <motion.div
+                className="h-[1px] mb-5"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(201,169,110,0.6), transparent)",
+                }}
+                initial={{ width: 0, opacity: 0 }}
+                whileInView={{ width: 60, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 1.5, ease: lux }}
+              />
+
+              <ScrollReveal direction="left" delay={0.2} distance={60} blur>
                 <p
                   className="font-serif italic text-[#F0EBE4]"
                   style={{
@@ -121,7 +256,8 @@ export default function DiscoverQuote() {
                   live well, be a gentleman.&rdquo;
                 </p>
               </ScrollReveal>
-              <ScrollReveal direction="up" delay={0.25}>
+
+              <ScrollReveal direction="up" delay={0.45} distance={25}>
                 <div className="mt-6">
                   <Link
                     href="/shop"
@@ -139,82 +275,31 @@ export default function DiscoverQuote() {
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN — image cards + labels ─── */}
-          <div className="flex flex-col">
-            <div className="flex gap-4">
-              <motion.div
-                className="relative flex-1 overflow-hidden"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.85, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="relative w-full" style={{ aspectRatio: "2 / 3" }}>
-                  <Image
-                    src="/collection-model.jpg"
-                    alt="Shop Collection"
-                    fill
-                    className="object-contain"
-                    sizes="(min-width:768px) 28vw, 50vw"
-                    priority
-                  />
-                </div>
-              </motion.div>
-              <motion.div
-                className="relative flex-1 overflow-hidden"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.85, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="relative w-full" style={{ aspectRatio: "2 / 3" }}>
-                  <Image
-                    src="/collection-flatlay.jpg"
-                    alt="About Us"
-                    fill
-                    className="object-contain"
-                    sizes="(min-width:768px) 28vw, 50vw"
-                    priority
-                  />
-                </div>
-              </motion.div>
-            </div>
-
-            {/* White label strips */}
-            <ScrollReveal direction="up" delay={0.35} distance={20}>
-              <div className="flex gap-4 mt-0">
-                <Link
-                  href="/shop"
-                  className="flex-1 bg-white text-center block hover:bg-[#F8F5F1] transition-colors"
-                  style={{ padding: "14px 0" }}
-                >
-                  <span
-                    className="text-[#3B2F2F] uppercase font-bold"
-                    style={{ fontSize: "13px", letterSpacing: "0.14em" }}
-                  >
-                    SHOP COLLECTION
-                  </span>
-                </Link>
-                <Link
-                  href="/about"
-                  className="flex-1 bg-white text-center block hover:bg-[#F8F5F1] transition-colors"
-                  style={{ padding: "14px 0" }}
-                >
-                  <span
-                    className="text-[#3B2F2F] uppercase font-bold"
-                    style={{ fontSize: "13px", letterSpacing: "0.14em" }}
-                  >
-                    ABOUT US
-                  </span>
-                </Link>
-              </div>
-            </ScrollReveal>
+          {/* ─── RIGHT COLUMN — Flip Cards ─── */}
+          <div className="flex gap-4">
+            <FlipCard
+              src="/collection-model.jpg"
+              alt="Shop Collection"
+              href="/shop"
+              label="SHOP COLLECTION"
+              flipFrom={-180}
+              delay={0.4}
+            />
+            <FlipCard
+              src="/collection-flatlay.jpg"
+              alt="About Us"
+              href="/about"
+              label="ABOUT US"
+              flipFrom={180}
+              delay={0.7}
+            />
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════ MOBILE (<md) ═══════════════════════ */}
+      {/* ═══════════════ MOBILE (<md) ═══════════════ */}
       <section className="md:hidden">
+        {/* Paper texture — heading */}
         <div
           className="px-5 pt-10 pb-8"
           style={{
@@ -223,7 +308,17 @@ export default function DiscoverQuote() {
             backgroundPosition: "center",
           }}
         >
-          <ScrollReveal direction="up" delay={0}>
+          <motion.div
+            className="h-[1px] mb-4"
+            style={{
+              background: "linear-gradient(90deg, #C9A96E, transparent)",
+            }}
+            initial={{ width: 0, opacity: 0 }}
+            whileInView={{ width: 50, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: lux }}
+          />
+          <ScrollReveal direction="up" delay={0} blur>
             <h2
               className="font-serif italic text-[#3B2F2F] mb-3"
               style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
@@ -231,7 +326,7 @@ export default function DiscoverQuote() {
               Discover the Collection
             </h2>
           </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.1}>
+          <ScrollReveal direction="up" delay={0.15} blur>
             <p
               className="text-[#7D7168] mb-5"
               style={{ fontSize: "14px", lineHeight: 1.6, maxWidth: "300px" }}
@@ -239,18 +334,27 @@ export default function DiscoverQuote() {
               Sophisticated pieces crafted for the modern gentleman.
             </p>
           </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.2}>
+          <ScrollReveal direction="up" delay={0.3}>
             <div className="flex gap-3">
-              <Link href="/shop" className="btn-gold" style={{ fontSize: "11px", padding: "9px 16px" }}>
+              <Link
+                href="/shop"
+                className="btn-gold"
+                style={{ fontSize: "11px", padding: "9px 16px" }}
+              >
                 SHOP COLLECTION
               </Link>
-              <Link href="/about" className="btn-gold" style={{ fontSize: "11px", padding: "9px 16px" }}>
+              <Link
+                href="/about"
+                className="btn-gold"
+                style={{ fontSize: "11px", padding: "9px 16px" }}
+              >
                 ABOUT US
               </Link>
             </div>
           </ScrollReveal>
         </div>
 
+        {/* Brown texture — Flip cards */}
         <div
           className="px-4 py-4"
           style={{
@@ -260,29 +364,26 @@ export default function DiscoverQuote() {
           }}
         >
           <div className="grid grid-cols-2 gap-3">
-            <ScrollReveal direction="up" delay={0}>
-              <div className="relative overflow-hidden" style={{ aspectRatio: "2 / 3" }}>
-                <Image src="/collection-model.jpg" alt="Shop Collection" fill className="object-contain" sizes="50vw" />
-              </div>
-            </ScrollReveal>
-            <ScrollReveal direction="up" delay={0.12}>
-              <div className="relative overflow-hidden" style={{ aspectRatio: "2 / 3" }}>
-                <Image src="/collection-flatlay.jpg" alt="About Us" fill className="object-contain" sizes="50vw" />
-              </div>
-            </ScrollReveal>
-            <Link href="/shop" className="bg-white py-3 text-center hover:bg-[#F8F5F1] transition-colors">
-              <span className="text-[#3B2F2F] uppercase font-bold" style={{ fontSize: "11px", letterSpacing: "0.12em" }}>
-                SHOP COLLECTION
-              </span>
-            </Link>
-            <Link href="/about" className="bg-white py-3 text-center hover:bg-[#F8F5F1] transition-colors">
-              <span className="text-[#3B2F2F] uppercase font-bold" style={{ fontSize: "11px", letterSpacing: "0.12em" }}>
-                ABOUT US
-              </span>
-            </Link>
+            <FlipCard
+              src="/collection-model.jpg"
+              alt="Shop Collection"
+              href="/shop"
+              label="SHOP COLLECTION"
+              flipFrom={180}
+              delay={0.2}
+            />
+            <FlipCard
+              src="/collection-flatlay.jpg"
+              alt="About Us"
+              href="/about"
+              label="ABOUT US"
+              flipFrom={180}
+              delay={0.5}
+            />
           </div>
         </div>
 
+        {/* Brown texture — Quote */}
         <div
           className="px-5 pt-8 pb-10"
           style={{
@@ -291,13 +392,31 @@ export default function DiscoverQuote() {
             backgroundPosition: "center bottom",
           }}
         >
-          <ScrollReveal direction="up" delay={0}>
-            <p className="font-serif italic text-[#F0EBE4] mb-5" style={{ fontSize: "22px", lineHeight: 1.35 }}>
+          <motion.div
+            className="h-[1px] mb-5"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
+            }}
+            initial={{ width: 0, opacity: 0 }}
+            whileInView={{ width: 40, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: lux }}
+          />
+          <ScrollReveal direction="up" delay={0} blur>
+            <p
+              className="font-serif italic text-[#F0EBE4] mb-5"
+              style={{ fontSize: "22px", lineHeight: 1.35 }}
+            >
               &ldquo;Dress well, live well, be a gentleman.&rdquo;
             </p>
           </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.12}>
-            <Link href="/shop" className="btn-gold" style={{ fontSize: "11px", padding: "9px 20px" }}>
+          <ScrollReveal direction="up" delay={0.15}>
+            <Link
+              href="/shop"
+              className="btn-gold"
+              style={{ fontSize: "11px", padding: "9px 20px" }}
+            >
               SHOP NOW
             </Link>
           </ScrollReveal>

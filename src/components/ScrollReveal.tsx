@@ -11,19 +11,21 @@ interface Props {
   distance?: number;
   once?: boolean;
   amount?: number;
+  blur?: boolean;
 }
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function ScrollReveal({
   children,
   className = "",
   direction = "up",
   delay = 0,
-  duration = 0.85,
-  distance = 40,
+  duration = 1.2,
+  distance = 60,
   once = true,
-  amount = 0.25,
+  amount = 0.2,
+  blur = false,
 }: Props) {
   const dir = {
     up: { y: distance, x: 0 },
@@ -36,8 +38,17 @@ export default function ScrollReveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, ...dir }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      initial={{
+        opacity: 0,
+        ...dir,
+        ...(blur ? { filter: "blur(6px)" } : {}),
+      }}
+      whileInView={{
+        opacity: 1,
+        x: 0,
+        y: 0,
+        ...(blur ? { filter: "blur(0px)" } : {}),
+      }}
       viewport={{ once, amount }}
       transition={{ duration, delay, ease }}
     >

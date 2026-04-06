@@ -31,4 +31,11 @@
     padding: 12px 32px;
   }
   .btn-gold:hover { background-color: #B8944D; }
+
+  .card-glow {
+    transition: box-shadow 1s ease;
+  }
+  .card-glow:hover {
+    box-shadow: 0 25px 70px rgba(201, 169, 110, 0.14), 0 8px 24px rgba(0,0,0,0.06);
+  }
 }

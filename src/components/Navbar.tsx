@@ -13,7 +13,7 @@ const NAV = [
   { href: "/contact", label: "CONTACT" },
 ];
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -22,10 +22,9 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD] border-b border-[#3B2F2F]/10"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 3.2, duration: 0.8, ease }}
+      transition={{ delay: 4.6, duration: 1, ease }}
     >
       <nav className="mx-auto px-8 lg:px-12 xl:px-16 h-[68px] lg:h-[74px] flex items-center justify-between">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
@@ -39,7 +38,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop links — UPPERCASE + BOLD */}
         <div className="hidden md:flex items-center gap-8 lg:gap-10">
           {NAV.map((n) => (
             <Link
@@ -56,20 +54,17 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Icons pill */}
         <div className="hidden md:flex items-center gap-4 border border-[#3B2F2F]/20 rounded-full px-5 py-2">
           <FiSearch className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
           <FiUser className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
           <FiShoppingCart className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
         </div>
 
-        {/* Mobile hamburger */}
         <button className="md:hidden p-1" onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
         </button>
       </nav>
 
-      {/* Mobile menu — UPPERCASE + BOLD */}
       {open && (
         <div className="md:hidden bg-[#EDE6DD] border-t border-[#3B2F2F]/10 px-6 py-4 space-y-3">
           {NAV.map((n) => (

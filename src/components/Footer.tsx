@@ -11,19 +11,18 @@ const LINKS = [
   { href: "/contact", label: "CONTACT" },
 ];
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Footer() {
   return (
     <motion.footer
       className="bg-[#2C1E16]"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease }}
+      transition={{ duration: 1.2, ease }}
     >
       <div className="max-w-[1100px] mx-auto px-5 h-[68px] lg:h-[76px] flex items-center justify-between">
-        {/* Logo — NOT TOUCHED */}
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
@@ -37,7 +36,6 @@ export default function Footer() {
           </span>
         </Link>
 
-        {/* Desktop: Nav links + socials — UPPERCASE + BOLD */}
         <div className="hidden sm:flex items-center gap-5">
           {LINKS.map((l) => (
             <Link
@@ -62,7 +60,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Mobile: just socials */}
         <div className="sm:hidden flex items-center gap-3">
           <a href="#" aria-label="Instagram" className="text-[#C5B9A8]">
             <FaInstagram className="w-4 h-4" />
