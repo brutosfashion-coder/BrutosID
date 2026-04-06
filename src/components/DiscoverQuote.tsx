@@ -15,7 +15,7 @@ function FlipCard({
   href,
   label,
   delay,
-  mobileAspect,
+  isMobile,
 }: {
   frontSrc: string;
   backSrc: string;
@@ -23,7 +23,7 @@ function FlipCard({
   href: string;
   label: string;
   delay: number;
-  mobileAspect?: string;
+  isMobile?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.15 });
@@ -33,21 +33,21 @@ function FlipCard({
     <div className="flex-1 flex flex-col">
       <div
         ref={ref}
-        className="relative group cursor-pointer card-glow"
+        className={`relative cursor-pointer ${isMobile ? "gpu-layer" : "card-glow group"}`}
         style={{ perspective: "1200px" }}
         onClick={() => setFlipped((prev) => !prev)}
       >
         <motion.div
           className="relative w-full"
-          style={{ aspectRatio: mobileAspect || "2 / 3" }}
-          initial={{ opacity: 0, y: 60, scale: 0.92 }}
+          style={{ aspectRatio: isMobile ? "3 / 4" : "2 / 3" }}
+          initial={{ opacity: 0, y: isMobile ? 30 : 60, scale: isMobile ? 0.96 : 0.92 }}
           animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-          transition={{ delay, duration: 1.6, ease: lux }}
+          transition={{ delay, duration: isMobile ? 0.8 : 1.6, ease: lux }}
         >
           <div
             className={`absolute inset-0 card-flip-container ${flipped ? "flipped" : ""}`}
           >
-            {/* Front face — main image */}
+            {/* Front face */}
             <div
               className="absolute inset-0 overflow-hidden rounded-lg md:rounded-none"
               style={{ backfaceVisibility: "hidden" }}
@@ -56,14 +56,18 @@ function FlipCard({
                 src={frontSrc}
                 alt={alt}
                 fill
-                className="object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
-                sizes="(min-width:768px) 28vw, 46vw"
+                className={`object-cover transition-transform duration-[1200ms] ease-out ${
+                  isMobile ? "" : "group-hover:scale-[1.06]"
+                }`}
+                sizes={isMobile ? "46vw" : "28vw"}
                 priority
               />
-              <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
+              {!isMobile && (
+                <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
+              )}
             </div>
 
-            {/* Back face — second image */}
+            {/* Back face */}
             <div
               className="absolute inset-0 overflow-hidden rounded-lg md:rounded-none"
               style={{
@@ -76,7 +80,7 @@ function FlipCard({
                 alt={`${alt} — tampilan lain`}
                 fill
                 className="object-cover"
-                sizes="(min-width:768px) 28vw, 46vw"
+                sizes={isMobile ? "46vw" : "28vw"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A120D]/40 to-transparent pointer-events-none" />
             </div>
@@ -84,25 +88,27 @@ function FlipCard({
         </motion.div>
 
         {/* Tap hint on mobile */}
-        <motion.div
-          className="md:hidden absolute bottom-3 right-3 z-10 bg-[#3B2F2F]/60 backdrop-blur-sm rounded-full px-3 py-1"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: flipped ? 0 : 0.7 } : {}}
-          transition={{ delay: delay + 1.5, duration: 0.8 }}
-        >
-          <span className="text-[#F0EBE4] text-[9px] uppercase tracking-[0.1em]">Tap to flip</span>
-        </motion.div>
+        {isMobile && (
+          <motion.div
+            className="absolute bottom-3 right-3 z-10 bg-[#3B2F2F]/50 rounded-full px-2.5 py-1"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: flipped ? 0 : 0.6 } : {}}
+            transition={{ delay: delay + 0.8, duration: 0.5 }}
+          >
+            <span className="text-[#F0EBE4] text-[8px] uppercase tracking-[0.1em]">Tap</span>
+          </motion.div>
+        )}
       </div>
 
-      <ScrollReveal direction="up" delay={delay + 1.4} distance={20} duration={0.8}>
+      <ScrollReveal direction="up" delay={delay + (isMobile ? 0.5 : 1.4)} distance={15} duration={0.6}>
         <Link
           href={href}
-          className="block bg-white text-center hover:bg-[#F8F5F1] active:bg-[#F0EBE4] transition-colors rounded-b-lg md:rounded-none"
-          style={{ padding: "12px 0" }}
+          className="block bg-white text-center active:bg-[#F0EBE4] transition-colors rounded-b-lg md:rounded-none"
+          style={{ padding: isMobile ? "10px 0" : "12px 0" }}
         >
           <span
             className="text-[#3B2F2F] uppercase font-bold"
-            style={{ fontSize: "11px", letterSpacing: "0.14em" }}
+            style={{ fontSize: isMobile ? "10px" : "11px", letterSpacing: "0.14em" }}
           >
             {label}
           </span>
@@ -153,7 +159,6 @@ export default function DiscoverQuote() {
         >
           {/* ─── LEFT COLUMN ─── */}
           <div className="flex flex-col self-stretch">
-            {/* Top half — cream */}
             <div
               className="flex flex-col justify-end"
               style={{ flex: "0 0 55%", paddingBottom: "28px" }}
@@ -196,33 +201,16 @@ export default function DiscoverQuote() {
               </ScrollReveal>
               <ScrollReveal direction="up" delay={0.55} distance={30}>
                 <div className="flex gap-3 mt-6">
-                  <Link
-                    href="/"
-                    className="btn-glass-gold"
-                    style={{
-                      fontSize: "11.5px",
-                      letterSpacing: "0.12em",
-                      padding: "10px 22px",
-                    }}
-                  >
+                  <Link href="/" className="btn-glass-gold" style={{ fontSize: "11.5px", letterSpacing: "0.12em", padding: "10px 22px" }}>
                     LIHAT KOLEKSI
                   </Link>
-                  <Link
-                    href="/"
-                    className="btn-glass-gold"
-                    style={{
-                      fontSize: "11.5px",
-                      letterSpacing: "0.12em",
-                      padding: "10px 22px",
-                    }}
-                  >
+                  <Link href="/" className="btn-glass-gold" style={{ fontSize: "11.5px", letterSpacing: "0.12em", padding: "10px 22px" }}>
                     TENTANG KAMI
                   </Link>
                 </div>
               </ScrollReveal>
             </div>
 
-            {/* Bottom half — brown */}
             <div
               className="flex flex-col justify-start"
               style={{ flex: "0 0 45%", paddingTop: "36px" }}
@@ -230,8 +218,7 @@ export default function DiscoverQuote() {
               <motion.div
                 className="h-[1px] mb-5 gold-line-pulse"
                 style={{
-                  background:
-                    "linear-gradient(90deg, rgba(201,169,110,0.6), transparent)",
+                  background: "linear-gradient(90deg, rgba(201,169,110,0.6), transparent)",
                 }}
                 initial={{ width: 0, opacity: 0 }}
                 whileInView={{ width: 60, opacity: 1 }}
@@ -254,15 +241,7 @@ export default function DiscoverQuote() {
               </ScrollReveal>
               <ScrollReveal direction="up" delay={0.45} distance={25}>
                 <div className="mt-6">
-                  <Link
-                    href="/"
-                    className="btn-glass-gold-light"
-                    style={{
-                      fontSize: "11.5px",
-                      letterSpacing: "0.12em",
-                      padding: "10px 22px",
-                    }}
-                  >
+                  <Link href="/" className="btn-glass-gold-light" style={{ fontSize: "11.5px", letterSpacing: "0.12em", padding: "10px 22px" }}>
                     BELANJA SEKARANG
                   </Link>
                 </div>
@@ -270,7 +249,7 @@ export default function DiscoverQuote() {
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN — Click-to-Flip Cards ─── */}
+          {/* ─── RIGHT COLUMN — Flip Cards ─── */}
           <div className="flex gap-4">
             <FlipCard
               frontSrc="/collection-model.jpg"
@@ -292,68 +271,50 @@ export default function DiscoverQuote() {
         </div>
       </section>
 
-      {/* ═══════════════ MOBILE (<md) — PREMIUM REDESIGN ═══════════════ */}
+      {/* ═══════════════ MOBILE (<md) ═══════════════ */}
       <section className="md:hidden">
         {/* ── Section 1: Discover Header on Cream ── */}
         <div
-          className="relative px-6 pt-12 pb-8"
+          className="relative px-6 pt-10 pb-7"
           style={{
             backgroundImage: "url('/paper-texture.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          {/* Ambient gold glow */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at 20% 30%, rgba(201,169,110,0.06) 0%, transparent 60%)",
-            }}
-          />
-
           <div className="relative">
             <motion.div
-              className="h-[1px] mb-5 gold-line-pulse"
-              style={{
-                background: "linear-gradient(90deg, #C9A96E, transparent)",
-              }}
+              className="h-[1px] mb-4 gold-line-pulse gpu-layer"
+              style={{ background: "linear-gradient(90deg, #C9A96E, transparent)" }}
               initial={{ width: 0, opacity: 0 }}
               whileInView={{ width: 40, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: lux }}
+              transition={{ duration: 0.8, ease: lux }}
             />
-            <ScrollReveal direction="up" delay={0} blur>
+            <ScrollReveal direction="up" delay={0}>
               <h2
-                className="font-serif italic gold-shimmer-text mb-4"
-                style={{ fontSize: "30px", lineHeight: 1.08, fontWeight: 400 }}
+                className="font-serif italic gold-shimmer-text mb-3"
+                style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
               >
                 Jelajahi
                 <br />
                 Koleksi Kami
               </h2>
             </ScrollReveal>
-            <ScrollReveal direction="up" delay={0.15} blur>
+            <ScrollReveal direction="up" delay={0.1}>
               <p
-                className="text-[#7D7168] mb-6"
-                style={{ fontSize: "13px", lineHeight: 1.65, maxWidth: "280px" }}
+                className="text-[#7D7168] mb-5"
+                style={{ fontSize: "12.5px", lineHeight: 1.65, maxWidth: "270px" }}
               >
                 Fashion premium dengan sentuhan modern — dirancang untuk mereka yang mengutamakan kualitas dan gaya.
               </p>
             </ScrollReveal>
-            <ScrollReveal direction="up" delay={0.3}>
-              <div className="flex gap-3">
-                <Link
-                  href="/"
-                  className="btn-glass-gold"
-                  style={{ fontSize: "10px", padding: "10px 18px" }}
-                >
+            <ScrollReveal direction="up" delay={0.2}>
+              <div className="flex gap-2.5">
+                <Link href="/" className="btn-glass-gold" style={{ fontSize: "9.5px", padding: "9px 16px" }}>
                   LIHAT KOLEKSI
                 </Link>
-                <Link
-                  href="/"
-                  className="btn-glass-gold"
-                  style={{ fontSize: "10px", padding: "10px 18px" }}
-                >
+                <Link href="/" className="btn-glass-gold" style={{ fontSize: "9.5px", padding: "9px 16px" }}>
                   TENTANG KAMI
                 </Link>
               </div>
@@ -361,31 +322,24 @@ export default function DiscoverQuote() {
           </div>
         </div>
 
-        {/* ── Section 2: Flip Cards on Brown ── */}
+        {/* ── Section 2: Flip Cards ── */}
         <div
-          className="relative px-5 py-6 texture-drift"
+          className="relative px-4 py-5"
           style={{
             backgroundImage: "url('/brown-texture.jpg')",
-            backgroundSize: "120% 120%",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          {/* Subtle gold highlight */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at 50% 20%, rgba(201,169,110,0.05) 0%, transparent 50%)",
-            }}
-          />
-
-          <div className="relative flex gap-3">
+          <div className="relative flex gap-2.5">
             <FlipCard
               frontSrc="/collection-model.jpg"
               backSrc="/collection-model.jpg"
               alt="Koleksi fashion premium Brutos ID"
               href="/"
               label="LIHAT KOLEKSI"
-              delay={0.2}
-              mobileAspect="3 / 4"
+              delay={0.1}
+              isMobile
             />
             <FlipCard
               frontSrc="/collection-flatlay.jpg"
@@ -393,44 +347,34 @@ export default function DiscoverQuote() {
               alt="Koleksi premium Brutos ID — fashion modern"
               href="/"
               label="TENTANG KAMI"
-              delay={0.4}
-              mobileAspect="3 / 4"
+              delay={0.25}
+              isMobile
             />
           </div>
         </div>
 
-        {/* ── Section 3: Quote on Brown ── */}
+        {/* ── Section 3: Quote ── */}
         <div
-          className="relative px-6 pt-10 pb-12 texture-drift overflow-hidden"
+          className="relative px-6 pt-8 pb-10 overflow-hidden"
           style={{
             backgroundImage: "url('/brown-texture.jpg')",
-            backgroundSize: "120% 120%",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          {/* Decorative ambient glow */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at 30% 50%, rgba(201,169,110,0.08) 0%, transparent 60%)",
-            }}
-          />
-
           <div className="relative">
             <motion.div
-              className="h-[1px] mb-6 gold-line-pulse"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
-              }}
+              className="h-[1px] mb-5 gold-line-pulse gpu-layer"
+              style={{ background: "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)" }}
               initial={{ width: 0, opacity: 0 }}
               whileInView={{ width: 35, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: lux }}
+              transition={{ duration: 0.8, ease: lux }}
             />
-            <ScrollReveal direction="up" delay={0} blur>
+            <ScrollReveal direction="up" delay={0}>
               <p
-                className="font-serif italic quote-glow mb-6"
-                style={{ fontSize: "24px", lineHeight: 1.35, color: "#F0EBE4" }}
+                className="font-serif italic quote-glow mb-5"
+                style={{ fontSize: "22px", lineHeight: 1.35, color: "#F0EBE4" }}
               >
                 &ldquo;Berpakaian baik,
                 <br />
@@ -439,12 +383,8 @@ export default function DiscoverQuote() {
                 jadilah versi terbaik dirimu.&rdquo;
               </p>
             </ScrollReveal>
-            <ScrollReveal direction="up" delay={0.2}>
-              <Link
-                href="/"
-                className="btn-glass-gold-light"
-                style={{ fontSize: "10px", padding: "10px 22px" }}
-              >
+            <ScrollReveal direction="up" delay={0.15}>
+              <Link href="/" className="btn-glass-gold-light" style={{ fontSize: "10px", padding: "10px 20px" }}>
                 BELANJA SEKARANG
               </Link>
             </ScrollReveal>

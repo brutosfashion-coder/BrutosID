@@ -24,49 +24,48 @@ const CATS = [
   },
 ];
 
-function MobileCatCard({ cat, index }: { cat: typeof CATS[0]; index: number }) {
+function MobileCatCard({ cat, index }: { cat: (typeof CATS)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   return (
     <motion.div
       ref={ref}
-      className="mobile-cat-card bg-white/50 backdrop-blur-sm overflow-hidden"
-      initial={{ opacity: 0, y: 40 }}
+      className="mobile-cat-card gpu-layer"
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.15, duration: 1, ease: lux }}
+      transition={{ delay: index * 0.12, duration: 0.8, ease: lux }}
     >
-      <div className="flex">
-        {/* Image side */}
-        <div className="relative w-[42%] overflow-hidden">
-          <div className="relative w-full h-full" style={{ minHeight: "160px" }}>
-            <Image
-              src={cat.img}
-              alt={`${cat.title} — koleksi fashion premium Brutos ID`}
-              fill
-              className="object-cover"
-              sizes="42vw"
-            />
-            {/* Gold overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/10 pointer-events-none" />
-          </div>
-        </div>
+      {/* Full-width image — never cropped */}
+      <div className="relative w-full" style={{ aspectRatio: "16 / 10" }}>
+        <Image
+          src={cat.img}
+          alt={`${cat.title} — koleksi fashion premium Brutos ID`}
+          fill
+          className="object-cover rounded-t-[10px]"
+          sizes="(max-width: 640px) 90vw, 42vw"
+        />
+        {/* Subtle gold gradient at bottom */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-[40%] pointer-events-none"
+          style={{ background: "linear-gradient(to top, rgba(255,255,255,0.25), transparent)" }}
+        />
+      </div>
 
-        {/* Content side */}
-        <div className="flex-1 flex flex-col justify-center px-4 py-5">
-          <h3 className="font-serif text-[18px] sm:text-[20px] italic font-semibold text-[#3B2F2F] mb-2 leading-tight">
-            {cat.title}
-          </h3>
-          <p className="text-[#9C8E82] text-[11px] sm:text-[12px] leading-[1.55] mb-4">
-            {cat.desc}
-          </p>
-          <Link
-            href="/"
-            className="self-start text-[10px] sm:text-[11px] uppercase font-bold tracking-[0.12em] text-[#C9A96E] border-b border-[#C9A96E]/40 pb-[2px] transition-all duration-300 active:border-[#C9A96E]"
-          >
-            Lihat Koleksi →
-          </Link>
-        </div>
+      {/* Content below image */}
+      <div className="px-5 py-4">
+        <h3 className="font-serif text-[17px] italic font-semibold text-[#3B2F2F] mb-1.5 leading-tight">
+          {cat.title}
+        </h3>
+        <p className="text-[#9C8E82] text-[11.5px] leading-[1.6] mb-3">
+          {cat.desc}
+        </p>
+        <Link
+          href="/"
+          className="inline-block text-[10px] uppercase font-bold tracking-[0.12em] text-[#C9A96E] border-b border-[#C9A96E]/40 pb-[2px] transition-colors duration-300 active:text-[#B8944D]"
+        >
+          Lihat Koleksi →
+        </Link>
       </div>
     </motion.div>
   );
@@ -75,7 +74,7 @@ function MobileCatCard({ cat, index }: { cat: typeof CATS[0]; index: number }) {
 export default function Categories() {
   return (
     <section
-      className="py-12 sm:py-16 lg:py-20"
+      className="py-10 sm:py-16 lg:py-20"
       style={{
         backgroundImage: "url('/paper-texture.jpg')",
         backgroundSize: "600px 600px",
@@ -113,26 +112,26 @@ export default function Categories() {
         </div>
       </div>
 
-      {/* ── MOBILE ── */}
+      {/* ── MOBILE — vertical cards, full images ── */}
       <div className="sm:hidden px-5">
         {/* Section header */}
         <motion.div
-          className="mb-8"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-6 gpu-layer"
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: lux }}
+          transition={{ duration: 0.6, ease: lux }}
         >
           <div
-            className="h-[1px] mb-4 gold-line-pulse"
+            className="h-[1px] mb-3 gold-line-pulse"
             style={{ background: "linear-gradient(90deg, #C9A96E, transparent)", width: "30px" }}
           />
-          <h2 className="font-serif text-[22px] italic text-[#3B2F2F] font-light">
+          <h2 className="font-serif text-[21px] italic text-[#3B2F2F] font-light">
             Kategori Pilihan
           </h2>
         </motion.div>
 
-        {/* Cards */}
+        {/* Cards — vertical layout */}
         <div className="flex flex-col gap-4">
           {CATS.map((cat, i) => (
             <MobileCatCard key={cat.title} cat={cat} index={i} />

@@ -15,10 +15,10 @@ export default function Footer() {
   return (
     <motion.footer
       className="bg-[#2C1E16]"
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 1.2, ease }}
+      transition={{ duration: 0.8, ease }}
     >
       {/* ── DESKTOP ── */}
       <div className="hidden sm:flex max-w-[1100px] mx-auto px-5 h-[76px] items-center justify-between">
@@ -65,39 +65,39 @@ export default function Footer() {
       </div>
 
       {/* ── MOBILE ── */}
-      <div className="sm:hidden">
-        {/* Top: Logo + brand */}
-        <div className="flex items-center justify-center gap-2 pt-6 pb-4">
+      <div className="sm:hidden px-5 py-6">
+        {/* Logo */}
+        <div className="flex items-center justify-center gap-2 mb-4">
           <Image
             src="/logo-head.png"
             alt="Brutos ID"
             width={20}
             height={26}
-            className="w-[18px] h-[24px] brightness-0 invert opacity-80"
+            className="w-[16px] h-[22px] brightness-0 invert opacity-80"
           />
-          <span className="font-serif text-[14px] font-bold text-[#E8DFD4] tracking-[0.04em]">
+          <span className="font-serif text-[13px] font-bold text-[#E8DFD4] tracking-[0.04em]">
             BRUTOS ID
           </span>
         </div>
 
         {/* Gold separator */}
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-4">
           <div
-            className="h-[1px] w-[50px]"
-            style={{ background: "linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent)" }}
+            className="h-[1px] w-[40px]"
+            style={{ background: "linear-gradient(90deg, transparent, rgba(201,169,110,0.35), transparent)" }}
           />
         </div>
 
-        {/* Menu links in a row */}
-        <div className="flex items-center justify-center gap-4 py-4">
+        {/* Menu links */}
+        <div className="flex items-center justify-center gap-4 mb-4">
           {LINKS.map((label) => (
             <button
               key={label}
               onClick={() => setActive(label)}
               className={
                 active === label
-                  ? "text-[9px] text-[#F5F0EB] font-bold uppercase tracking-[0.08em] transition-all duration-300"
-                  : "text-[9px] text-[#C5B9A8]/70 font-bold uppercase tracking-[0.08em] active:text-[#F5F0EB] transition-all duration-300"
+                  ? "text-[8.5px] text-[#F5F0EB] font-bold uppercase tracking-[0.08em] underline underline-offset-[4px] decoration-[1px] transition-all duration-300"
+                  : "text-[8.5px] text-[#C5B9A8]/60 font-bold uppercase tracking-[0.08em] active:text-[#F5F0EB] transition-all duration-300"
               }
             >
               {label}
@@ -106,24 +106,22 @@ export default function Footer() {
         </div>
 
         {/* Social icons */}
-        <div className="flex items-center justify-center gap-5 pb-4">
-          <a href="https://instagram.com/brutos.id" aria-label="Instagram Brutos ID" className="text-[#C5B9A8]/60 active:text-[#F5F0EB] transition-colors">
-            <FaInstagram className="w-[14px] h-[14px]" />
+        <div className="flex items-center justify-center gap-5 mb-4">
+          <a href="https://instagram.com/brutos.id" aria-label="Instagram" className="text-[#C5B9A8]/50 active:text-[#F5F0EB] transition-colors">
+            <FaInstagram className="w-[13px] h-[13px]" />
           </a>
-          <a href="https://facebook.com/brutosid" aria-label="Facebook Brutos ID" className="text-[#C5B9A8]/60 active:text-[#F5F0EB] transition-colors">
-            <FaFacebookF className="w-[12px] h-[12px]" />
+          <a href="https://facebook.com/brutosid" aria-label="Facebook" className="text-[#C5B9A8]/50 active:text-[#F5F0EB] transition-colors">
+            <FaFacebookF className="w-[11px] h-[11px]" />
           </a>
-          <a href="https://twitter.com/brutosid" aria-label="Twitter Brutos ID" className="text-[#C5B9A8]/60 active:text-[#F5F0EB] transition-colors">
-            <FaTwitter className="w-[14px] h-[14px]" />
+          <a href="https://twitter.com/brutosid" aria-label="Twitter" className="text-[#C5B9A8]/50 active:text-[#F5F0EB] transition-colors">
+            <FaTwitter className="w-[13px] h-[13px]" />
           </a>
         </div>
 
-        {/* Copyright / tagline */}
-        <div className="text-center pb-5">
-          <p className="text-[#8C7E74]/40 text-[8px] uppercase tracking-[0.2em]">
-            Elegance is Never Loud
-          </p>
-        </div>
+        {/* Tagline */}
+        <p className="text-center text-[#8C7E74]/35 text-[7.5px] uppercase tracking-[0.2em]">
+          Elegance is Never Loud
+        </p>
       </div>
     </motion.footer>
   );

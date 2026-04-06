@@ -28,8 +28,6 @@
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, rgba(201,169,110,0.25), rgba(201,169,110,0.12));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(201,169,110,0.45);
     color: #3B2F2F;
     font-size: 12px;
@@ -41,28 +39,35 @@
       inset 0 -1px 0 rgba(201,169,110,0.08);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .btn-glass-gold:hover {
-    background: linear-gradient(135deg, rgba(201,169,110,0.45), rgba(201,169,110,0.25));
-    border-color: rgba(201,169,110,0.75);
-    box-shadow:
-      0 8px 36px rgba(201,169,110,0.22),
-      inset 0 1px 0 rgba(255,255,255,0.35),
-      inset 0 -1px 0 rgba(201,169,110,0.12);
-    transform: translateY(-2px);
-  }
-  .btn-glass-gold::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-    transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-  }
-  .btn-glass-gold:hover::before {
-    left: 100%;
+  /* Desktop-only blur + hover effects */
+  @media (min-width: 768px) {
+    .btn-glass-gold {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .btn-glass-gold:hover {
+      background: linear-gradient(135deg, rgba(201,169,110,0.45), rgba(201,169,110,0.25));
+      border-color: rgba(201,169,110,0.75);
+      box-shadow:
+        0 8px 36px rgba(201,169,110,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.35),
+        inset 0 -1px 0 rgba(201,169,110,0.12);
+      transform: translateY(-2px);
+    }
+    .btn-glass-gold::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .btn-glass-gold:hover::before {
+      left: 100%;
+    }
   }
 
   /* ═══ GLASS GOLD BUTTON — brown/dark backgrounds ═══ */
@@ -71,8 +76,6 @@
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, rgba(201,169,110,0.2), rgba(201,169,110,0.08));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(201,169,110,0.4);
     color: #F0EBE4;
     font-size: 12px;
@@ -84,28 +87,34 @@
       inset 0 -1px 0 rgba(0,0,0,0.1);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .btn-glass-gold-light:hover {
-    background: linear-gradient(135deg, rgba(201,169,110,0.35), rgba(201,169,110,0.15));
-    border-color: rgba(201,169,110,0.65);
-    box-shadow:
-      0 8px 36px rgba(201,169,110,0.15),
-      inset 0 1px 0 rgba(201,169,110,0.2),
-      inset 0 -1px 0 rgba(0,0,0,0.08);
-    transform: translateY(-2px);
-  }
-  .btn-glass-gold-light::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.2), transparent);
-    transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-  }
-  .btn-glass-gold-light:hover::before {
-    left: 100%;
+  @media (min-width: 768px) {
+    .btn-glass-gold-light {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .btn-glass-gold-light:hover {
+      background: linear-gradient(135deg, rgba(201,169,110,0.35), rgba(201,169,110,0.15));
+      border-color: rgba(201,169,110,0.65);
+      box-shadow:
+        0 8px 36px rgba(201,169,110,0.15),
+        inset 0 1px 0 rgba(201,169,110,0.2),
+        inset 0 -1px 0 rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .btn-glass-gold-light::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201,169,110,0.2), transparent);
+      transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .btn-glass-gold-light:hover::before {
+      left: 100%;
+    }
   }
 
   .btn-gold {
@@ -121,8 +130,10 @@
   .card-glow {
     transition: box-shadow 1s ease;
   }
-  .card-glow:hover {
-    box-shadow: 0 25px 70px rgba(201, 169, 110, 0.14), 0 8px 24px rgba(0,0,0,0.06);
+  @media (min-width: 768px) {
+    .card-glow:hover {
+      box-shadow: 0 25px 70px rgba(201, 169, 110, 0.14), 0 8px 24px rgba(0,0,0,0.06);
+    }
   }
 
   .texture-drift {
@@ -133,6 +144,7 @@
   .card-flip-container {
     transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
+    will-change: transform;
   }
   .card-flip-container.flipped {
     transform: rotateY(180deg);
@@ -238,13 +250,13 @@
   .diamond-ring::before { top: -3px; left: 50%; margin-left: -3px; }
   .diamond-ring::after { bottom: -3px; left: 50%; margin-left: -3px; }
 
-  /* ═══ HERO KEN BURNS — SLOWER ═══ */
+  /* ═══ HERO KEN BURNS — DESKTOP ═══ */
   .hero-ken-burns {
     animation: kenBurns 45s ease-in-out infinite alternate;
     will-change: transform;
   }
 
-  /* ═══ GOLD SHIMMER TEXT — SLOWER ═══ */
+  /* ═══ GOLD SHIMMER TEXT ═══ */
   .gold-shimmer-text {
     background: linear-gradient(
       90deg,
@@ -275,8 +287,6 @@
     inset: 0;
     z-index: 45;
     background: rgba(26, 18, 13, 0.97);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
   }
 
   .mobile-menu-gold-line {
@@ -297,23 +307,29 @@
     );
   }
 
-  /* ═══ MOBILE CATEGORY CARD ═══ */
+  /* ═══ MOBILE CATEGORY CARD — VERTICAL ═══ */
   .mobile-cat-card {
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.45);
+    transform: translateZ(0);
   }
   .mobile-cat-card::after {
     content: '';
     position: absolute;
     inset: 0;
     border: 1px solid rgba(201,169,110,0.15);
-    border-radius: 12px;
+    border-radius: 10px;
     pointer-events: none;
-    transition: border-color 0.5s ease;
   }
-  .mobile-cat-card:active::after {
-    border-color: rgba(201,169,110,0.4);
+
+  /* ═══ GPU COMPOSITING HINTS FOR MOBILE ═══ */
+  @media (max-width: 767px) {
+    .gpu-layer {
+      transform: translateZ(0);
+      will-change: transform, opacity;
+    }
   }
 }
 
@@ -342,7 +358,6 @@
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Ken Burns — slower & gentler movement, biased upward to preserve heads */
 @keyframes kenBurns {
   0%   { transform: scale(1.0)  translate(0%, 0%); }
   30%  { transform: scale(1.04) translate(-0.8%, 0.3%); }
@@ -350,14 +365,12 @@
   100% { transform: scale(1.05) translate(-0.5%, 0.4%); }
 }
 
-/* Ken Burns mobile — even gentler, strictly no upward crop */
 @keyframes kenBurnsMobile {
   0%   { transform: scale(1.0) translate(0%, 0%); }
-  50%  { transform: scale(1.03) translate(-0.5%, 0.2%); }
-  100% { transform: scale(1.02) translate(0.3%, 0.1%); }
+  50%  { transform: scale(1.02) translate(-0.3%, 0.1%); }
+  100% { transform: scale(1.01) translate(0.2%, 0.05%); }
 }
 
-/* Gold shimmer — much slower sweep */
 @keyframes goldShimmer {
   0%   { background-position: 100% 0; }
   100% { background-position: -100% 0; }
