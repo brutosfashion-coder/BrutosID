@@ -188,7 +188,7 @@ export default function DiscoverQuote() {
           <div
             className="absolute inset-x-0 top-0"
             style={{
-              height: "48%",
+              height: "55%",
               backgroundImage: "url('/paper-texture.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
@@ -197,7 +197,7 @@ export default function DiscoverQuote() {
           <div
             className="absolute inset-x-0 bottom-0 texture-drift"
             style={{
-              height: "52%",
+              height: "45%",
               backgroundImage: "url('/brown-texture.jpg')",
               backgroundSize: "120% 120%",
             }}
@@ -219,7 +219,7 @@ export default function DiscoverQuote() {
             {/* Top half — cream */}
             <div
               className="flex flex-col justify-end"
-              style={{ flex: "0 0 48%", paddingBottom: "28px" }}
+              style={{ flex: "0 0 55%", paddingBottom: "28px" }}
             >
               <motion.div
                 className="h-[1px] mb-5 gold-line-pulse"
@@ -289,7 +289,7 @@ export default function DiscoverQuote() {
             {/* Bottom half — brown */}
             <div
               className="flex flex-col justify-start"
-              style={{ flex: "0 0 52%", paddingTop: "36px" }}
+              style={{ flex: "0 0 45%", paddingTop: "36px" }}
             >
               <motion.div
                 className="h-[1px] mb-5 gold-line-pulse"
