@@ -79,7 +79,7 @@ export default function Hero() {
             </motion.p>
             <motion.div {...appear(0.6)}>
               <Link
-                href="/shop"
+                href="/"
                 className="btn-gold px-10 py-[13px] text-[13px]"
               >
                 SHOP NOW
@@ -134,7 +134,7 @@ export default function Hero() {
             class.
           </motion.p>
           <motion.div {...appear(0.5)}>
-            <Link href="/shop" className="btn-gold text-[12px] px-8 py-3">
+            <Link href="/" className="btn-gold text-[12px] px-8 py-3">
               SHOP NOW
             </Link>
           </motion.div>

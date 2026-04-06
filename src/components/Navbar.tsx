@@ -5,14 +5,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 
-const NAV = [
-  { href: "/", label: "HOME", active: true },
-  { href: "/shop", label: "SHOP" },
-  { href: "/about", label: "ABOUT" },
-  { href: "/journal", label: "JOURNAL" },
-  { href: "/contact", label: "CONTACT" },
-];
-
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Navbar() {
@@ -38,22 +30,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8 lg:gap-10">
-          {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className={
-                n.active
-                  ? "text-[13px] lg:text-[13.5px] text-[#3B2F2F] font-bold uppercase tracking-[0.08em] underline underline-offset-[6px] decoration-[1.5px]"
-                  : "text-[13px] lg:text-[13.5px] text-[#8C7E74] font-bold uppercase tracking-[0.08em] hover:text-[#3B2F2F] transition-colors"
-              }
-            >
-              {n.label}
-            </Link>
-          ))}
-        </div>
-
         <div className="hidden md:flex items-center gap-4 border border-[#3B2F2F]/20 rounded-full px-5 py-2">
           <FiSearch className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
           <FiUser className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
@@ -66,18 +42,8 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden bg-[#EDE6DD] border-t border-[#3B2F2F]/10 px-6 py-4 space-y-3">
-          {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              onClick={() => setOpen(false)}
-              className="block text-[13px] text-[#3B2F2F] font-bold uppercase tracking-[0.08em]"
-            >
-              {n.label}
-            </Link>
-          ))}
-          <div className="flex items-center gap-4 pt-2 border-t border-[#3B2F2F]/10">
+        <div className="md:hidden bg-[#EDE6DD] border-t border-[#3B2F2F]/10 px-6 py-4">
+          <div className="flex items-center gap-4 pt-2">
             <FiSearch className="w-5 h-5" />
             <FiUser className="w-5 h-5" />
             <FiShoppingCart className="w-5 h-5" />

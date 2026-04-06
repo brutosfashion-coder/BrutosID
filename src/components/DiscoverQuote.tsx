@@ -261,7 +261,7 @@ export default function DiscoverQuote() {
               <ScrollReveal direction="up" delay={0.55} distance={30}>
                 <div className="flex gap-3 mt-6">
                   <Link
-                    href="/shop"
+                    href="/"
                     className="btn-glass-gold"
                     style={{
                       fontSize: "11.5px",
@@ -272,7 +272,7 @@ export default function DiscoverQuote() {
                     SHOP COLLECTION
                   </Link>
                   <Link
-                    href="/about"
+                    href="/"
                     className="btn-glass-gold"
                     style={{
                       fontSize: "11.5px",
@@ -319,7 +319,7 @@ export default function DiscoverQuote() {
               <ScrollReveal direction="up" delay={0.45} distance={25}>
                 <div className="mt-6">
                   <Link
-                    href="/shop"
+                    href="/"
                     className="btn-glass-gold-light"
                     style={{
                       fontSize: "11.5px",
@@ -339,14 +339,14 @@ export default function DiscoverQuote() {
             <FlipCard
               src="/collection-model.jpg"
               alt="Brutos ID premium menswear collection - Indonesian local clothing brand"
-              href="/shop"
+              href="/"
               label="SHOP COLLECTION"
               delay={0.4}
             />
             <FlipCard
               src="/collection-flatlay.jpg"
               alt="Brutos ID outfit flatlay - modern menswear styling"
-              href="/about"
+              href="/"
               label="ABOUT US"
               delay={0.7}
             />
@@ -394,14 +394,14 @@ export default function DiscoverQuote() {
           <ScrollReveal direction="up" delay={0.3}>
             <div className="flex gap-3">
               <Link
-                href="/shop"
+                href="/"
                 className="btn-glass-gold"
                 style={{ fontSize: "11px", padding: "9px 16px" }}
               >
                 SHOP COLLECTION
               </Link>
               <Link
-                href="/about"
+                href="/"
                 className="btn-glass-gold"
                 style={{ fontSize: "11px", padding: "9px 16px" }}
               >
@@ -422,14 +422,14 @@ export default function DiscoverQuote() {
             <FlipCard
               src="/collection-model.jpg"
               alt="Brutos ID premium menswear collection"
-              href="/shop"
+              href="/"
               label="SHOP COLLECTION"
               delay={0.2}
             />
             <FlipCard
               src="/collection-flatlay.jpg"
               alt="Brutos ID outfit flatlay"
-              href="/about"
+              href="/"
               label="ABOUT US"
               delay={0.5}
             />
@@ -464,7 +464,7 @@ export default function DiscoverQuote() {
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.15}>
             <Link
-              href="/shop"
+              href="/"
               className="btn-glass-gold-light"
               style={{ fontSize: "11px", padding: "9px 20px" }}
             >

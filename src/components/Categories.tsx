@@ -57,7 +57,7 @@ export default function Categories() {
 
               {/* Button — gold with subtle border */}
               <Link
-                href="/shop"
+                href="/"
                 className="inline-block w-full max-w-[280px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[12.5px] tracking-[0.18em] font-medium py-[11px] transition-colors border border-[#A08A5A] rounded-[3px]"
               >
                 SHOP NOW
