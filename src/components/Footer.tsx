@@ -12,7 +12,7 @@ const LINKS = [
 export default function Footer() {
   return (
     <footer className="bg-[#2C1E16]">
-      <div className="max-w-[1100px] mx-auto px-5 h-[56px] lg:h-[62px] flex items-center justify-between">
+      <div className="max-w-[1100px] mx-auto px-5 h-[68px] lg:h-[76px] flex items-center justify-between">
         {/* Logo — inverted for dark bg */}
         <Link href="/" className="flex items-center gap-2">
           <Image

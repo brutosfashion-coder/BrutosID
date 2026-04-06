@@ -8,21 +8,21 @@ export default function DiscoverQuote() {
       <section
         className="hidden md:block relative overflow-hidden"
         style={{
-          background: "linear-gradient(to bottom, #EDE6DD 38%, #4A3728 38%)",
+          background: "linear-gradient(to bottom, #EDE6DD 45%, #4A3728 45%)",
         }}
       >
         <div className="relative max-w-[1060px] mx-auto px-5 sm:px-8">
           <div
             className="grid gap-6"
             style={{
-              gridTemplateColumns: "36% 1fr",
-              minHeight: "580px",
+              gridTemplateColumns: "38% 1fr",
+              minHeight: "620px",
             }}
           >
             {/* ── LEFT COLUMN ── */}
             <div className="flex flex-col">
               {/* Cream area — Discover heading + subtitle + buttons */}
-              <div style={{ flex: "0 0 38%" }} className="flex flex-col justify-end pb-8">
+              <div style={{ flex: "0 0 45%" }} className="flex flex-col justify-end pb-6">
                 <h2 className="font-serif text-[34px] lg:text-[38px] xl:text-[42px] font-bold italic text-[#3B2F2F] leading-[1.08] mb-3">
                   Discover the<br />Collection
                 </h2>
@@ -40,7 +40,7 @@ export default function DiscoverQuote() {
               </div>
 
               {/* Dark area — Quote + SHOP NOW */}
-              <div style={{ flex: "1 1 62%" }} className="flex flex-col justify-start pt-10">
+              <div style={{ flex: "1 1 55%" }} className="flex flex-col justify-start pt-8">
                 <p className="font-serif text-[22px] lg:text-[26px] xl:text-[30px] italic text-[#F5F0EB] leading-[1.35] mb-6">
                   &ldquo;Dress well,<br />live well, be a gentleman.&rdquo;
                 </p>
@@ -53,7 +53,7 @@ export default function DiscoverQuote() {
             </div>
 
             {/* ── RIGHT COLUMN — Two portrait images + white labels ── */}
-            <div className="flex flex-col py-4">
+            <div className="flex flex-col py-5">
               {/* Two tall portrait images side-by-side */}
               <div className="flex gap-4 flex-1 min-h-0">
                 <div className="relative flex-1 rounded-md overflow-hidden">

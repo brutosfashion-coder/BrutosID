@@ -16,11 +16,11 @@ export default function Hero() {
           sizes="100vw"
         />
         <div className="absolute inset-0 flex items-center">
-          <div className="ml-auto w-[42%] max-w-[460px] pr-[4%] xl:pr-[6%]">
+          <div className="ml-auto w-[46%] max-w-[500px] pr-[5%] xl:pr-[7%]">
             <h1 className="font-serif text-[40px] lg:text-[46px] xl:text-[52px] font-bold italic text-[#3B2F2F] leading-[1.06] mb-4">
               Elevate Your Style
             </h1>
-            <p className="text-[#8C7E74] text-[14.5px] lg:text-[15.5px] leading-[1.65] mb-7 max-w-[340px]">
+            <p className="text-[#8C7E74] text-[14.5px] lg:text-[15.5px] leading-[1.65] mb-7 max-w-[360px]">
               Timeless attire for the modern man who values sophistication and class.
             </p>
             <Link href="/shop" className="btn-gold text-[13px] px-8 py-[11px]">SHOP NOW</Link>
