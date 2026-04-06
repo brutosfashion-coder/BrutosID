@@ -331,11 +331,6 @@
 
 /* ═══════════════ KEYFRAMES ═══════════════ */
 
-
-  75%  { background-position: 20% 5%; }
-  100% { background-position: 10% 15%; }
-}
-
 @keyframes shimmerSweep {
   0%   { transform: translateX(-60%) translateY(-60%) rotate(45deg); }
   100% { transform: translateX(60%) translateY(60%) rotate(45deg); }
