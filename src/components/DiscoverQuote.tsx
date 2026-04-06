@@ -4,141 +4,191 @@ import Link from "next/link";
 export default function DiscoverQuote() {
   return (
     <>
-      {/* ═══════════════════════════════ DESKTOP (md+) ═══════════════════════════════ */}
-      <section className="hidden md:block relative" style={{ minHeight: "620px" }}>
-        {/* ── Full-width background split ── */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+      {/* ═══════════════════════ DESKTOP (md+) ═══════════════════════ */}
+      <section className="hidden md:block relative overflow-hidden">
+        {/* ── Full-width split background ── */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           {/* Top: cream paper texture */}
           <div
             className="absolute inset-x-0 top-0"
             style={{
-              height: "42%",
+              height: "48%",
               backgroundImage: "url('/paper-texture.jpg')",
-              backgroundSize: "600px 600px",
-              backgroundRepeat: "repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           />
-          {/* Bottom: brown textured */}
+          {/* Bottom: brown stone texture */}
           <div
             className="absolute inset-x-0 bottom-0"
             style={{
-              height: "58%",
-              backgroundColor: "#4A3728",
-              backgroundImage:
-                "url('/texture.png'), linear-gradient(175deg, rgba(150,135,120,0.45) 0%, rgba(90,70,55,0.85) 35%, rgba(55,38,28,1) 100%)",
-              backgroundSize: "150px 150px, cover",
-              backgroundRepeat: "repeat, no-repeat",
-              backgroundBlendMode: "overlay, normal",
+              height: "52%",
+              backgroundImage: "url('/brown-texture.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           />
         </div>
 
         {/* ── Content grid ── */}
         <div
-          className="relative grid mx-auto"
+          className="relative mx-auto"
           style={{
-            maxWidth: "1200px",
-            padding: "0 32px",
-            gridTemplateColumns: "37% 1fr",
-            gap: "28px",
-            minHeight: "620px",
+            maxWidth: "1280px",
+            padding: "40px 48px 32px",
+            display: "grid",
+            gridTemplateColumns: "38% 1fr",
+            gap: "36px",
           }}
         >
           {/* ─── LEFT COLUMN ─── */}
-          <div className="flex flex-col">
-            {/* Top: cream zone — title + subtitle + buttons */}
+          <div className="flex flex-col self-stretch">
+            {/* Top cream zone: heading + buttons */}
             <div
               className="flex flex-col justify-end"
-              style={{ height: "42%", paddingBottom: "28px" }}
+              style={{ flex: "0 0 48%", paddingBottom: "28px" }}
             >
               <h2
-                className="font-serif italic text-[#3B2F2F] leading-[1.05]"
-                style={{ fontSize: "clamp(34px, 3.2vw, 50px)", fontWeight: 700 }}
+                className="font-serif italic text-[#3B2F2F]"
+                style={{
+                  fontSize: "clamp(32px, 3vw, 48px)",
+                  lineHeight: 1.08,
+                  fontWeight: 400,
+                }}
               >
                 Discover the
                 <br />
                 Collection
               </h2>
               <p
-                className="text-[#8C7E74] leading-[1.6] mt-3"
-                style={{ fontSize: "clamp(13px, 1.05vw, 16px)", maxWidth: "340px" }}
+                className="text-[#7D7168] mt-3"
+                style={{
+                  fontSize: "clamp(13px, 1vw, 15px)",
+                  lineHeight: 1.6,
+                  maxWidth: "340px",
+                }}
               >
                 Sophisticated pieces crafted for the modern gentleman.
               </p>
               <div className="flex gap-3 mt-6">
-                <Link href="/shop" className="btn-gold text-[11.5px] tracking-[0.13em] px-5 py-2.5">
+                <Link
+                  href="/shop"
+                  className="btn-gold"
+                  style={{
+                    fontSize: "11.5px",
+                    letterSpacing: "0.12em",
+                    padding: "10px 22px",
+                  }}
+                >
                   SHOP COLLECTION
                 </Link>
-                <Link href="/about" className="btn-gold text-[11.5px] tracking-[0.13em] px-5 py-2.5">
+                <Link
+                  href="/about"
+                  className="btn-gold"
+                  style={{
+                    fontSize: "11.5px",
+                    letterSpacing: "0.12em",
+                    padding: "10px 22px",
+                  }}
+                >
                   ABOUT US
                 </Link>
               </div>
             </div>
 
-            {/* Bottom: brown zone — quote + button */}
+            {/* Bottom brown zone: quote + button */}
             <div
               className="flex flex-col justify-start"
-              style={{ height: "58%", paddingTop: "32px" }}
+              style={{ flex: "0 0 52%", paddingTop: "36px" }}
             >
               <p
-                className="font-serif italic text-[#F5F0EB] leading-[1.32]"
-                style={{ fontSize: "clamp(22px, 2.2vw, 34px)" }}
+                className="font-serif italic text-[#F0EBE4]"
+                style={{
+                  fontSize: "clamp(20px, 2vw, 32px)",
+                  lineHeight: 1.35,
+                }}
               >
                 &ldquo;Dress well,
                 <br />
                 live well, be a gentleman.&rdquo;
               </p>
               <div className="mt-6">
-                <Link href="/shop" className="btn-gold text-[11.5px] tracking-[0.13em] px-5 py-2.5">
+                <Link
+                  href="/shop"
+                  className="btn-gold"
+                  style={{
+                    fontSize: "11.5px",
+                    letterSpacing: "0.12em",
+                    padding: "10px 22px",
+                  }}
+                >
                   SHOP NOW
                 </Link>
               </div>
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN — portraits + labels ─── */}
-          <div className="flex flex-col" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-            {/* Two tall portrait images side-by-side */}
-            <div className="flex gap-3 flex-1 min-h-0">
-              <div className="relative flex-1 overflow-hidden">
+          {/* ─── RIGHT COLUMN — image cards + labels ─── */}
+          <div className="flex flex-col">
+            {/* Two 3:5 portrait image cards */}
+            <div className="flex gap-4">
+              <div
+                className="relative flex-1 overflow-hidden"
+                style={{ aspectRatio: "3 / 5" }}
+              >
                 <Image
                   src="/collection-model.jpg"
-                  alt="Collection Model"
+                  alt="Shop Collection"
                   fill
                   className="object-cover"
-                  sizes="(min-width:768px) 30vw, 50vw"
+                  sizes="(min-width:768px) 28vw, 50vw"
                   priority
                 />
               </div>
-              <div className="relative flex-1 overflow-hidden">
+              <div
+                className="relative flex-1 overflow-hidden"
+                style={{ aspectRatio: "3 / 5" }}
+              >
                 <Image
                   src="/collection-flatlay.jpg"
-                  alt="Collection Flatlay"
+                  alt="About Us"
                   fill
                   className="object-cover"
-                  sizes="(min-width:768px) 30vw, 50vw"
+                  sizes="(min-width:768px) 28vw, 50vw"
                   priority
                 />
               </div>
             </div>
 
-            {/* White label bars below each image */}
-            <div className="flex gap-3">
+            {/* White label strips — flush below images */}
+            <div className="flex gap-4 mt-0">
               <Link
                 href="/shop"
-                className="flex-1 bg-white border border-[#D5CFC7] text-center block hover:bg-[#F8F5F1] transition-colors"
-                style={{ padding: "14px 0" }}
+                className="flex-1 bg-white text-center block hover:bg-[#F8F5F1] transition-colors"
+                style={{
+                  padding: "14px 0",
+                  borderTop: "none",
+                }}
               >
-                <span className="text-[#3B2F2F] text-[13px] tracking-[0.14em] uppercase font-medium">
+                <span
+                  className="text-[#3B2F2F] uppercase font-medium"
+                  style={{ fontSize: "13px", letterSpacing: "0.14em" }}
+                >
                   SHOP COLLECTION
                 </span>
               </Link>
               <Link
                 href="/about"
-                className="flex-1 bg-white border border-[#D5CFC7] text-center block hover:bg-[#F8F5F1] transition-colors"
-                style={{ padding: "14px 0" }}
+                className="flex-1 bg-white text-center block hover:bg-[#F8F5F1] transition-colors"
+                style={{
+                  padding: "14px 0",
+                  borderTop: "none",
+                }}
               >
-                <span className="text-[#3B2F2F] text-[13px] tracking-[0.14em] uppercase font-medium">
+                <span
+                  className="text-[#3B2F2F] uppercase font-medium"
+                  style={{ fontSize: "13px", letterSpacing: "0.14em" }}
+                >
                   ABOUT US
                 </span>
               </Link>
@@ -147,61 +197,94 @@ export default function DiscoverQuote() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════ MOBILE (<md) ═══════════════════════════════ */}
+      {/* ═══════════════════════ MOBILE (<md) ═══════════════════════ */}
       <section className="md:hidden">
         {/* Cream zone */}
         <div
           className="px-5 pt-10 pb-8"
           style={{
             backgroundImage: "url('/paper-texture.jpg')",
-            backgroundSize: "600px 600px",
-            backgroundRepeat: "repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          <h2 className="font-serif text-[28px] font-bold italic text-[#3B2F2F] leading-[1.08] mb-3">
+          <h2
+            className="font-serif italic text-[#3B2F2F] mb-3"
+            style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
+          >
             Discover the Collection
           </h2>
-          <p className="text-[#8C7E74] text-[14px] leading-[1.6] mb-5 max-w-[300px]">
+          <p
+            className="text-[#7D7168] mb-5"
+            style={{ fontSize: "14px", lineHeight: 1.6, maxWidth: "300px" }}
+          >
             Sophisticated pieces crafted for the modern gentleman.
           </p>
           <div className="flex gap-3">
-            <Link href="/shop" className="btn-gold text-[11px] px-4 py-2.5">
+            <Link
+              href="/shop"
+              className="btn-gold"
+              style={{ fontSize: "11px", padding: "9px 16px" }}
+            >
               SHOP COLLECTION
             </Link>
-            <Link href="/about" className="btn-gold text-[11px] px-4 py-2.5">
+            <Link
+              href="/about"
+              className="btn-gold"
+              style={{ fontSize: "11px", padding: "9px 16px" }}
+            >
               ABOUT US
             </Link>
           </div>
         </div>
 
-        {/* Two images + labels */}
-        <div className="px-4 py-4 bg-[#EDE6DD]">
+        {/* Two 3:5 image cards + labels */}
+        <div
+          className="px-4 py-4"
+          style={{
+            backgroundImage: "url('/brown-texture.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center top",
+          }}
+        >
           <div className="grid grid-cols-2 gap-3">
-            <div className="relative aspect-[3/4] overflow-hidden">
+            <div className="relative overflow-hidden" style={{ aspectRatio: "3 / 5" }}>
               <Image
                 src="/collection-model.jpg"
-                alt="Collection Model"
+                alt="Shop Collection"
                 fill
                 className="object-cover"
                 sizes="50vw"
               />
             </div>
-            <div className="relative aspect-[3/4] overflow-hidden">
+            <div className="relative overflow-hidden" style={{ aspectRatio: "3 / 5" }}>
               <Image
                 src="/collection-flatlay.jpg"
-                alt="Collection Flatlay"
+                alt="About Us"
                 fill
                 className="object-cover"
                 sizes="50vw"
               />
             </div>
-            <Link href="/shop" className="bg-white border border-[#D5CFC7] py-3 text-center">
-              <span className="text-[#3B2F2F] text-[11px] tracking-[0.12em] uppercase font-medium">
+            <Link
+              href="/shop"
+              className="bg-white py-3 text-center hover:bg-[#F8F5F1] transition-colors"
+            >
+              <span
+                className="text-[#3B2F2F] uppercase font-medium"
+                style={{ fontSize: "11px", letterSpacing: "0.12em" }}
+              >
                 SHOP COLLECTION
               </span>
             </Link>
-            <Link href="/about" className="bg-white border border-[#D5CFC7] py-3 text-center">
-              <span className="text-[#3B2F2F] text-[11px] tracking-[0.12em] uppercase font-medium">
+            <Link
+              href="/about"
+              className="bg-white py-3 text-center hover:bg-[#F8F5F1] transition-colors"
+            >
+              <span
+                className="text-[#3B2F2F] uppercase font-medium"
+                style={{ fontSize: "11px", letterSpacing: "0.12em" }}
+              >
                 ABOUT US
               </span>
             </Link>
@@ -212,18 +295,22 @@ export default function DiscoverQuote() {
         <div
           className="px-5 pt-8 pb-10"
           style={{
-            backgroundColor: "#4A3728",
-            backgroundImage:
-              "url('/texture.png'), linear-gradient(175deg, rgba(150,135,120,0.45) 0%, rgba(90,70,55,0.85) 35%, rgba(55,38,28,1) 100%)",
-            backgroundSize: "150px 150px, cover",
-            backgroundRepeat: "repeat, no-repeat",
-            backgroundBlendMode: "overlay, normal",
+            backgroundImage: "url('/brown-texture.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
           }}
         >
-          <p className="font-serif text-[22px] italic text-[#F5F0EB] leading-[1.35] mb-5">
+          <p
+            className="font-serif italic text-[#F0EBE4] mb-5"
+            style={{ fontSize: "22px", lineHeight: 1.35 }}
+          >
             &ldquo;Dress well, live well, be a gentleman.&rdquo;
           </p>
-          <Link href="/shop" className="btn-gold text-[11px] px-5 py-2.5">
+          <Link
+            href="/shop"
+            className="btn-gold"
+            style={{ fontSize: "11px", padding: "9px 20px" }}
+          >
             SHOP NOW
           </Link>
         </div>
