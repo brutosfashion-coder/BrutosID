@@ -17,14 +17,14 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD] border-b border-[#3B2F2F]/10">
       <nav className="mx-auto px-8 lg:px-12 xl:px-16 h-[68px] lg:h-[74px] flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo — natural aspect ratio (portrait 0.76:1) */}
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
             alt="Brutos ID"
-            width={44}
+            width={34}
             height={44}
-            className="w-[38px] h-[38px] lg:w-[44px] lg:h-[44px]"
+            className="w-[30px] h-[40px] lg:w-[34px] lg:h-[44px]"
           />
           <span className="font-serif text-[20px] lg:text-[22px] font-bold text-[#3B2F2F] tracking-[0.03em]">
             BRUTOS ID
