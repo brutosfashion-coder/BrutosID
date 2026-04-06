@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/* Dramatic stagger — entrance after loading screen exit begins */
 const appear = (delay: number) => ({
   initial: { opacity: 0, y: 70, filter: "blur(10px)" },
   animate: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -20,22 +19,25 @@ export default function Hero() {
         className="hidden md:block relative w-full overflow-hidden"
         style={{ aspectRatio: "16/10", maxHeight: "48vh" }}
       >
-        {/* Image with dramatic slow zoom */}
+        {/* Image with entrance zoom + continuous Ken Burns */}
         <motion.div
           className="absolute inset-0"
-          initial={{ scale: 1.2, opacity: 0 }}
+          initial={{ scale: 1.25, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 4.2, duration: 3.5, ease: lux }}
         >
-          <Image
-            src="/hero.jpg"
-            alt="Gentleman in tan blazer"
-            fill
-            priority
-            className="object-cover"
-            style={{ objectPosition: "25% center" }}
-            sizes="100vw"
-          />
+          {/* The hero-ken-burns class adds continuous slow zoom/pan after entrance */}
+          <div className="absolute inset-0 hero-ken-burns" style={{ animationDelay: "7.7s" }}>
+            <Image
+              src="/hero.jpg"
+              alt="Gentleman in tan blazer"
+              fill
+              priority
+              className="object-cover"
+              style={{ objectPosition: "25% center" }}
+              sizes="100vw"
+            />
+          </div>
         </motion.div>
 
         {/* Cinematic vignette overlay */}
@@ -53,12 +55,10 @@ export default function Hero() {
         {/* Text overlay */}
         <div className="absolute inset-0 flex items-center">
           <div className="ml-auto w-[48%] max-w-[540px] pr-[5%] xl:pr-[7%]">
-            {/* Decorative line before title */}
             <motion.div
               className="h-[1px] mb-5"
               style={{
-                background:
-                  "linear-gradient(90deg, #C9A96E, transparent)",
+                background: "linear-gradient(90deg, #C9A96E, transparent)",
               }}
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: 60, opacity: 1 }}
@@ -98,15 +98,17 @@ export default function Hero() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 4.2, duration: 2.5, ease: lux }}
         >
-          <Image
-            src="/hero.jpg"
-            alt="Gentleman in tan blazer"
-            fill
-            priority
-            className="object-cover"
-            style={{ objectPosition: "30% center" }}
-            sizes="100vw"
-          />
+          <div className="absolute inset-0 hero-ken-burns" style={{ animationDelay: "6.7s" }}>
+            <Image
+              src="/hero.jpg"
+              alt="Gentleman in tan blazer"
+              fill
+              priority
+              className="object-cover"
+              style={{ objectPosition: "30% center" }}
+              sizes="100vw"
+            />
+          </div>
         </motion.div>
         <div className="bg-[#EDE6DD] px-6 py-8">
           <motion.div

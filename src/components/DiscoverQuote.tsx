@@ -6,6 +6,99 @@ import ScrollReveal from "./ScrollReveal";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+/* ── Luxury Card Back Face ── */
+function CardBack() {
+  return (
+    <div
+      className="absolute inset-0 luxury-card-back"
+      style={{
+        backfaceVisibility: "hidden",
+        transform: "rotateY(180deg)",
+      }}
+    >
+      {/* Corner ornaments */}
+      <div className="card-corner tl" />
+      <div className="card-corner tr" />
+      <div className="card-corner bl" />
+      <div className="card-corner br" />
+
+      {/* Geometric frame pattern */}
+      <div className="card-pattern" />
+
+      {/* Pulsing center glow */}
+      <div className="card-center-glow" />
+
+      {/* Rotating diamond ring */}
+      <div className="diamond-ring" />
+
+      {/* Center emblem */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          {/* Top ornament line */}
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
+            <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
+            <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
+          </div>
+
+          {/* Logo mark — stylized B monogram */}
+          <div
+            className="relative w-16 h-16 flex items-center justify-center mb-2"
+            style={{
+              border: "1px solid rgba(201,169,110,0.3)",
+              borderRadius: "50%",
+            }}
+          >
+            <div
+              className="absolute inset-[3px] flex items-center justify-center"
+              style={{
+                border: "1px solid rgba(201,169,110,0.15)",
+                borderRadius: "50%",
+              }}
+            >
+              <span
+                className="font-serif text-[#C9A96E] font-light"
+                style={{ fontSize: "28px", letterSpacing: "0.05em" }}
+              >
+                B
+              </span>
+            </div>
+          </div>
+
+          {/* Brand text */}
+          <div className="flex items-center gap-2 mt-1">
+            <div className="w-5 h-[1px] bg-[#C9A96E]/40" />
+            <span
+              className="font-serif text-[#C9A96E]/90 tracking-[0.4em] font-light"
+              style={{ fontSize: "10px" }}
+            >
+              EST. 2024
+            </span>
+            <div className="w-5 h-[1px] bg-[#C9A96E]/40" />
+          </div>
+
+          {/* Bottom ornament line */}
+          <div className="flex items-center gap-2 mt-3">
+            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
+            <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
+            <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
+          </div>
+        </div>
+      </div>
+
+      {/* Repeating subtle diagonal line pattern overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(45deg, #C9A96E 0px, #C9A96E 1px, transparent 1px, transparent 12px)",
+          backgroundSize: "17px 17px",
+        }}
+      />
+    </div>
+  );
+}
+
 /* ── Continuous Flip Card ── */
 function FlipCard({
   src,
@@ -22,12 +115,10 @@ function FlipCard({
   flipFrom: number;
   delay: number;
 }) {
-  /* Direction of first entrance flip */
   const direction = flipFrom < 0 ? -1 : 1;
 
   return (
     <div className="flex-1 flex flex-col">
-      {/* Perspective wrapper */}
       <div
         className="relative group cursor-pointer card-glow"
         style={{ perspective: "1200px" }}
@@ -35,17 +126,13 @@ function FlipCard({
         <motion.div
           className="relative w-full"
           style={{ transformStyle: "preserve-3d", aspectRatio: "2 / 3" }}
-          /* 
-            Keyframe loop:
-            0°    → show front (hold 4s)
-            180°  → flip to back 
-            180°  → hold back (2s)
-            360°  → flip back to front
-            Total cycle ≈ 8s per full rotation
-          */
           initial={{ rotateY: direction * 180, opacity: 0 }}
           whileInView={{
-            rotateY: [direction * 180, 0, 0, direction * 180, direction * 180, direction * 360],
+            rotateY: [
+              direction * 180, 0, 0,
+              direction * 180, direction * 180,
+              direction * 360,
+            ],
             opacity: [0, 1, 1, 1, 1, 1],
           }}
           viewport={{ once: true, amount: 0.15 }}
@@ -74,47 +161,11 @@ function FlipCard({
               sizes="(min-width:768px) 28vw, 50vw"
               priority
             />
-            {/* Warm hover overlay */}
             <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
           </div>
 
-          {/* ▸ BACK FACE — Luxury brand pattern */}
-          <div
-            className="absolute inset-0 flex items-center justify-center overflow-hidden"
-            style={{
-              backfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-              background:
-                "linear-gradient(160deg, #2C1E16 0%, #4A3728 40%, #3B2F2F 100%)",
-            }}
-          >
-            {/* Subtle radial glow */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(201,169,110,0.08) 0%, transparent 70%)",
-              }}
-            />
-            <div className="flex flex-col items-center relative z-10">
-              <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-[#C9A96E]/60 to-transparent" />
-              <div className="my-4 w-2.5 h-2.5 bg-[#C9A96E]/80 rotate-45" />
-              <span
-                className="font-serif text-[#C9A96E] tracking-[0.35em] font-medium"
-                style={{ fontSize: "16px" }}
-              >
-                BRUTOS
-              </span>
-              <span
-                className="font-serif text-[#C9A96E]/60 tracking-[0.25em] mt-1.5"
-                style={{ fontSize: "11px" }}
-              >
-                INDONESIA
-              </span>
-              <div className="my-4 w-2.5 h-2.5 bg-[#C9A96E]/80 rotate-45" />
-              <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-[#C9A96E]/60 to-transparent" />
-            </div>
-          </div>
+          {/* ▸ BACK FACE — Luxury brand card */}
+          <CardBack />
         </motion.div>
       </div>
 
@@ -143,12 +194,10 @@ export default function DiscoverQuote() {
     <>
       {/* ═══════════════ DESKTOP (md+) ═══════════════ */}
       <section className="hidden md:block relative overflow-hidden">
-        {/* Full-width split background */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
         >
-          {/* Paper texture — top */}
           <div
             className="absolute inset-x-0 top-0"
             style={{
@@ -158,7 +207,6 @@ export default function DiscoverQuote() {
               backgroundPosition: "center",
             }}
           />
-          {/* Brown texture — bottom — with slow drift animation */}
           <div
             className="absolute inset-x-0 bottom-0 texture-drift"
             style={{
@@ -169,7 +217,6 @@ export default function DiscoverQuote() {
           />
         </div>
 
-        {/* Content grid */}
         <div
           className="relative mx-auto"
           style={{
@@ -182,24 +229,20 @@ export default function DiscoverQuote() {
         >
           {/* ─── LEFT COLUMN ─── */}
           <div className="flex flex-col self-stretch">
-            {/* Top cream zone */}
             <div
               className="flex flex-col justify-end"
               style={{ flex: "0 0 48%", paddingBottom: "28px" }}
             >
-              {/* Gold accent line */}
               <motion.div
                 className="h-[1px] mb-5"
                 style={{
-                  background:
-                    "linear-gradient(90deg, #C9A96E, transparent)",
+                  background: "linear-gradient(90deg, #C9A96E, transparent)",
                 }}
                 initial={{ width: 0, opacity: 0 }}
                 whileInView={{ width: 70, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.5, ease: lux }}
               />
-
               <ScrollReveal direction="left" delay={0.1} distance={70} blur>
                 <h2
                   className="font-serif italic text-[#3B2F2F]"
@@ -214,7 +257,6 @@ export default function DiscoverQuote() {
                   Collection
                 </h2>
               </ScrollReveal>
-
               <ScrollReveal direction="left" delay={0.3} distance={50} blur>
                 <p
                   className="text-[#7D7168] mt-3"
@@ -224,11 +266,10 @@ export default function DiscoverQuote() {
                     maxWidth: "340px",
                   }}
                 >
-                  Premium menswear with a modern touch — 
-                  crafted for the gentleman who values quality and style.
+                  Premium menswear with a modern touch — crafted for the
+                  gentleman who values quality and style.
                 </p>
               </ScrollReveal>
-
               <ScrollReveal direction="up" delay={0.55} distance={30}>
                 <div className="flex gap-3 mt-6">
                   <Link
@@ -257,12 +298,10 @@ export default function DiscoverQuote() {
               </ScrollReveal>
             </div>
 
-            {/* Bottom brown zone */}
             <div
               className="flex flex-col justify-start"
               style={{ flex: "0 0 52%", paddingTop: "36px" }}
             >
-              {/* Decorative gold line */}
               <motion.div
                 className="h-[1px] mb-5"
                 style={{
@@ -274,7 +313,6 @@ export default function DiscoverQuote() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2, duration: 1.5, ease: lux }}
               />
-
               <ScrollReveal direction="left" delay={0.2} distance={60} blur>
                 <p
                   className="font-serif italic text-[#F0EBE4]"
@@ -288,7 +326,6 @@ export default function DiscoverQuote() {
                   be a gentleman.&rdquo;
                 </p>
               </ScrollReveal>
-
               <ScrollReveal direction="up" delay={0.45} distance={25}>
                 <div className="mt-6">
                   <Link
@@ -331,7 +368,6 @@ export default function DiscoverQuote() {
 
       {/* ═══════════════ MOBILE (<md) ═══════════════ */}
       <section className="md:hidden">
-        {/* Paper texture — heading */}
         <div
           className="px-5 pt-10 pb-8"
           style={{
@@ -363,8 +399,8 @@ export default function DiscoverQuote() {
               className="text-[#7D7168] mb-5"
               style={{ fontSize: "14px", lineHeight: 1.6, maxWidth: "300px" }}
             >
-              Premium menswear with a modern touch —
-              crafted for the gentleman who values quality and style.
+              Premium menswear with a modern touch — crafted for the gentleman
+              who values quality and style.
             </p>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.3}>
@@ -387,7 +423,6 @@ export default function DiscoverQuote() {
           </ScrollReveal>
         </div>
 
-        {/* Brown texture — Flip cards with drift */}
         <div
           className="px-4 py-4 texture-drift"
           style={{
@@ -415,7 +450,6 @@ export default function DiscoverQuote() {
           </div>
         </div>
 
-        {/* Brown texture — Quote */}
         <div
           className="px-5 pt-8 pb-10 texture-drift"
           style={{

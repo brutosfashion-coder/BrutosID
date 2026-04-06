@@ -39,26 +39,156 @@
     box-shadow: 0 25px 70px rgba(201, 169, 110, 0.14), 0 8px 24px rgba(0,0,0,0.06);
   }
 
-  /* Slow drifting texture background — continuous subtle movement */
+  /* Slow drifting texture background */
   .texture-drift {
     animation: textureDrift 25s ease-in-out infinite alternate;
+  }
+
+  /* ═══ LUXURY CARD BACK ═══ */
+  .luxury-card-back {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #1A120D 0%, #3B2A1F 35%, #2C1E16 65%, #1A120D 100%);
+  }
+
+  /* Animated shimmer sweep across the card */
+  .luxury-card-back::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(201, 169, 110, 0.06) 40%,
+      rgba(201, 169, 110, 0.12) 50%,
+      rgba(201, 169, 110, 0.06) 60%,
+      transparent 70%
+    );
+    animation: shimmerSweep 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Gold corner frames */
+  .card-corner {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    pointer-events: none;
+  }
+  .card-corner::before,
+  .card-corner::after {
+    content: '';
+    position: absolute;
+    background: linear-gradient(90deg, #C9A96E, rgba(201,169,110,0.3));
+  }
+  .card-corner::before {
+    width: 100%;
+    height: 1px;
+  }
+  .card-corner::after {
+    width: 1px;
+    height: 100%;
+  }
+  .card-corner.tl { top: 14px; left: 14px; }
+  .card-corner.tl::before { top: 0; left: 0; }
+  .card-corner.tl::after { top: 0; left: 0; }
+  .card-corner.tr { top: 14px; right: 14px; }
+  .card-corner.tr::before { top: 0; right: 0; background: linear-gradient(270deg, #C9A96E, rgba(201,169,110,0.3)); }
+  .card-corner.tr::after { top: 0; right: 0; }
+  .card-corner.bl { bottom: 14px; left: 14px; }
+  .card-corner.bl::before { bottom: 0; left: 0; }
+  .card-corner.bl::after { bottom: 0; left: 0; background: linear-gradient(180deg, rgba(201,169,110,0.3), #C9A96E); }
+  .card-corner.br { bottom: 14px; right: 14px; }
+  .card-corner.br::before { bottom: 0; right: 0; background: linear-gradient(270deg, #C9A96E, rgba(201,169,110,0.3)); }
+  .card-corner.br::after { bottom: 0; right: 0; background: linear-gradient(180deg, rgba(201,169,110,0.3), #C9A96E); }
+
+  /* Geometric ornament pattern */
+  .card-pattern {
+    position: absolute;
+    inset: 28px;
+    border: 1px solid rgba(201, 169, 110, 0.12);
+    pointer-events: none;
+  }
+  .card-pattern::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(201, 169, 110, 0.06);
+  }
+
+  /* Pulsing gold glow behind center emblem */
+  .card-center-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.15) 0%, transparent 70%);
+    animation: centerPulse 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Rotating diamond ring */
+  .diamond-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    transform: translate(-50%, -50%);
+    animation: diamondSpin 20s linear infinite;
+    pointer-events: none;
+  }
+  .diamond-ring::before,
+  .diamond-ring::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: rgba(201, 169, 110, 0.4);
+    transform: rotate(45deg);
+  }
+  .diamond-ring::before { top: -3px; left: 50%; margin-left: -3px; }
+  .diamond-ring::after { bottom: -3px; left: 50%; margin-left: -3px; }
+
+  /* ═══ HERO KEN BURNS ═══ */
+  .hero-ken-burns {
+    animation: kenBurns 20s ease-in-out infinite alternate;
+    will-change: transform;
   }
 }
 
 @keyframes textureDrift {
-  0% {
-    background-position: 0% 0%;
-  }
-  25% {
-    background-position: 15% 8%;
-  }
-  50% {
-    background-position: 5% 18%;
-  }
-  75% {
-    background-position: 20% 5%;
-  }
-  100% {
-    background-position: 10% 15%;
-  }
+  0%   { background-position: 0% 0%; }
+  25%  { background-position: 15% 8%; }
+  50%  { background-position: 5% 18%; }
+  75%  { background-position: 20% 5%; }
+  100% { background-position: 10% 15%; }
+}
+
+@keyframes shimmerSweep {
+  0%   { transform: translateX(-60%) translateY(-60%) rotate(45deg); }
+  100% { transform: translateX(60%) translateY(60%) rotate(45deg); }
+}
+
+@keyframes centerPulse {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.85); }
+  50%      { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+@keyframes diamondSpin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes kenBurns {
+  0%   { transform: scale(1.0)  translate(0%, 0%); }
+  30%  { transform: scale(1.08) translate(-1.5%, -0.5%); }
+  60%  { transform: scale(1.05) translate(0.5%, -1%); }
+  100% { transform: scale(1.1)  translate(-1%, 0.5%); }
 }
