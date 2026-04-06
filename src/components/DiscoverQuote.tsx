@@ -134,7 +134,7 @@ export default function DiscoverQuote() {
             <div className="flex gap-4">
               <div
                 className="relative flex-1 overflow-hidden"
-                style={{ aspectRatio: "3 / 5" }}
+                style={{ aspectRatio: "2 / 3" }}
               >
                 <Image
                   src="/collection-model.jpg"
@@ -147,7 +147,7 @@ export default function DiscoverQuote() {
               </div>
               <div
                 className="relative flex-1 overflow-hidden"
-                style={{ aspectRatio: "3 / 5" }}
+                style={{ aspectRatio: "2 / 3" }}
               >
                 <Image
                   src="/collection-flatlay.jpg"
@@ -248,7 +248,7 @@ export default function DiscoverQuote() {
           }}
         >
           <div className="grid grid-cols-2 gap-3">
-            <div className="relative overflow-hidden" style={{ aspectRatio: "3 / 5" }}>
+            <div className="relative overflow-hidden" style={{ aspectRatio: "2 / 3" }}>
               <Image
                 src="/collection-model.jpg"
                 alt="Shop Collection"
@@ -257,7 +257,7 @@ export default function DiscoverQuote() {
                 sizes="50vw"
               />
             </div>
-            <div className="relative overflow-hidden" style={{ aspectRatio: "3 / 5" }}>
+            <div className="relative overflow-hidden" style={{ aspectRatio: "2 / 3" }}>
               <Image
                 src="/collection-flatlay.jpg"
                 alt="About Us"
