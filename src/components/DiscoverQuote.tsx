@@ -38,7 +38,7 @@ function FlipCard({
   entranceDelay: number;
   isMobile?: boolean;
 }) {
-  const { isLoaded } = useLoading();
+  const { isLoaded, isFullyLoaded } = useLoading();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.15 });
 
@@ -79,7 +79,7 @@ function FlipCard({
 
   /* Entrance flip — fires once when loaded (or in view for desktop) */
   useEffect(() => {
-    const shouldStart = isMobile ? isLoaded : isLoaded && isInView;
+    const shouldStart = isMobile ? isFullyLoaded : isLoaded && isInView;
     if (!shouldStart) return;
 
     const t = setTimeout(() => {
@@ -91,7 +91,7 @@ function FlipCard({
       clearTimeout(t);
       clearInterval(intervalRef.current);
     };
-  }, [isLoaded, isInView, isMobile, entranceDelay, doFlip, startInterval]);
+  }, [isLoaded, isFullyLoaded, isInView, isMobile, entranceDelay, doFlip, startInterval]);
 
   /* Cleanup interval on unmount */
   useEffect(() => () => clearInterval(intervalRef.current), []);
@@ -274,13 +274,16 @@ function MobileSection({
   card1Images: [string, string, string];
   card2Images: [string, string, string];
 }) {
-  const { isLoaded } = useLoading();
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.05 });
-  const shouldAnimate = isLoaded && isInView;
+  const { isFullyLoaded } = useLoading();
+
+  /* 
+   * isFullyLoaded = true ONLY after loading screen has COMPLETELY exited.
+   * No useInView needed — all animations start the MOMENT the screen clears.
+   * Delays are tight since there's zero overlap with loading screen.
+   */
 
   return (
-    <section className="md:hidden" ref={sectionRef}>
+    <section className="md:hidden">
       {/* ── Discover Header ── */}
       <div
         className="relative px-6 pt-10 pb-7 overflow-hidden"
@@ -294,8 +297,8 @@ function MobileSection({
               background: "linear-gradient(90deg, #C9A96E, transparent)",
             }}
             initial={{ width: 0, opacity: 0 }}
-            animate={shouldAnimate ? { width: 40, opacity: 1 } : {}}
-            transition={{ delay: 0.2, duration: 1.2, ease: lux }}
+            animate={isFullyLoaded ? { width: 40, opacity: 1 } : { width: 0, opacity: 0 }}
+            transition={{ delay: 0, duration: 1.2, ease: lux }}
           />
 
           {/* Title — slides from left with blur */}
@@ -303,8 +306,8 @@ function MobileSection({
             className="font-serif italic gold-shimmer-text mb-3"
             style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
             initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
-            animate={shouldAnimate ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
-            transition={{ delay: 0.4, duration: 1.0, ease: lux }}
+            animate={isFullyLoaded ? { opacity: 1, x: 0, filter: "blur(0px)" } : { opacity: 0, x: -40, filter: "blur(8px)" }}
+            transition={{ delay: 0.15, duration: 1.0, ease: lux }}
           >
             Jelajahi
             <br />
@@ -320,8 +323,8 @@ function MobileSection({
               maxWidth: "270px",
             }}
             initial={{ opacity: 0, y: 20 }}
-            animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.7, duration: 0.9, ease: lux }}
+            animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.4, duration: 0.9, ease: lux }}
           >
             Fashion premium dengan sentuhan modern — dirancang untuk mereka
             yang mengutamakan kualitas dan gaya.
@@ -331,8 +334,8 @@ function MobileSection({
           <div className="flex gap-2.5">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.95, duration: 0.7, ease: lux }}
+              animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ delay: 0.6, duration: 0.7, ease: lux }}
             >
               <Link
                 href="/"
@@ -344,8 +347,8 @@ function MobileSection({
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 15 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 1.1, duration: 0.7, ease: lux }}
+              animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ delay: 0.75, duration: 0.7, ease: lux }}
             >
               <Link
                 href="/"
@@ -366,8 +369,8 @@ function MobileSection({
           background: "linear-gradient(to bottom, #F5F0EB, #3B2F2F)",
         }}
         initial={{ opacity: 0 }}
-        animate={shouldAnimate ? { opacity: 1 } : {}}
-        transition={{ delay: 1.2, duration: 0.8, ease: lux }}
+        animate={isFullyLoaded ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 0.8, duration: 0.8, ease: lux }}
       />
 
       {/* ── Flip Cards — staggered entrance ── */}
@@ -378,8 +381,8 @@ function MobileSection({
         <motion.div
           className="relative flex gap-2.5"
           initial={{ opacity: 0, y: 30 }}
-          animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 1.3, duration: 1.0, ease: lux }}
+          animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ delay: 0.9, duration: 1.0, ease: lux }}
         >
           <FlipCard
             images={card1Images}
@@ -413,8 +416,8 @@ function MobileSection({
               background: "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
             }}
             initial={{ width: 0, opacity: 0 }}
-            animate={shouldAnimate ? { width: 35, opacity: 1 } : {}}
-            transition={{ delay: 2.2, duration: 1.2, ease: lux }}
+            animate={isFullyLoaded ? { width: 35, opacity: 1 } : { width: 0, opacity: 0 }}
+            transition={{ delay: 1.6, duration: 1.2, ease: lux }}
           />
 
           {/* Quote text — fades in from left with blur */}
@@ -426,8 +429,8 @@ function MobileSection({
               color: "#F0EBE4",
             }}
             initial={{ opacity: 0, x: -30, filter: "blur(6px)" }}
-            animate={shouldAnimate ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
-            transition={{ delay: 2.5, duration: 1.0, ease: lux }}
+            animate={isFullyLoaded ? { opacity: 1, x: 0, filter: "blur(0px)" } : { opacity: 0, x: -30, filter: "blur(6px)" }}
+            transition={{ delay: 1.8, duration: 1.0, ease: lux }}
           >
             &ldquo;Berpakaian baik,
             <br />
@@ -439,8 +442,8 @@ function MobileSection({
           {/* Button — fades up */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
-            animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 2.9, duration: 0.7, ease: lux }}
+            animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ delay: 2.1, duration: 0.7, ease: lux }}
           >
             <Link
               href="/"

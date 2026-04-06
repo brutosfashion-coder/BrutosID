@@ -9,7 +9,7 @@ const exitEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
 export default function LoadingScreen() {
   const [show, setShow] = useState(true);
-  const { onLoadComplete } = useLoading();
+  const { onLoadComplete, onFullyLoaded } = useLoading();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -25,7 +25,7 @@ export default function LoadingScreen() {
   }, [onLoadComplete]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={onFullyLoaded}>
       {show && (
         <motion.div
           key="loader"
