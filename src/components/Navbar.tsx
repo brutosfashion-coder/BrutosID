@@ -24,7 +24,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
-            alt="Brutos ID — Brand Fashion Pria Premium Indonesia"
+            alt="Brutos ID — Brand Fashion Premium"
             width={34}
             height={44}
             className="w-[30px] h-[40px] lg:w-[34px] lg:h-[44px]"

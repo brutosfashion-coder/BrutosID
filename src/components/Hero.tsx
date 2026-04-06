@@ -28,11 +28,11 @@ export default function Hero() {
           <div className="absolute inset-0 hero-ken-burns" style={{ animationDelay: "7.7s" }}>
             <Image
               src="/hero.jpg"
-              alt="Koleksi fashion pria premium Brutos ID — brand pakaian pria terbaik Indonesia"
+              alt="Koleksi fashion premium Brutos ID — brand pakaian berkualitas"
               fill
               priority
               className="object-cover"
-              style={{ objectPosition: "25% center" }}
+              style={{ objectPosition: "25% 15%" }}
               sizes="100vw"
             />
           </div>
@@ -50,7 +50,7 @@ export default function Hero() {
         />
 
         <div className="absolute inset-0 flex items-center">
-          <div className="ml-auto w-[48%] max-w-[540px] pr-[5%] xl:pr-[7%]">
+          <div className="ml-auto w-[44%] max-w-[500px] pr-[3%] xl:pr-[4%]">
             <motion.div
               className="h-[1px] mb-5"
               style={{
@@ -70,7 +70,7 @@ export default function Hero() {
               className="text-[#6B5E54] text-[15px] lg:text-[16px] leading-[1.7] mb-7 max-w-[400px]"
               {...appear(0.3)}
             >
-              Pakaian pria premium dengan sentuhan modern — dirancang khusus untuk pria Indonesia yang menghargai kualitas dan gaya berpakaian elegan.
+              Pakaian premium dengan sentuhan modern — dirancang untuk mereka yang menghargai kualitas dan gaya berpakaian elegan.
             </motion.p>
             <motion.div {...appear(0.6)}>
               <Link
@@ -96,11 +96,11 @@ export default function Hero() {
           <div className="absolute inset-0 hero-ken-burns" style={{ animationDelay: "6.7s" }}>
             <Image
               src="/hero.jpg"
-              alt="Baju pria premium Brutos ID — fashion pria Indonesia berkualitas"
+              alt="Koleksi fashion premium Brutos ID — gaya berkelas"
               fill
               priority
               className="object-cover"
-              style={{ objectPosition: "30% center" }}
+              style={{ objectPosition: "30% 15%" }}
               sizes="100vw"
             />
           </div>
@@ -125,7 +125,7 @@ export default function Hero() {
             className="text-[#6B5E54] text-[14px] leading-[1.65] mb-6 max-w-[300px]"
             {...appear(0.25)}
           >
-            Pakaian pria premium dengan sentuhan modern — dirancang untuk pria yang menghargai kualitas dan penampilan.
+            Pakaian premium dengan sentuhan modern — dirancang untuk mereka yang menghargai kualitas dan penampilan.
           </motion.p>
           <motion.div {...appear(0.5)}>
             <Link href="/" className="btn-gold text-[12px] px-8 py-3">

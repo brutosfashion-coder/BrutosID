@@ -15,9 +15,9 @@ const inter = Inter({
 
 const SITE_URL = "https://brutos-id.vercel.app";
 const SITE_NAME = "Brutos ID";
-const TITLE = "Brutos ID — Brand Fashion Pria Premium Indonesia | Baju & Pakaian Pria Berkualitas";
+const TITLE = "Brutos ID — Brand Fashion Premium | Pakaian & Gaya Berpakaian Berkelas";
 const DESCRIPTION =
-  "Brutos ID adalah brand fashion pria premium Indonesia yang menghadirkan kemeja pria, outerwear, dan aksesoris berkualitas tinggi. Temukan koleksi pakaian pria terbaru dengan gaya maskulin modern untuk pria Indonesia yang menghargai kualitas dan penampilan.";
+  "Brutos ID menghadirkan koleksi fashion premium — kemeja, outerwear, dan aksesoris berkualitas tinggi dengan desain maskulin modern. Temukan gaya terbaik Anda bersama Brutos ID.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -28,35 +28,25 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   keywords: [
     "Brutos ID",
-    "fashion pria",
-    "baju pria",
-    "pakaian pria",
-    "brand fashion pria Indonesia",
-    "baju pria premium",
-    "pakaian pria terbaru",
-    "kemeja pria premium",
-    "outerwear pria",
-    "outfit pria keren",
-    "style pria modern",
-    "brand lokal Indonesia",
-    "clothing brand Indonesia",
-    "brand pakaian pria lokal",
-    "toko baju pria online",
-    "fashion pria Indonesia",
-    "gaya berpakaian pria",
-    "baju cowok keren",
-    "fashion cowok",
-    "jaket pria premium",
-    "aksesoris pria",
-    "baju pria berkualitas",
-    "brand fashion lokal premium",
-    "pakaian pria Indonesia",
-    "kemeja pria Indonesia",
-    "outfit pria Indonesia",
-    "gaya pria maskulin",
-    "pakaian pria elegan",
-    "busana pria modern",
-    "koleksi baju pria",
+    "fashion premium",
+    "brand fashion",
+    "pakaian berkualitas",
+    "kemeja premium",
+    "outerwear",
+    "outfit keren",
+    "style modern",
+    "gaya berpakaian",
+    "baju berkualitas",
+    "brand fashion lokal",
+    "clothing brand",
+    "premium menswear",
+    "fashion maskulin",
+    "jaket premium",
+    "aksesoris",
+    "busana modern",
+    "koleksi fashion",
+    "luxury streetwear",
+    "modern elegance",
   ],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
@@ -64,9 +54,6 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
   alternates: {
     canonical: SITE_URL,
-    languages: {
-      "id-ID": SITE_URL,
-    },
   },
   openGraph: {
     type: "website",
@@ -80,7 +67,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "Brutos ID — Brand Fashion Pria Premium Indonesia | Baju Pria Berkualitas",
+        alt: "Brutos ID — Brand Fashion Premium | Gaya Berkelas",
         type: "image/jpeg",
       },
     ],
@@ -103,14 +90,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    // Add your Google Search Console verification code here
-    // google: "your-verification-code",
-  },
   category: "fashion",
 };
 
-/* JSON-LD Structured Data */
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -119,7 +101,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: SITE_NAME,
-      description: "Brand fashion pria premium Indonesia — kemeja, outerwear, dan aksesoris berkualitas tinggi untuk pria modern.",
+      description: "Brand fashion premium — kemeja, outerwear, dan aksesoris berkualitas tinggi dengan desain maskulin modern.",
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "id",
     },
@@ -127,7 +109,7 @@ const jsonLd = {
       "@type": ["Organization", "ClothingStore", "Brand"],
       "@id": `${SITE_URL}/#organization`,
       name: SITE_NAME,
-      alternateName: ["Brutos Indonesia", "BRUTOS ID", "Brutos Fashion Pria"],
+      alternateName: ["BRUTOS ID", "Brutos Fashion"],
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
@@ -137,43 +119,32 @@ const jsonLd = {
       },
       image: `${SITE_URL}/og-image.jpg`,
       description:
-        "Brand fashion pria premium Indonesia yang menghadirkan kemeja, outerwear, dan aksesoris berkualitas tinggi dengan desain maskulin modern.",
+        "Brand fashion premium yang menghadirkan kemeja, outerwear, dan aksesoris berkualitas tinggi dengan desain maskulin modern.",
       foundingDate: "2024",
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "ID",
-        addressRegion: "Indonesia",
-      },
       sameAs: [
         "https://instagram.com/brutos.id",
         "https://facebook.com/brutosid",
         "https://twitter.com/brutosid",
       ],
       priceRange: "$$",
-      currenciesAccepted: "IDR",
-      paymentAccepted: "Kartu Kredit, Transfer Bank, E-Wallet",
-      areaServed: {
-        "@type": "Country",
-        name: "Indonesia",
-      },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Koleksi Fashion Pria Brutos ID",
+        name: "Koleksi Fashion Premium Brutos ID",
         itemListElement: [
           {
             "@type": "OfferCatalog",
-            name: "Kemeja Pria Premium",
-            description: "Koleksi kemeja pria premium dengan potongan presisi dan bahan berkualitas tinggi",
+            name: "Kemeja Premium",
+            description: "Koleksi kemeja premium dengan potongan presisi dan bahan berkualitas tinggi",
           },
           {
             "@type": "OfferCatalog",
-            name: "Outerwear & Jaket Pria",
-            description: "Jaket dan outerwear pria bergaya maskulin modern untuk tampilan elegan",
+            name: "Outerwear & Jaket",
+            description: "Jaket dan outerwear bergaya maskulin modern untuk tampilan elegan",
           },
           {
             "@type": "OfferCatalog",
-            name: "Aksesoris Pria",
-            description: "Koleksi aksesoris pria pilihan untuk melengkapi gaya berpakaian Anda",
+            name: "Aksesoris",
+            description: "Koleksi aksesoris pilihan untuk melengkapi gaya berpakaian Anda",
           },
         ],
       },
@@ -207,8 +178,6 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#3C2A21" />
-        <meta name="geo.region" content="ID" />
-        <meta name="geo.placename" content="Indonesia" />
         <meta name="content-language" content="id" />
         <script
           type="application/ld+json"

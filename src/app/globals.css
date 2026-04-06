@@ -50,7 +50,6 @@
       inset 0 -1px 0 rgba(201,169,110,0.12);
     transform: translateY(-2px);
   }
-  /* Hover shine sweep */
   .btn-glass-gold::before {
     content: '';
     position: absolute;
@@ -109,7 +108,6 @@
     left: 100%;
   }
 
-  /* Keep legacy for other pages */
   .btn-gold {
     @apply inline-flex items-center justify-center font-medium uppercase rounded-full transition-colors duration-200 cursor-pointer;
     background-color: #C9A96E;
@@ -127,14 +125,17 @@
     box-shadow: 0 25px 70px rgba(201, 169, 110, 0.14), 0 8px 24px rgba(0,0,0,0.06);
   }
 
-  /* Slow drifting texture background */
   .texture-drift {
     animation: textureDrift 25s ease-in-out infinite alternate;
   }
 
-  /* ═══ CARD FLIP — CSS-based seamless loop ═══ */
-  .card-flip {
-    animation: cardFlip 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  /* ═══ CARD FLIP — click-based with smooth transition ═══ */
+  .card-flip-container {
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .card-flip-container.flipped {
+    transform: rotateY(180deg);
   }
 
   /* ═══ LUXURY CARD BACK ═══ */
@@ -162,7 +163,6 @@
     pointer-events: none;
   }
 
-  /* Gold corner frames */
   .card-corner {
     position: absolute;
     width: 28px;
@@ -238,13 +238,13 @@
   .diamond-ring::before { top: -3px; left: 50%; margin-left: -3px; }
   .diamond-ring::after { bottom: -3px; left: 50%; margin-left: -3px; }
 
-  /* ═══ HERO KEN BURNS ═══ */
+  /* ═══ HERO KEN BURNS — SLOWER ═══ */
   .hero-ken-burns {
-    animation: kenBurns 20s ease-in-out infinite alternate;
+    animation: kenBurns 45s ease-in-out infinite alternate;
     will-change: transform;
   }
 
-  /* ═══ GOLD SHIMMER TEXT ═══ */
+  /* ═══ GOLD SHIMMER TEXT — SLOWER ═══ */
   .gold-shimmer-text {
     background: linear-gradient(
       90deg,
@@ -258,15 +258,13 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: goldShimmer 5s ease-in-out infinite;
+    animation: goldShimmer 14s ease-in-out infinite;
   }
 
-  /* ═══ QUOTE GLOW ═══ */
   .quote-glow {
     animation: quoteGlow 3s ease-in-out infinite alternate;
   }
 
-  /* ═══ GOLD LINE PULSE ═══ */
   .gold-line-pulse {
     animation: goldLinePulse 2.5s ease-in-out infinite alternate;
   }
@@ -280,13 +278,6 @@
   50%  { background-position: 5% 18%; }
   75%  { background-position: 20% 5%; }
   100% { background-position: 10% 15%; }
-}
-
-/* Seamless: 0°=360° so CSS loops perfectly */
-@keyframes cardFlip {
-  0%, 40%  { transform: rotateY(0deg); }
-  50%, 90% { transform: rotateY(180deg); }
-  100%     { transform: rotateY(360deg); }
 }
 
 @keyframes shimmerSweep {
@@ -304,13 +295,15 @@
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+/* Ken Burns — slower & gentler movement, biased upward to preserve heads */
 @keyframes kenBurns {
   0%   { transform: scale(1.0)  translate(0%, 0%); }
-  30%  { transform: scale(1.08) translate(-1.5%, -0.5%); }
-  60%  { transform: scale(1.05) translate(0.5%, -1%); }
-  100% { transform: scale(1.1)  translate(-1%, 0.5%); }
+  30%  { transform: scale(1.04) translate(-0.8%, 0.3%); }
+  60%  { transform: scale(1.03) translate(0.3%, 0.2%); }
+  100% { transform: scale(1.05) translate(-0.5%, 0.4%); }
 }
 
+/* Gold shimmer — much slower sweep */
 @keyframes goldShimmer {
   0%   { background-position: 100% 0; }
   100% { background-position: -100% 0; }

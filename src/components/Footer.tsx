@@ -24,7 +24,7 @@ export default function Footer() {
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
-            alt="Brutos ID — Brand Fashion Pria Indonesia"
+            alt="Brutos ID — Brand Fashion Premium"
             width={24}
             height={32}
             className="w-[22px] h-[29px] lg:w-[24px] lg:h-[32px] brightness-0 invert opacity-85"
@@ -50,13 +50,13 @@ export default function Footer() {
           ))}
           <span className="text-[#F5F0EB]/20 text-[16px]">|</span>
           <div className="flex items-center gap-3">
-            <a href="https://instagram.com/brutos.id" aria-label="Instagram Brutos ID Fashion Pria" className="text-[#C5B9A8] hover:text-[#F5F0EB] transition-colors">
+            <a href="https://instagram.com/brutos.id" aria-label="Instagram Brutos ID" className="text-[#C5B9A8] hover:text-[#F5F0EB] transition-colors">
               <FaInstagram className="w-4 h-4" />
             </a>
-            <a href="https://facebook.com/brutosid" aria-label="Facebook Brutos ID Fashion Pria" className="text-[#C5B9A8] hover:text-[#F5F0EB] transition-colors">
+            <a href="https://facebook.com/brutosid" aria-label="Facebook Brutos ID" className="text-[#C5B9A8] hover:text-[#F5F0EB] transition-colors">
               <FaFacebookF className="w-3.5 h-3.5" />
             </a>
-            <a href="https://twitter.com/brutosid" aria-label="Twitter Brutos ID Fashion Pria" className="text-[#C5B9A8] hover:text-[#F5F0EB] transition-colors">
+            <a href="https://twitter.com/brutosid" aria-label="Twitter Brutos ID" className="text-[#C5B9A8] hover:text-[#F5F0EB] transition-colors">
               <FaTwitter className="w-4 h-4" />
             </a>
           </div>

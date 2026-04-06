@@ -2,89 +2,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import ScrollReveal from "./ScrollReveal";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/* ── Luxury Card Back Face ── */
-function CardBack() {
-  return (
-    <div
-      className="absolute inset-0 luxury-card-back"
-      style={{
-        backfaceVisibility: "hidden",
-        transform: "rotateY(180deg)",
-      }}
-    >
-      <div className="card-corner tl" />
-      <div className="card-corner tr" />
-      <div className="card-corner bl" />
-      <div className="card-corner br" />
-      <div className="card-pattern" />
-      <div className="card-center-glow" />
-      <div className="diamond-ring" />
-
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
-            <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
-            <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
-          </div>
-
-          <div
-            className="relative w-20 h-20 flex items-center justify-center"
-            style={{
-              border: "1px solid rgba(201,169,110,0.35)",
-              borderRadius: "50%",
-            }}
-          >
-            <div
-              className="absolute inset-[4px] flex items-center justify-center"
-              style={{
-                border: "1px solid rgba(201,169,110,0.15)",
-                borderRadius: "50%",
-              }}
-            >
-              <span
-                className="font-serif text-[#C9A96E] font-light"
-                style={{ fontSize: "34px", letterSpacing: "0.05em" }}
-              >
-                B
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 mt-4">
-            <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#C9A96E]/50" />
-            <div className="w-1.5 h-1.5 bg-[#C9A96E]/70 rotate-45" />
-            <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#C9A96E]/50" />
-          </div>
-        </div>
-      </div>
-
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(45deg, #C9A96E 0px, #C9A96E 1px, transparent 1px, transparent 12px)",
-          backgroundSize: "17px 17px",
-        }}
-      />
-    </div>
-  );
-}
-
-/* ── Continuous Flip Card ── */
+/* ── Click-Based Flip Card ── */
 function FlipCard({
-  src,
+  frontSrc,
+  backSrc,
   alt,
   href,
   label,
   delay,
 }: {
-  src: string;
+  frontSrc: string;
+  backSrc: string;
   alt: string;
   href: string;
   label: string;
@@ -92,17 +25,7 @@ function FlipCard({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.15 });
-  const [flipActive, setFlipActive] = useState(false);
-
-  useEffect(() => {
-    if (isInView) {
-      const timer = setTimeout(
-        () => setFlipActive(true),
-        (delay + 1.8) * 1000
-      );
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, delay]);
+  const [flipped, setFlipped] = useState(false);
 
   return (
     <div className="flex-1 flex flex-col">
@@ -110,6 +33,7 @@ function FlipCard({
         ref={ref}
         className="relative group cursor-pointer card-glow"
         style={{ perspective: "1200px" }}
+        onClick={() => setFlipped((prev) => !prev)}
       >
         <motion.div
           className="relative w-full"
@@ -119,15 +43,15 @@ function FlipCard({
           transition={{ delay, duration: 1.6, ease: lux }}
         >
           <div
-            className={`absolute inset-0 ${flipActive ? "card-flip" : ""}`}
-            style={{ transformStyle: "preserve-3d" }}
+            className={`absolute inset-0 card-flip-container ${flipped ? "flipped" : ""}`}
           >
+            {/* Front face — main image */}
             <div
               className="absolute inset-0 overflow-hidden"
               style={{ backfaceVisibility: "hidden" }}
             >
               <Image
-                src={src}
+                src={frontSrc}
                 alt={alt}
                 fill
                 className="object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
@@ -136,7 +60,24 @@ function FlipCard({
               />
               <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
             </div>
-            <CardBack />
+
+            {/* Back face — second image */}
+            <div
+              className="absolute inset-0 overflow-hidden"
+              style={{
+                backfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+              }}
+            >
+              <Image
+                src={backSrc}
+                alt={`${alt} — tampilan lain`}
+                fill
+                className="object-cover"
+                sizes="(min-width:768px) 28vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A120D]/40 to-transparent pointer-events-none" />
+            </div>
           </div>
         </motion.div>
       </div>
@@ -238,7 +179,7 @@ export default function DiscoverQuote() {
                     maxWidth: "340px",
                   }}
                 >
-                  Fashion pria premium dengan sentuhan modern — dirancang untuk pria Indonesia yang mengutamakan kualitas dan gaya berpakaian maskulin.
+                  Fashion premium dengan sentuhan modern — dirancang untuk mereka yang mengutamakan kualitas dan gaya berpakaian maskulin.
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="up" delay={0.55} distance={30}>
@@ -296,7 +237,7 @@ export default function DiscoverQuote() {
                 >
                   &ldquo;Berpakaian baik, hidup lebih baik,
                   <br />
-                  jadilah pria sejati.&rdquo;
+                  jadilah versi terbaik dirimu.&rdquo;
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="up" delay={0.45} distance={25}>
@@ -317,18 +258,20 @@ export default function DiscoverQuote() {
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN — Flip Cards ─── */}
+          {/* ─── RIGHT COLUMN — Click-to-Flip Cards ─── */}
           <div className="flex gap-4">
             <FlipCard
-              src="/collection-model.jpg"
-              alt="Koleksi baju pria premium Brutos ID — outfit pria keren brand lokal Indonesia"
+              frontSrc="/collection-model.jpg"
+              backSrc="/collection-model.jpg"
+              alt="Koleksi fashion premium Brutos ID — gaya maskulin modern"
               href="/"
               label="LIHAT KOLEKSI"
               delay={0.4}
             />
             <FlipCard
-              src="/collection-flatlay.jpg"
-              alt="Flatlay pakaian pria Brutos ID — fashion pria modern Indonesia"
+              frontSrc="/collection-flatlay.jpg"
+              backSrc="/collection-flatlay.jpg"
+              alt="Flatlay koleksi premium Brutos ID — fashion modern berkelas"
               href="/"
               label="TENTANG KAMI"
               delay={0.7}
@@ -370,7 +313,7 @@ export default function DiscoverQuote() {
               className="text-[#7D7168] mb-5"
               style={{ fontSize: "14px", lineHeight: 1.6, maxWidth: "300px" }}
             >
-              Fashion pria premium dengan sentuhan modern — dirancang untuk pria yang mengutamakan kualitas dan gaya.
+              Fashion premium dengan sentuhan modern — dirancang untuk mereka yang mengutamakan kualitas dan gaya.
             </p>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.3}>
@@ -402,15 +345,17 @@ export default function DiscoverQuote() {
         >
           <div className="grid grid-cols-2 gap-3">
             <FlipCard
-              src="/collection-model.jpg"
-              alt="Koleksi baju pria premium Brutos ID — brand fashion pria Indonesia"
+              frontSrc="/collection-model.jpg"
+              backSrc="/collection-model.jpg"
+              alt="Koleksi fashion premium Brutos ID"
               href="/"
               label="LIHAT KOLEKSI"
               delay={0.2}
             />
             <FlipCard
-              src="/collection-flatlay.jpg"
-              alt="Outfit pria modern Brutos ID — pakaian pria berkualitas"
+              frontSrc="/collection-flatlay.jpg"
+              backSrc="/collection-flatlay.jpg"
+              alt="Koleksi premium Brutos ID — fashion modern"
               href="/"
               label="TENTANG KAMI"
               delay={0.5}
@@ -441,7 +386,7 @@ export default function DiscoverQuote() {
               className="font-serif italic quote-glow mb-5"
               style={{ fontSize: "22px", lineHeight: 1.35, color: "#F0EBE4" }}
             >
-              &ldquo;Berpakaian baik, hidup lebih baik, jadilah pria sejati.&rdquo;
+              &ldquo;Berpakaian baik, hidup lebih baik, jadilah versi terbaik dirimu.&rdquo;
             </p>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.15}>

@@ -4,17 +4,17 @@ import Link from "next/link";
 const CATS = [
   {
     title: "Kemeja Signature",
-    desc: "Koleksi kemeja pria premium dari bahan katun terbaik dengan potongan presisi dan tampilan timeless.",
+    desc: "Koleksi kemeja premium dari bahan katun terbaik dengan potongan presisi dan tampilan timeless.",
     img: "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=600&q=80",
   },
   {
     title: "Outerwear Premium",
-    desc: "Jaket dan outerwear pria bergaya maskulin modern untuk pria yang menghargai penampilan berkelas.",
+    desc: "Jaket dan outerwear bergaya maskulin modern untuk mereka yang menghargai penampilan berkelas.",
     img: "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&q=80",
   },
   {
     title: "Aksesoris Elegan",
-    desc: "Lengkapi gaya berpakaian Anda dengan koleksi aksesoris pria pilihan yang menunjang penampilan.",
+    desc: "Lengkapi gaya berpakaian Anda dengan koleksi aksesoris pilihan yang menunjang penampilan.",
     img: "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=600&q=80",
   },
 ];
@@ -36,7 +36,7 @@ export default function Categories() {
               <div className="relative w-full aspect-[5/3] mb-5 rounded-xl overflow-hidden">
                 <Image
                   src={c.img}
-                  alt={`${c.title} — koleksi fashion pria premium Brutos ID Indonesia`}
+                  alt={`${c.title} — koleksi fashion premium Brutos ID`}
                   fill
                   className="object-cover"
                   sizes="(max-width:640px) 100vw, 28vw"
