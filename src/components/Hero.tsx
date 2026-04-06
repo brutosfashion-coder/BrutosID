@@ -84,103 +84,86 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ====== MOBILE — FULL VIEWPORT HERO ====== */}
+      {/* ====== MOBILE — FULL VIEWPORT, TEXT ON RIGHT ====== */}
       <div className="md:hidden relative w-full overflow-hidden" style={{ height: "calc(100svh - 60px)" }}>
-        {/* Background image — lighter Ken Burns via CSS */}
+        {/* Background image — model on the left */}
         <motion.div
           className="absolute inset-0 gpu-layer"
-          initial={{ scale: 1.08, opacity: 0 }}
+          initial={{ scale: 1.05, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 4.2, duration: 2, ease: lux }}
         >
-          <div
-            className="absolute inset-0 gpu-layer"
-            style={{ animation: "kenBurnsMobile 60s ease-in-out infinite alternate" }}
-          >
-            <Image
-              src="/hero.jpg"
-              alt="Koleksi fashion premium Brutos ID — gaya berkelas"
-              fill
-              priority
-              className="object-cover"
-              style={{ objectPosition: "30% 10%" }}
-              sizes="100vw"
+          <Image
+            src="/hero.jpg"
+            alt="Koleksi fashion premium Brutos ID — gaya berkelas"
+            fill
+            priority
+            className="object-cover"
+            style={{ objectPosition: "25% 15%" }}
+            sizes="100vw"
+          />
+        </motion.div>
+
+        {/* Light overlay — subtle, NOT dark gradient */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "linear-gradient(to left, rgba(245,240,235,0.55) 35%, transparent 75%)",
+          }}
+        />
+
+        {/* Text content — positioned right side, vertically centered */}
+        <div className="absolute inset-0 flex items-center justify-end">
+          <div className="w-[55%] sm:w-[50%] pr-5 sm:pr-8">
+            {/* Gold accent line */}
+            <motion.div
+              className="h-[1px] mb-4 gpu-layer"
+              style={{
+                background: "linear-gradient(90deg, #C9A96E, transparent)",
+              }}
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 35, opacity: 1 }}
+              transition={{ delay: 4.6, duration: 0.8, ease: lux }}
             />
+
+            {/* H1 — dark text, serif, elegant */}
+            <motion.h1
+              className="font-serif text-[28px] sm:text-[34px] font-bold italic text-[#3B2F2F] leading-[1.1] mb-3 gpu-layer"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 4.7, duration: 1, ease: lux }}
+            >
+              Elegance is
+              <br />
+              Never Loud
+            </motion.h1>
+
+            {/* Description — dark muted text */}
+            <motion.p
+              className="text-[#6B5E54] text-[12px] sm:text-[13px] leading-[1.65] mb-5 max-w-[220px] gpu-layer"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 5.0, duration: 0.8, ease: lux }}
+            >
+              Pakaian premium dengan sentuhan modern — dirancang untuk mereka yang menghargai kualitas dan penampilan.
+            </motion.p>
+
+            {/* CTA — solid muted brown button */}
+            <motion.div
+              className="gpu-layer"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 5.2, duration: 0.8, ease: lux }}
+            >
+              <Link
+                href="/"
+                className="inline-block bg-[#B8956A] text-white text-[10px] sm:text-[11px] tracking-[0.2em] px-6 py-3 uppercase hover:bg-[#A07D55] transition-colors duration-300"
+              >
+                BELANJA SEKARANG
+              </Link>
+            </motion.div>
           </div>
-        </motion.div>
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 mobile-hero-gradient pointer-events-none" />
-
-        {/* Content at bottom */}
-        <div className="absolute inset-x-0 bottom-0 px-6 pb-8">
-          {/* Gold line */}
-          <motion.div
-            className="h-[1px] mb-4 gold-line-pulse gpu-layer"
-            style={{
-              background: "linear-gradient(90deg, #C9A96E, transparent)",
-              width: "35px",
-            }}
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 35, opacity: 1 }}
-            transition={{ delay: 4.6, duration: 0.8, ease: lux }}
-          />
-
-          {/* H1 — no blur filter for perf */}
-          <motion.h1
-            className="font-serif text-[30px] sm:text-[34px] font-bold italic text-[#F0EBE4] leading-[1.1] mb-2.5 gpu-layer"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 4.7, duration: 1, ease: lux }}
-            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}
-          >
-            Elegance is
-            <br />
-            Never Loud
-          </motion.h1>
-
-          {/* Description */}
-          <motion.p
-            className="text-[#E8DFD4]/70 text-[12.5px] sm:text-[13px] leading-[1.65] mb-6 max-w-[260px] gpu-layer"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 5.0, duration: 0.8, ease: lux }}
-          >
-            Pakaian premium dengan sentuhan modern — dirancang untuk mereka yang menghargai kualitas dan penampilan.
-          </motion.p>
-
-          {/* CTA */}
-          <motion.div
-            className="gpu-layer"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 5.2, duration: 0.8, ease: lux }}
-          >
-            <Link href="/" className="btn-glass-gold-light text-[10.5px] sm:text-[11px] px-6 py-2.5">
-              BELANJA SEKARANG
-            </Link>
-          </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.3 }}
-          transition={{ delay: 6, duration: 1 }}
-        >
-          <motion.div
-            className="w-[1px] h-4 bg-[#F0EBE4]"
-            animate={{ scaleY: [1, 0.4, 1] }}
-            transition={{
-              repeat: Infinity,
-              duration: 2.5,
-              ease: "easeInOut",
-              delay: 6.5,
-            }}
-            style={{ transformOrigin: "top" }}
-          />
-        </motion.div>
       </div>
 
       {/* Desktop scroll indicator */}
