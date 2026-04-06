@@ -30,7 +30,7 @@ export default function Categories() {
       }}
     >
       {/* Percentage-based width: 80% content, 10% margin each side — matches design */}
-      <div className="w-[90%] lg:w-[80%] mx-auto">
+      <div className="w-[90%] lg:w-[70%] mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-7">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
