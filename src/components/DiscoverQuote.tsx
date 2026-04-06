@@ -2,13 +2,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import ScrollReveal from "./ScrollReveal";
 import { useLoading } from "./LoadingContext";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/* Stable image arrays — defined at module level to prevent re-creation on every render */
+/* ── Stable image arrays at module level ── */
 const card1Images: [string, string, string] = [
   "/collection-model.jpg",
   "/hero.jpg",
@@ -21,7 +21,11 @@ const card2Images: [string, string, string] = [
 ];
 
 /* ══════════════════════════════════════════════════════════
-   FLIP CARD — 3 images, auto-flip 7s, click resets timer
+   FLIP CARD
+   - 3 images cycling through face A and B
+   - Entrance flip: triggered by shouldStart + entranceDelay
+   - Auto-flip: starts at autoStartDelay, repeats every 7s
+   - Click: instant flip + resets auto-flip timer
    ══════════════════════════════════════════════════════════ */
 function FlipCard({
   images,
@@ -29,6 +33,8 @@ function FlipCard({
   href,
   label,
   entranceDelay,
+  autoStartDelay,
+  shouldStart,
   isMobile,
 }: {
   images: [string, string, string];
@@ -36,80 +42,82 @@ function FlipCard({
   href: string;
   label: string;
   entranceDelay: number;
+  autoStartDelay: number;
+  shouldStart: boolean;
   isMobile?: boolean;
 }) {
-  const { isLoaded, isFullyLoaded } = useLoading();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.15 });
-
-  /* ── Flip state ── */
   const [flipCount, setFlipCount] = useState(0);
   const [faceAImg, setFaceAImg] = useState(images[0]);
   const [faceBImg, setFaceBImg] = useState(images[1]);
-  const nextImgIdx = useRef(2); // next image index to load into hidden face
+  const nextImgIdx = useRef(2);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
-  const imagesRef = useRef(images);  // stable ref to avoid re-render issues
+  const autoTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const entranceTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const imagesRef = useRef(images);
+  const startedRef = useRef(false);
 
   const doFlip = useCallback(() => {
     setFlipCount((c) => c + 1);
   }, []);
 
-  /* After each flip, update the now-hidden face with the next image */
+  /* After each flip, swap the hidden face with the next image */
   useEffect(() => {
     if (flipCount === 0) return;
     const imgs = imagesRef.current;
     const timer = setTimeout(() => {
-      const isANowHidden = flipCount % 2 === 1; // odd = A hidden, even = B hidden
+      const isAHidden = flipCount % 2 === 1;
       const img = imgs[nextImgIdx.current];
       nextImgIdx.current = (nextImgIdx.current + 1) % imgs.length;
-      if (isANowHidden) {
-        setFaceAImg(img);
-      } else {
-        setFaceBImg(img);
-      }
-    }, isMobile ? 500 : 900); // wait for flip animation to mostly complete
+      if (isAHidden) setFaceAImg(img);
+      else setFaceBImg(img);
+    }, isMobile ? 500 : 900);
     return () => clearTimeout(timer);
   }, [flipCount, isMobile]);
 
-  /* Start auto-flip interval */
-  const startInterval = useCallback(() => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(doFlip, 7000);
-  }, [doFlip]);
-
-  /* Entrance flip — fires once when loaded (or in view for desktop) */
+  /* Entrance flip + auto-flip setup */
   useEffect(() => {
-    const shouldStart = isMobile ? isFullyLoaded : isLoaded && isInView;
-    if (!shouldStart) return;
+    if (!shouldStart || startedRef.current) return;
+    startedRef.current = true;
 
-    const t = setTimeout(() => {
+    /* Entrance flip */
+    entranceTimerRef.current = setTimeout(doFlip, entranceDelay * 1000);
+
+    /* Auto-flip: first tick at autoStartDelay, then every 7s */
+    autoTimerRef.current = setTimeout(() => {
       doFlip();
-      startInterval();
-    }, entranceDelay * 1000);
+      intervalRef.current = setInterval(doFlip, 7000);
+    }, autoStartDelay * 1000);
 
     return () => {
-      clearTimeout(t);
+      clearTimeout(entranceTimerRef.current);
+      clearTimeout(autoTimerRef.current);
       clearInterval(intervalRef.current);
     };
-  }, [isLoaded, isFullyLoaded, isInView, isMobile, entranceDelay, doFlip, startInterval]);
+  }, [shouldStart, entranceDelay, autoStartDelay, doFlip]);
 
-  /* Cleanup interval on unmount */
-  useEffect(() => () => clearInterval(intervalRef.current), []);
+  /* Cleanup on unmount */
+  useEffect(() => {
+    return () => {
+      clearTimeout(entranceTimerRef.current);
+      clearTimeout(autoTimerRef.current);
+      clearInterval(intervalRef.current);
+    };
+  }, []);
 
-  /* Click handler — flip + reset timer */
+  /* Click: flip immediately + reset auto-flip timer to 7s from now */
   const handleClick = () => {
     doFlip();
-    startInterval();
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(doFlip, 7000);
   };
 
   const rotation = flipCount * 180;
 
-  /* ── MOBILE ── */
+  /* ── MOBILE RENDER ── */
   if (isMobile) {
     return (
       <div className="flex-1 flex flex-col">
         <div
-          ref={ref}
           className="relative cursor-pointer gpu-layer"
           style={{ perspective: "1000px" }}
           onClick={handleClick}
@@ -179,11 +187,10 @@ function FlipCard({
     );
   }
 
-  /* ── DESKTOP ── */
+  /* ── DESKTOP RENDER ── */
   return (
     <div className="flex-1 flex flex-col">
       <div
-        ref={ref}
         className="relative cursor-pointer card-glow group"
         style={{ perspective: "1200px" }}
         onClick={handleClick}
@@ -192,7 +199,11 @@ function FlipCard({
           className="relative w-full"
           style={{ aspectRatio: "2 / 3" }}
           initial={{ opacity: 0, y: 60, scale: 0.92 }}
-          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          animate={
+            shouldStart
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 60, scale: 0.92 }
+          }
           transition={{ delay: entranceDelay, duration: 1.6, ease: lux }}
         >
           <div
@@ -265,7 +276,13 @@ function FlipCard({
 }
 
 /* ══════════════════════════════════════════════════════════
-   MOBILE SECTION — with premium entrance animations
+   MOBILE SECTION — premium entrance animations
+   
+   Uses TWO conditions before animating:
+   1. isFullyLoaded — loading screen has FULLY exited
+   2. isInView — section is visible in viewport
+   
+   Both must be true → shouldAnimate (once-only, stays true forever)
    ══════════════════════════════════════════════════════════ */
 function MobileSection({
   card1Images,
@@ -275,15 +292,19 @@ function MobileSection({
   card2Images: [string, string, string];
 }) {
   const { isFullyLoaded } = useLoading();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.05 });
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
-  /* 
-   * isFullyLoaded = true ONLY after loading screen has COMPLETELY exited.
-   * No useInView needed — all animations start the MOMENT the screen clears.
-   * Delays are tight since there's zero overlap with loading screen.
-   */
+  /* Once both conditions are met, lock shouldAnimate = true forever */
+  useEffect(() => {
+    if (isFullyLoaded && isInView && !shouldAnimate) {
+      setShouldAnimate(true);
+    }
+  }, [isFullyLoaded, isInView, shouldAnimate]);
 
   return (
-    <section className="md:hidden">
+    <section ref={sectionRef} className="md:hidden">
       {/* ── Discover Header ── */}
       <div
         className="relative px-6 pt-10 pb-7 overflow-hidden"
@@ -297,16 +318,24 @@ function MobileSection({
               background: "linear-gradient(90deg, #C9A96E, transparent)",
             }}
             initial={{ width: 0, opacity: 0 }}
-            animate={isFullyLoaded ? { width: 40, opacity: 1 } : { width: 0, opacity: 0 }}
+            animate={
+              shouldAnimate
+                ? { width: 40, opacity: 1 }
+                : { width: 0, opacity: 0 }
+            }
             transition={{ delay: 0, duration: 1.2, ease: lux }}
           />
 
-          {/* Title — slides from left with blur */}
+          {/* Title — slides from left with blur dissolve */}
           <motion.h2
             className="font-serif italic gold-shimmer-text mb-3"
             style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
             initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
-            animate={isFullyLoaded ? { opacity: 1, x: 0, filter: "blur(0px)" } : { opacity: 0, x: -40, filter: "blur(8px)" }}
+            animate={
+              shouldAnimate
+                ? { opacity: 1, x: 0, filter: "blur(0px)" }
+                : { opacity: 0, x: -40, filter: "blur(8px)" }
+            }
             transition={{ delay: 0.15, duration: 1.0, ease: lux }}
           >
             Jelajahi
@@ -323,7 +352,11 @@ function MobileSection({
               maxWidth: "270px",
             }}
             initial={{ opacity: 0, y: 20 }}
-            animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={
+              shouldAnimate
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: 20 }
+            }
             transition={{ delay: 0.4, duration: 0.9, ease: lux }}
           >
             Fashion premium dengan sentuhan modern — dirancang untuk mereka
@@ -334,7 +367,11 @@ function MobileSection({
           <div className="flex gap-2.5">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
-              animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              animate={
+                shouldAnimate
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 15 }
+              }
               transition={{ delay: 0.6, duration: 0.7, ease: lux }}
             >
               <Link
@@ -347,7 +384,11 @@ function MobileSection({
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 15 }}
-              animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              animate={
+                shouldAnimate
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 15 }
+              }
               transition={{ delay: 0.75, duration: 0.7, ease: lux }}
             >
               <Link
@@ -362,18 +403,18 @@ function MobileSection({
         </div>
       </div>
 
-      {/* Gradient transition — cream to dark brown */}
+      {/* Gradient transition — cream to dark */}
       <motion.div
         style={{
           height: "48px",
           background: "linear-gradient(to bottom, #F5F0EB, #3B2F2F)",
         }}
         initial={{ opacity: 0 }}
-        animate={isFullyLoaded ? { opacity: 1 } : { opacity: 0 }}
+        animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: 0.8, duration: 0.8, ease: lux }}
       />
 
-      {/* ── Flip Cards — staggered entrance ── */}
+      {/* ── Flip Cards ── */}
       <div
         className="relative px-4 py-5"
         style={{ background: "#3B2F2F" }}
@@ -381,15 +422,24 @@ function MobileSection({
         <motion.div
           className="relative flex gap-2.5"
           initial={{ opacity: 0, y: 30 }}
-          animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.9, duration: 1.0, ease: lux }}
+          animate={
+            shouldAnimate
+              ? { opacity: 1, y: 0 }
+              : { opacity: 0, y: 30 }
+          }
+          transition={{ delay: 0.5, duration: 1.0, ease: lux }}
         >
+          {/* Both cards flip simultaneously on entrance (1.0s delay).
+              Then card 1 auto-flips at 8.0s, card 2 at 10.0s (2s stagger).
+              After that, both repeat every 7s maintaining the 2s offset. */}
           <FlipCard
             images={card1Images}
             alt="Koleksi fashion premium Brutos ID"
             href="/"
             label="LIHAT KOLEKSI"
-            entranceDelay={0.4}
+            entranceDelay={1.0}
+            autoStartDelay={8.0}
+            shouldStart={shouldAnimate}
             isMobile
           />
           <FlipCard
@@ -397,7 +447,9 @@ function MobileSection({
             alt="Koleksi premium Brutos ID — fashion modern"
             href="/"
             label="TENTANG KAMI"
-            entranceDelay={1.8}
+            entranceDelay={1.0}
+            autoStartDelay={10.0}
+            shouldStart={shouldAnimate}
             isMobile
           />
         </motion.div>
@@ -413,10 +465,15 @@ function MobileSection({
           <motion.div
             className="h-[1px] mb-5 gold-line-pulse gpu-layer"
             style={{
-              background: "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
+              background:
+                "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
             }}
             initial={{ width: 0, opacity: 0 }}
-            animate={isFullyLoaded ? { width: 35, opacity: 1 } : { width: 0, opacity: 0 }}
+            animate={
+              shouldAnimate
+                ? { width: 35, opacity: 1 }
+                : { width: 0, opacity: 0 }
+            }
             transition={{ delay: 1.6, duration: 1.2, ease: lux }}
           />
 
@@ -429,7 +486,11 @@ function MobileSection({
               color: "#F0EBE4",
             }}
             initial={{ opacity: 0, x: -30, filter: "blur(6px)" }}
-            animate={isFullyLoaded ? { opacity: 1, x: 0, filter: "blur(0px)" } : { opacity: 0, x: -30, filter: "blur(6px)" }}
+            animate={
+              shouldAnimate
+                ? { opacity: 1, x: 0, filter: "blur(0px)" }
+                : { opacity: 0, x: -30, filter: "blur(6px)" }
+            }
             transition={{ delay: 1.8, duration: 1.0, ease: lux }}
           >
             &ldquo;Berpakaian baik,
@@ -442,7 +503,11 @@ function MobileSection({
           {/* Button — fades up */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
-            animate={isFullyLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            animate={
+              shouldAnimate
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: 15 }
+            }
             transition={{ delay: 2.1, duration: 0.7, ease: lux }}
           >
             <Link
@@ -460,10 +525,22 @@ function MobileSection({
 }
 
 /* ══════════════════════════════════════════════════════════
-   MAIN SECTION
+   MAIN — DESKTOP + MOBILE
    ══════════════════════════════════════════════════════════ */
 export default function DiscoverQuote() {
-  /* Images defined at module level above for stable references */
+  const { isLoaded } = useLoading();
+  const desktopCardsRef = useRef<HTMLDivElement>(null);
+  const desktopInView = useInView(desktopCardsRef, {
+    once: true,
+    amount: 0.15,
+  });
+  const [desktopReady, setDesktopReady] = useState(false);
+
+  useEffect(() => {
+    if (isLoaded && desktopInView && !desktopReady) {
+      setDesktopReady(true);
+    }
+  }, [isLoaded, desktopInView, desktopReady]);
 
   return (
     <>
@@ -613,13 +690,15 @@ export default function DiscoverQuote() {
           </div>
 
           {/* ─── RIGHT COLUMN — Flip Cards ─── */}
-          <div className="flex gap-4">
+          <div ref={desktopCardsRef} className="flex gap-4">
             <FlipCard
               images={card1Images}
               alt="Koleksi fashion premium Brutos ID — gaya maskulin modern"
               href="/"
               label="LIHAT KOLEKSI"
               entranceDelay={0.6}
+              autoStartDelay={7.6}
+              shouldStart={desktopReady}
             />
             <FlipCard
               images={card2Images}
@@ -627,16 +706,15 @@ export default function DiscoverQuote() {
               href="/"
               label="TENTANG KAMI"
               entranceDelay={2.0}
+              autoStartDelay={9.6}
+              shouldStart={desktopReady}
             />
           </div>
         </div>
       </section>
 
       {/* ═══════════════ MOBILE (<md) ═══════════════ */}
-      <MobileSection
-        card1Images={card1Images}
-        card2Images={card2Images}
-      />
+      <MobileSection card1Images={card1Images} card2Images={card2Images} />
     </>
   );
 }

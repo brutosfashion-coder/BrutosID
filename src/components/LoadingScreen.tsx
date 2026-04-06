@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLoading } from "./LoadingContext";
@@ -10,22 +10,39 @@ const exitEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
 export default function LoadingScreen() {
   const [show, setShow] = useState(true);
   const { onLoadComplete, onFullyLoaded } = useLoading();
+  const fullyFiredRef = useRef(false);
+
+  /* Ensure onFullyLoaded fires exactly once, even if onExitComplete fails */
+  const fireFullyLoaded = useCallback(() => {
+    if (!fullyFiredRef.current) {
+      fullyFiredRef.current = true;
+      onFullyLoaded();
+    }
+  }, [onFullyLoaded]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    const t = setTimeout(() => {
-      onLoadComplete();          // Signal content to animate NOW — while screen slides up
-      setShow(false);            // Start exit animation
+
+    /* At 4200ms: signal Hero/Navbar to start, begin exit animation */
+    const t1 = setTimeout(() => {
+      onLoadComplete();
+      setShow(false);
       document.body.style.overflow = "";
     }, 4200);
+
+    /* Backup: fire isFullyLoaded at 5500ms (4200 + 1300ms margin)
+       in case AnimatePresence onExitComplete doesn't trigger */
+    const t2 = setTimeout(fireFullyLoaded, 5500);
+
     return () => {
-      clearTimeout(t);
+      clearTimeout(t1);
+      clearTimeout(t2);
       document.body.style.overflow = "";
     };
-  }, [onLoadComplete]);
+  }, [onLoadComplete, fireFullyLoaded]);
 
   return (
-    <AnimatePresence onExitComplete={onFullyLoaded}>
+    <AnimatePresence onExitComplete={fireFullyLoaded}>
       {show && (
         <motion.div
           key="loader"
@@ -66,7 +83,6 @@ export default function LoadingScreen() {
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 2.2, ease: lux }}
             >
-              {/* Glow behind logo */}
               <motion.div
                 className="absolute -inset-10"
                 initial={{ opacity: 0 }}
