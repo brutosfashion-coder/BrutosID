@@ -268,6 +268,53 @@
   .gold-line-pulse {
     animation: goldLinePulse 2.5s ease-in-out infinite alternate;
   }
+
+  /* ═══ FULLSCREEN MOBILE MENU ═══ */
+  .mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    background: rgba(26, 18, 13, 0.97);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+  }
+
+  .mobile-menu-gold-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent);
+  }
+
+  /* ═══ MOBILE HERO FULLSCREEN ═══ */
+  .mobile-hero-gradient {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 25%,
+      rgba(26, 18, 13, 0.15) 45%,
+      rgba(26, 18, 13, 0.5) 65%,
+      rgba(26, 18, 13, 0.82) 80%,
+      rgba(26, 18, 13, 0.95) 100%
+    );
+  }
+
+  /* ═══ MOBILE CATEGORY CARD ═══ */
+  .mobile-cat-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .mobile-cat-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 12px;
+    pointer-events: none;
+    transition: border-color 0.5s ease;
+  }
+  .mobile-cat-card:active::after {
+    border-color: rgba(201,169,110,0.4);
+  }
 }
 
 /* ═══════════════ KEYFRAMES ═══════════════ */
@@ -303,6 +350,13 @@
   100% { transform: scale(1.05) translate(-0.5%, 0.4%); }
 }
 
+/* Ken Burns mobile — even gentler, strictly no upward crop */
+@keyframes kenBurnsMobile {
+  0%   { transform: scale(1.0) translate(0%, 0%); }
+  50%  { transform: scale(1.03) translate(-0.5%, 0.2%); }
+  100% { transform: scale(1.02) translate(0.3%, 0.1%); }
+}
+
 /* Gold shimmer — much slower sweep */
 @keyframes goldShimmer {
   0%   { background-position: 100% 0; }
@@ -317,4 +371,9 @@
 @keyframes goldLinePulse {
   0%   { opacity: 0.6; }
   100% { opacity: 1; }
+}
+
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-6px); }
 }

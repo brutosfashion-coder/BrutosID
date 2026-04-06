@@ -26,7 +26,7 @@ export default function LoadingScreen() {
       {show && (
         <motion.div
           key="loader"
-          className="fixed inset-0 z-[200] flex items-center justify-center"
+          className="fixed inset-0 z-[200] flex items-center justify-center px-6"
           style={{ backgroundColor: "#EDE6DD" }}
           exit={{ y: "-100%" }}
           transition={{ duration: 1.2, ease: exitEase }}
@@ -43,16 +43,16 @@ export default function LoadingScreen() {
             }}
           />
 
-          <div className="flex flex-col items-center relative">
+          <div className="flex flex-col items-center relative w-full max-w-[320px]">
             {/* Top decorative gold line */}
             <motion.div
-              className="h-[1px] mb-10"
+              className="h-[1px] mb-8 sm:mb-10"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent)",
               }}
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 150, opacity: 1 }}
+              animate={{ width: "45%", opacity: 1 }}
               transition={{ delay: 0.2, duration: 2, ease: lux }}
             />
 
@@ -81,16 +81,16 @@ export default function LoadingScreen() {
                 width={120}
                 height={160}
                 priority
-                className="w-[85px] md:w-[110px] h-auto relative z-10"
+                className="w-[70px] sm:w-[85px] md:w-[110px] h-auto relative z-10"
               />
             </motion.div>
 
             {/* BRUTOS — letter by letter with 3D rotateX */}
-            <div className="flex mt-7 overflow-hidden">
+            <div className="flex mt-6 sm:mt-7 overflow-hidden">
               {"BRUTOS".split("").map((letter, i) => (
                 <motion.span
                   key={i}
-                  className="font-serif text-[30px] md:text-[40px] font-bold text-[#3B2F2F]"
+                  className="font-serif text-[26px] sm:text-[30px] md:text-[40px] font-bold text-[#3B2F2F]"
                   style={{ letterSpacing: "0.16em", display: "inline-block" }}
                   initial={{ opacity: 0, y: 50, rotateX: -90 }}
                   animate={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -107,7 +107,7 @@ export default function LoadingScreen() {
 
             {/* ── ID ── with expanding lines + letter-spacing */}
             <motion.div
-              className="flex items-center gap-4 mt-2"
+              className="flex items-center gap-3 sm:gap-4 mt-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6, duration: 1.3, ease: lux }}
@@ -115,11 +115,11 @@ export default function LoadingScreen() {
               <motion.div
                 className="h-[1px] bg-[#3B2F2F]/40"
                 initial={{ width: 0 }}
-                animate={{ width: 50 }}
+                animate={{ width: 40 }}
                 transition={{ delay: 1.8, duration: 1.3, ease: lux }}
               />
               <motion.span
-                className="font-serif text-[16px] md:text-[20px] text-[#3B2F2F]/60"
+                className="font-serif text-[14px] sm:text-[16px] md:text-[20px] text-[#3B2F2F]/60"
                 initial={{ opacity: 0, letterSpacing: "1em" }}
                 animate={{ opacity: 1, letterSpacing: "0.3em" }}
                 transition={{ delay: 1.8, duration: 1.5, ease: lux }}
@@ -129,15 +129,15 @@ export default function LoadingScreen() {
               <motion.div
                 className="h-[1px] bg-[#3B2F2F]/40"
                 initial={{ width: 0 }}
-                animate={{ width: 50 }}
+                animate={{ width: 40 }}
                 transition={{ delay: 1.8, duration: 1.3, ease: lux }}
               />
             </motion.div>
 
             {/* Tagline */}
             <motion.p
-              className="text-[#8C7E74] text-[10px] md:text-[11px] uppercase mt-8"
-              style={{ letterSpacing: "0.3em" }}
+              className="text-[#8C7E74] text-[9px] sm:text-[10px] md:text-[11px] uppercase mt-6 sm:mt-8 text-center"
+              style={{ letterSpacing: "0.25em" }}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.6, duration: 1.3, ease: lux }}
@@ -145,8 +145,8 @@ export default function LoadingScreen() {
               ELEGANCE IS NEVER LOUD
             </motion.p>
 
-            {/* Gold loading bar — scales from left */}
-            <div className="mt-8 overflow-hidden" style={{ width: 160 }}>
+            {/* Gold loading bar */}
+            <div className="mt-6 sm:mt-8 overflow-hidden w-[55%] sm:w-[160px]">
               <motion.div
                 className="h-[1.5px] origin-left"
                 style={{
@@ -161,13 +161,13 @@ export default function LoadingScreen() {
 
             {/* Bottom decorative gold line */}
             <motion.div
-              className="h-[1px] mt-10"
+              className="h-[1px] mt-8 sm:mt-10"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent)",
               }}
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 150, opacity: 1 }}
+              animate={{ width: "45%", opacity: 1 }}
               transition={{ delay: 3.2, duration: 1.2, ease: lux }}
             />
           </div>
