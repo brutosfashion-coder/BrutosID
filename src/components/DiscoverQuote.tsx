@@ -21,7 +21,7 @@ const card2Images: [string, string, string] = [
 ];
 
 /* ══════════════════════════════════════════════════════════
-   FLIP CARD — 3 images, auto-flip 5s, click resets timer
+   FLIP CARD — 3 images, auto-flip 7s, click resets timer
    ══════════════════════════════════════════════════════════ */
 function FlipCard({
   images,
@@ -74,7 +74,7 @@ function FlipCard({
   /* Start auto-flip interval */
   const startInterval = useCallback(() => {
     clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(doFlip, 5000);
+    intervalRef.current = setInterval(doFlip, 7000);
   }, [doFlip]);
 
   /* Entrance flip — fires once when loaded (or in view for desktop) */
@@ -265,6 +265,198 @@ function FlipCard({
 }
 
 /* ══════════════════════════════════════════════════════════
+   MOBILE SECTION — with premium entrance animations
+   ══════════════════════════════════════════════════════════ */
+function MobileSection({
+  card1Images,
+  card2Images,
+}: {
+  card1Images: [string, string, string];
+  card2Images: [string, string, string];
+}) {
+  const { isLoaded } = useLoading();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.05 });
+  const shouldAnimate = isLoaded && isInView;
+
+  return (
+    <section className="md:hidden" ref={sectionRef}>
+      {/* ── Discover Header ── */}
+      <div
+        className="relative px-6 pt-10 pb-7 overflow-hidden"
+        style={{ background: "#F5F0EB" }}
+      >
+        <div className="relative">
+          {/* Gold line — draws in from left */}
+          <motion.div
+            className="h-[1px] mb-4 gold-line-pulse gpu-layer"
+            style={{
+              background: "linear-gradient(90deg, #C9A96E, transparent)",
+            }}
+            initial={{ width: 0, opacity: 0 }}
+            animate={shouldAnimate ? { width: 40, opacity: 1 } : {}}
+            transition={{ delay: 0.2, duration: 1.2, ease: lux }}
+          />
+
+          {/* Title — slides from left with blur */}
+          <motion.h2
+            className="font-serif italic gold-shimmer-text mb-3"
+            style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
+            initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
+            animate={shouldAnimate ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
+            transition={{ delay: 0.4, duration: 1.0, ease: lux }}
+          >
+            Jelajahi
+            <br />
+            Koleksi Kami
+          </motion.h2>
+
+          {/* Description — fades up */}
+          <motion.p
+            className="text-[#7D7168] mb-5"
+            style={{
+              fontSize: "12.5px",
+              lineHeight: 1.65,
+              maxWidth: "270px",
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.7, duration: 0.9, ease: lux }}
+          >
+            Fashion premium dengan sentuhan modern — dirancang untuk mereka
+            yang mengutamakan kualitas dan gaya.
+          </motion.p>
+
+          {/* Buttons — staggered fade up */}
+          <div className="flex gap-2.5">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.95, duration: 0.7, ease: lux }}
+            >
+              <Link
+                href="/"
+                className="btn-glass-gold"
+                style={{ fontSize: "9.5px", padding: "9px 16px" }}
+              >
+                LIHAT KOLEKSI
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 1.1, duration: 0.7, ease: lux }}
+            >
+              <Link
+                href="/"
+                className="btn-glass-gold"
+                style={{ fontSize: "9.5px", padding: "9px 16px" }}
+              >
+                TENTANG KAMI
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Gradient transition — cream to dark brown */}
+      <motion.div
+        style={{
+          height: "48px",
+          background: "linear-gradient(to bottom, #F5F0EB, #3B2F2F)",
+        }}
+        initial={{ opacity: 0 }}
+        animate={shouldAnimate ? { opacity: 1 } : {}}
+        transition={{ delay: 1.2, duration: 0.8, ease: lux }}
+      />
+
+      {/* ── Flip Cards — staggered entrance ── */}
+      <div
+        className="relative px-4 py-5"
+        style={{ background: "#3B2F2F" }}
+      >
+        <motion.div
+          className="relative flex gap-2.5"
+          initial={{ opacity: 0, y: 30 }}
+          animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 1.3, duration: 1.0, ease: lux }}
+        >
+          <FlipCard
+            images={card1Images}
+            alt="Koleksi fashion premium Brutos ID"
+            href="/"
+            label="LIHAT KOLEKSI"
+            entranceDelay={0.4}
+            isMobile
+          />
+          <FlipCard
+            images={card2Images}
+            alt="Koleksi premium Brutos ID — fashion modern"
+            href="/"
+            label="TENTANG KAMI"
+            entranceDelay={1.8}
+            isMobile
+          />
+        </motion.div>
+      </div>
+
+      {/* ── Quote — dramatic entrance ── */}
+      <div
+        className="relative px-6 pt-8 pb-10"
+        style={{ background: "#3B2F2F" }}
+      >
+        <div className="relative">
+          {/* Gold line draws in */}
+          <motion.div
+            className="h-[1px] mb-5 gold-line-pulse gpu-layer"
+            style={{
+              background: "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
+            }}
+            initial={{ width: 0, opacity: 0 }}
+            animate={shouldAnimate ? { width: 35, opacity: 1 } : {}}
+            transition={{ delay: 2.2, duration: 1.2, ease: lux }}
+          />
+
+          {/* Quote text — fades in from left with blur */}
+          <motion.p
+            className="font-serif italic mb-5"
+            style={{
+              fontSize: "22px",
+              lineHeight: 1.35,
+              color: "#F0EBE4",
+            }}
+            initial={{ opacity: 0, x: -30, filter: "blur(6px)" }}
+            animate={shouldAnimate ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
+            transition={{ delay: 2.5, duration: 1.0, ease: lux }}
+          >
+            &ldquo;Berpakaian baik,
+            <br />
+            hidup lebih baik,
+            <br />
+            jadilah versi terbaik dirimu.&rdquo;
+          </motion.p>
+
+          {/* Button — fades up */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 2.9, duration: 0.7, ease: lux }}
+          >
+            <Link
+              href="/"
+              className="btn-glass-gold-light"
+              style={{ fontSize: "10px", padding: "10px 20px" }}
+            >
+              BELANJA SEKARANG
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
    MAIN SECTION
    ══════════════════════════════════════════════════════════ */
 export default function DiscoverQuote() {
@@ -424,144 +616,24 @@ export default function DiscoverQuote() {
               alt="Koleksi fashion premium Brutos ID — gaya maskulin modern"
               href="/"
               label="LIHAT KOLEKSI"
-              entranceDelay={0.8}
+              entranceDelay={0.6}
             />
             <FlipCard
               images={card2Images}
               alt="Flatlay koleksi premium Brutos ID — fashion modern berkelas"
               href="/"
               label="TENTANG KAMI"
-              entranceDelay={1.2}
+              entranceDelay={2.0}
             />
           </div>
         </div>
       </section>
 
       {/* ═══════════════ MOBILE (<md) ═══════════════ */}
-      <section className="md:hidden">
-        {/* ── Discover Header ── */}
-        <div
-          className="relative px-6 pt-10 pb-7"
-          style={{ background: "#F5F0EB" }}
-        >
-          <div className="relative">
-            <div
-              className="h-[1px] mb-4 gold-line-pulse gpu-layer"
-              style={{
-                width: 40,
-                background:
-                  "linear-gradient(90deg, #C9A96E, transparent)",
-              }}
-            />
-            <h2
-              className="font-serif italic gold-shimmer-text mb-3"
-              style={{ fontSize: "28px", lineHeight: 1.08, fontWeight: 400 }}
-            >
-              Jelajahi
-              <br />
-              Koleksi Kami
-            </h2>
-            <p
-              className="text-[#7D7168] mb-5"
-              style={{
-                fontSize: "12.5px",
-                lineHeight: 1.65,
-                maxWidth: "270px",
-              }}
-            >
-              Fashion premium dengan sentuhan modern — dirancang untuk mereka
-              yang mengutamakan kualitas dan gaya.
-            </p>
-            <div className="flex gap-2.5">
-              <Link
-                href="/"
-                className="btn-glass-gold"
-                style={{ fontSize: "9.5px", padding: "9px 16px" }}
-              >
-                LIHAT KOLEKSI
-              </Link>
-              <Link
-                href="/"
-                className="btn-glass-gold"
-                style={{ fontSize: "9.5px", padding: "9px 16px" }}
-              >
-                TENTANG KAMI
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Gradient transition — cream to dark brown */}
-        <div
-          style={{
-            height: "48px",
-            background: "linear-gradient(to bottom, #F5F0EB, #3B2F2F)",
-          }}
-        />
-
-        {/* ── Flip Cards ── */}
-        <div
-          className="relative px-4 py-5"
-          style={{ background: "#3B2F2F" }}
-        >
-          <div className="relative flex gap-2.5">
-            <FlipCard
-              images={card1Images}
-              alt="Koleksi fashion premium Brutos ID"
-              href="/"
-              label="LIHAT KOLEKSI"
-              entranceDelay={0.5}
-              isMobile
-            />
-            <FlipCard
-              images={card2Images}
-              alt="Koleksi premium Brutos ID — fashion modern"
-              href="/"
-              label="TENTANG KAMI"
-              entranceDelay={0.8}
-              isMobile
-            />
-          </div>
-        </div>
-
-        {/* ── Quote ── */}
-        <div
-          className="relative px-6 pt-8 pb-10"
-          style={{ background: "#3B2F2F" }}
-        >
-          <div className="relative">
-            <div
-              className="h-[1px] mb-5 gold-line-pulse gpu-layer"
-              style={{
-                width: 35,
-                background:
-                  "linear-gradient(90deg, rgba(201,169,110,0.5), transparent)",
-              }}
-            />
-            <p
-              className="font-serif italic mb-5"
-              style={{
-                fontSize: "22px",
-                lineHeight: 1.35,
-                color: "#F0EBE4",
-              }}
-            >
-              &ldquo;Berpakaian baik,
-              <br />
-              hidup lebih baik,
-              <br />
-              jadilah versi terbaik dirimu.&rdquo;
-            </p>
-            <Link
-              href="/"
-              className="btn-glass-gold-light"
-              style={{ fontSize: "10px", padding: "10px 20px" }}
-            >
-              BELANJA SEKARANG
-            </Link>
-          </div>
-        </div>
-      </section>
+      <MobileSection
+        card1Images={card1Images}
+        card2Images={card2Images}
+      />
     </>
   );
 }
