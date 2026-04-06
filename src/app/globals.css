@@ -38,4 +38,27 @@
   .card-glow:hover {
     box-shadow: 0 25px 70px rgba(201, 169, 110, 0.14), 0 8px 24px rgba(0,0,0,0.06);
   }
+
+  /* Slow drifting texture background — continuous subtle movement */
+  .texture-drift {
+    animation: textureDrift 25s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes textureDrift {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 15% 8%;
+  }
+  50% {
+    background-position: 5% 18%;
+  }
+  75% {
+    background-position: 20% 5%;
+  }
+  100% {
+    background-position: 10% 15%;
+  }
 }

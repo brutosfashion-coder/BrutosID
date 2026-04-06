@@ -6,7 +6,7 @@ import ScrollReveal from "./ScrollReveal";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/* ── Flip Card Component ── */
+/* ── Continuous Flip Card ── */
 function FlipCard({
   src,
   alt,
@@ -22,9 +22,12 @@ function FlipCard({
   flipFrom: number;
   delay: number;
 }) {
+  /* Direction of first entrance flip */
+  const direction = flipFrom < 0 ? -1 : 1;
+
   return (
     <div className="flex-1 flex flex-col">
-      {/* Card with perspective */}
+      {/* Perspective wrapper */}
       <div
         className="relative group cursor-pointer card-glow"
         style={{ perspective: "1200px" }}
@@ -32,11 +35,29 @@ function FlipCard({
         <motion.div
           className="relative w-full"
           style={{ transformStyle: "preserve-3d", aspectRatio: "2 / 3" }}
-          initial={{ rotateY: flipFrom, opacity: 0 }}
-          whileInView={{ rotateY: 0, opacity: 1 }}
+          /* 
+            Keyframe loop:
+            0°    → show front (hold 4s)
+            180°  → flip to back 
+            180°  → hold back (2s)
+            360°  → flip back to front
+            Total cycle ≈ 8s per full rotation
+          */
+          initial={{ rotateY: direction * 180, opacity: 0 }}
+          whileInView={{
+            rotateY: [direction * 180, 0, 0, direction * 180, direction * 180, direction * 360],
+            opacity: [0, 1, 1, 1, 1, 1],
+          }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{
-            rotateY: { delay, duration: 2.2, ease: lux },
+            rotateY: {
+              delay,
+              duration: 12,
+              times: [0, 0.18, 0.52, 0.7, 0.82, 1],
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 0,
+            },
             opacity: { delay, duration: 0.01 },
           }}
         >
@@ -51,14 +72,15 @@ function FlipCard({
               fill
               className="object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
               sizes="(min-width:768px) 28vw, 50vw"
+              priority
             />
             {/* Warm hover overlay */}
             <div className="absolute inset-0 bg-[#C9A96E]/0 group-hover:bg-[#C9A96E]/[0.06] transition-colors duration-[1200ms] pointer-events-none" />
           </div>
 
-          {/* ▸ BACK FACE — Brand pattern */}
+          {/* ▸ BACK FACE — Luxury brand pattern */}
           <div
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0 flex items-center justify-center overflow-hidden"
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
@@ -66,23 +88,31 @@ function FlipCard({
                 "linear-gradient(160deg, #2C1E16 0%, #4A3728 40%, #3B2F2F 100%)",
             }}
           >
-            <div className="flex flex-col items-center">
-              <div className="w-[1px] h-14 bg-gradient-to-b from-transparent via-[#C9A96E]/50 to-transparent" />
-              <div className="my-3 w-2 h-2 bg-[#C9A96E]/70 rotate-45" />
+            {/* Subtle radial glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(201,169,110,0.08) 0%, transparent 70%)",
+              }}
+            />
+            <div className="flex flex-col items-center relative z-10">
+              <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-[#C9A96E]/60 to-transparent" />
+              <div className="my-4 w-2.5 h-2.5 bg-[#C9A96E]/80 rotate-45" />
               <span
-                className="font-serif text-[#C9A96E]/80 tracking-[0.3em]"
-                style={{ fontSize: "14px" }}
+                className="font-serif text-[#C9A96E] tracking-[0.35em] font-medium"
+                style={{ fontSize: "16px" }}
               >
                 BRUTOS
               </span>
               <span
-                className="font-serif text-[#C9A96E]/50 tracking-[0.2em] mt-1"
-                style={{ fontSize: "10px" }}
+                className="font-serif text-[#C9A96E]/60 tracking-[0.25em] mt-1.5"
+                style={{ fontSize: "11px" }}
               >
-                ID
+                INDONESIA
               </span>
-              <div className="my-3 w-2 h-2 bg-[#C9A96E]/70 rotate-45" />
-              <div className="w-[1px] h-14 bg-gradient-to-b from-transparent via-[#C9A96E]/50 to-transparent" />
+              <div className="my-4 w-2.5 h-2.5 bg-[#C9A96E]/80 rotate-45" />
+              <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-[#C9A96E]/60 to-transparent" />
             </div>
           </div>
         </motion.div>
@@ -118,6 +148,7 @@ export default function DiscoverQuote() {
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
         >
+          {/* Paper texture — top */}
           <div
             className="absolute inset-x-0 top-0"
             style={{
@@ -127,13 +158,13 @@ export default function DiscoverQuote() {
               backgroundPosition: "center",
             }}
           />
+          {/* Brown texture — bottom — with slow drift animation */}
           <div
-            className="absolute inset-x-0 bottom-0"
+            className="absolute inset-x-0 bottom-0 texture-drift"
             style={{
               height: "52%",
               backgroundImage: "url('/brown-texture.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: "120% 120%",
             }}
           />
         </div>
@@ -193,7 +224,8 @@ export default function DiscoverQuote() {
                     maxWidth: "340px",
                   }}
                 >
-                  Sophisticated pieces crafted for the modern gentleman.
+                  Premium menswear with a modern touch — 
+                  crafted for the gentleman who values quality and style.
                 </p>
               </ScrollReveal>
 
@@ -251,9 +283,9 @@ export default function DiscoverQuote() {
                     lineHeight: 1.35,
                   }}
                 >
-                  &ldquo;Dress well,
+                  &ldquo;Dress well, live well,
                   <br />
-                  live well, be a gentleman.&rdquo;
+                  be a gentleman.&rdquo;
                 </p>
               </ScrollReveal>
 
@@ -279,7 +311,7 @@ export default function DiscoverQuote() {
           <div className="flex gap-4">
             <FlipCard
               src="/collection-model.jpg"
-              alt="Shop Collection"
+              alt="Brutos ID premium menswear collection - Indonesian local clothing brand"
               href="/shop"
               label="SHOP COLLECTION"
               flipFrom={-180}
@@ -287,7 +319,7 @@ export default function DiscoverQuote() {
             />
             <FlipCard
               src="/collection-flatlay.jpg"
-              alt="About Us"
+              alt="Brutos ID outfit flatlay - modern menswear styling"
               href="/about"
               label="ABOUT US"
               flipFrom={180}
@@ -331,7 +363,8 @@ export default function DiscoverQuote() {
               className="text-[#7D7168] mb-5"
               style={{ fontSize: "14px", lineHeight: 1.6, maxWidth: "300px" }}
             >
-              Sophisticated pieces crafted for the modern gentleman.
+              Premium menswear with a modern touch —
+              crafted for the gentleman who values quality and style.
             </p>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.3}>
@@ -354,19 +387,18 @@ export default function DiscoverQuote() {
           </ScrollReveal>
         </div>
 
-        {/* Brown texture — Flip cards */}
+        {/* Brown texture — Flip cards with drift */}
         <div
-          className="px-4 py-4"
+          className="px-4 py-4 texture-drift"
           style={{
             backgroundImage: "url('/brown-texture.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center top",
+            backgroundSize: "120% 120%",
           }}
         >
           <div className="grid grid-cols-2 gap-3">
             <FlipCard
               src="/collection-model.jpg"
-              alt="Shop Collection"
+              alt="Brutos ID premium menswear collection"
               href="/shop"
               label="SHOP COLLECTION"
               flipFrom={180}
@@ -374,7 +406,7 @@ export default function DiscoverQuote() {
             />
             <FlipCard
               src="/collection-flatlay.jpg"
-              alt="About Us"
+              alt="Brutos ID outfit flatlay"
               href="/about"
               label="ABOUT US"
               flipFrom={180}
@@ -385,11 +417,10 @@ export default function DiscoverQuote() {
 
         {/* Brown texture — Quote */}
         <div
-          className="px-5 pt-8 pb-10"
+          className="px-5 pt-8 pb-10 texture-drift"
           style={{
             backgroundImage: "url('/brown-texture.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
+            backgroundSize: "120% 120%",
           }}
         >
           <motion.div
