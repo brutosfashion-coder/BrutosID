@@ -64,7 +64,7 @@ export default function Hero() {
               className="font-serif text-[42px] lg:text-[48px] xl:text-[54px] font-bold italic text-[#3B2F2F] leading-[1.08] mb-4"
               {...appear(0)}
             >
-              Wujudkan Gaya Terbaikmu
+              Elegance is Never Loud
             </motion.h1>
             <motion.p
               className="text-[#6B5E54] text-[15px] lg:text-[16px] leading-[1.7] mb-7 max-w-[400px]"
@@ -119,7 +119,7 @@ export default function Hero() {
             className="font-serif text-[30px] font-bold italic text-[#3B2F2F] leading-[1.08] mb-3"
             {...appear(0)}
           >
-            Wujudkan Gaya Terbaikmu
+            Elegance is Never Loud
           </motion.h1>
           <motion.p
             className="text-[#6B5E54] text-[14px] leading-[1.65] mb-6 max-w-[300px]"
