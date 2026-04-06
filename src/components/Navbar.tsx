@@ -16,7 +16,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD] border-b border-[#3B2F2F]/10">
-      <nav className="max-w-[1240px] mx-auto px-6 h-[70px] lg:h-[76px] flex items-center justify-between">
+      <nav className="mx-auto px-8 lg:px-12 xl:px-16 h-[68px] lg:h-[74px] flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
           <Image
@@ -32,7 +32,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-7 lg:gap-9">
+        <div className="hidden md:flex items-center gap-8 lg:gap-10">
           {NAV.map((n) => (
             <Link
               key={n.href}
@@ -49,7 +49,7 @@ export default function Navbar() {
         </div>
 
         {/* Icons in pill border */}
-        <div className="hidden md:flex items-center gap-4 border border-[#3B2F2F]/20 rounded-full px-4 py-[7px]">
+        <div className="hidden md:flex items-center gap-4 border border-[#3B2F2F]/20 rounded-full px-5 py-2">
           <FiSearch className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
           <FiUser className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
           <FiShoppingCart className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />

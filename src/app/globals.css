@@ -18,7 +18,7 @@
     color: #F5F0EB;
     font-size: 13px;
     letter-spacing: 0.14em;
-    padding: 11px 30px;
+    padding: 12px 32px;
   }
   .btn-dark:hover { background-color: #2C1A11; }
 
@@ -28,7 +28,7 @@
     color: #fff;
     font-size: 12.5px;
     letter-spacing: 0.14em;
-    padding: 11px 28px;
+    padding: 12px 32px;
   }
   .btn-gold:hover { background-color: #B8944D; }
 }
