@@ -29,32 +29,36 @@ export default function Categories() {
         backgroundRepeat: "repeat",
       }}
     >
-      <div className="max-w-[960px] mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
+      {/* Percentage-based width: 80% content, 10% margin each side — matches design */}
+      <div className="w-[90%] lg:w-[80%] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-7">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
-              {/* Image — 5:3 aspect ratio */}
-              <div className="relative w-full aspect-[5/3] mb-6 rounded-xl overflow-hidden">
+              {/* Image — 5:3 aspect ratio, rounded corners */}
+              <div className="relative w-full aspect-[5/3] mb-5 rounded-xl overflow-hidden">
                 <Image
                   src={c.img}
                   alt={c.title}
                   fill
                   className="object-cover"
-                  sizes="(max-width:640px) 100vw, 33vw"
+                  sizes="(max-width:640px) 100vw, 28vw"
                 />
               </div>
+
               {/* Title — large serif italic */}
               <h3 className="font-serif text-[24px] lg:text-[28px] italic font-semibold text-[#3B2F2F] mb-2">
                 {c.title}
               </h3>
+
               {/* Description */}
-              <p className="text-[#9C8E82] text-[13.5px] lg:text-[14.5px] leading-[1.5] mb-6 px-2">
+              <p className="text-[#9C8E82] text-[13px] lg:text-[14px] leading-[1.55] mb-5 px-1">
                 {c.desc}
               </p>
-              {/* Button — wide gold */}
+
+              {/* Button — gold with subtle border */}
               <Link
                 href="/shop"
-                className="inline-block w-full max-w-[280px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[13px] tracking-[0.16em] font-medium py-[12px] transition-colors rounded-[4px]"
+                className="inline-block w-full max-w-[280px] text-center bg-[#B49A6A] hover:bg-[#A38B5E] text-white text-[12.5px] tracking-[0.18em] font-medium py-[11px] transition-colors border border-[#A08A5A] rounded-[3px]"
               >
                 SHOP NOW
               </Link>
