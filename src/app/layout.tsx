@@ -105,8 +105,6 @@ const jsonLd = {
       description: DESCRIPTION,
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: ["id", "en"],
-        "query-input": "required name=search_term_string",
-      },
     },
     {
       "@type": ["Organization", "ClothingStore", "Brand"],
