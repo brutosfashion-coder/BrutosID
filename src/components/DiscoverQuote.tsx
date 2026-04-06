@@ -2,11 +2,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import ScrollReveal from "./ScrollReveal";
 import { useLoading } from "./LoadingContext";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+/* Stable image arrays — defined at module level to prevent re-creation on every render */
+const card1Images: [string, string, string] = [
+  "/collection-model.jpg",
+  "/hero.jpg",
+  "/collection-flatlay.jpg",
+];
+const card2Images: [string, string, string] = [
+  "/collection-flatlay.jpg",
+  "/collection-model.jpg",
+  "/hero.jpg",
+];
 
 /* ══════════════════════════════════════════════════════════
    FLIP CARD — 3 images, auto-flip 5s, click resets timer
@@ -36,6 +48,7 @@ function FlipCard({
   const [faceBImg, setFaceBImg] = useState(images[1]);
   const nextImgIdx = useRef(2); // next image index to load into hidden face
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
+  const imagesRef = useRef(images);  // stable ref to avoid re-render issues
 
   const doFlip = useCallback(() => {
     setFlipCount((c) => c + 1);
@@ -44,10 +57,11 @@ function FlipCard({
   /* After each flip, update the now-hidden face with the next image */
   useEffect(() => {
     if (flipCount === 0) return;
+    const imgs = imagesRef.current;
     const timer = setTimeout(() => {
       const isANowHidden = flipCount % 2 === 1; // odd = A hidden, even = B hidden
-      const img = images[nextImgIdx.current];
-      nextImgIdx.current = (nextImgIdx.current + 1) % images.length;
+      const img = imgs[nextImgIdx.current];
+      nextImgIdx.current = (nextImgIdx.current + 1) % imgs.length;
       if (isANowHidden) {
         setFaceAImg(img);
       } else {
@@ -55,7 +69,7 @@ function FlipCard({
       }
     }, isMobile ? 500 : 900); // wait for flip animation to mostly complete
     return () => clearTimeout(timer);
-  }, [flipCount, images, isMobile]);
+  }, [flipCount, isMobile]);
 
   /* Start auto-flip interval */
   const startInterval = useCallback(() => {
@@ -254,17 +268,7 @@ function FlipCard({
    MAIN SECTION
    ══════════════════════════════════════════════════════════ */
 export default function DiscoverQuote() {
-  /* 3 images per card — replace these with your product shots */
-  const card1Images: [string, string, string] = [
-    "/collection-model.jpg",
-    "/hero.jpg",
-    "/collection-flatlay.jpg",
-  ];
-  const card2Images: [string, string, string] = [
-    "/collection-flatlay.jpg",
-    "/collection-model.jpg",
-    "/hero.jpg",
-  ];
+  /* Images defined at module level above for stable references */
 
   return (
     <>
