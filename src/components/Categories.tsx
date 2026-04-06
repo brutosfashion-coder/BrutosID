@@ -26,12 +26,24 @@ export default function Categories() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-7 lg:gap-9">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
-              <div className="relative w-full aspect-[4/3] mb-5 border border-[#C5B9A8]/60 overflow-hidden">
-                <Image src={c.img} alt={c.title} fill className="object-cover" sizes="(max-width:640px) 100vw, 33vw" />
+              <div className="relative w-full aspect-[4/3] mb-5 rounded-md border border-[#C5B9A8]/60 overflow-hidden">
+                <Image
+                  src={c.img}
+                  alt={c.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width:640px) 100vw, 33vw"
+                />
               </div>
-              <h3 className="font-serif text-[20px] lg:text-[22px] font-semibold text-[#3B2F2F] mb-2">{c.title}</h3>
-              <p className="text-[#8C7E74] text-[13px] lg:text-[14px] leading-[1.6] mb-5 px-1">{c.desc}</p>
-              <Link href="/shop" className="btn-gold">SHOP NOW</Link>
+              <h3 className="font-serif text-[20px] lg:text-[22px] font-semibold text-[#3B2F2F] mb-2">
+                {c.title}
+              </h3>
+              <p className="text-[#8C7E74] text-[13px] lg:text-[14px] leading-[1.6] mb-5 px-1">
+                {c.desc}
+              </p>
+              <Link href="/shop" className="btn-gold">
+                SHOP NOW
+              </Link>
             </div>
           ))}
         </div>
