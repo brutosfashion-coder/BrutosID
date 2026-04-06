@@ -436,8 +436,8 @@ function MobileSection({
             alt="Koleksi fashion premium Brutos ID"
             href="/"
             label="LIHAT KOLEKSI"
-            entranceFlipDelay={1.0}
-            autoStartDelay={8.0}
+            entranceFlipDelay={7.0}
+            autoStartDelay={7.0}
             shouldStart={shouldAnimate}
             isMobile
           />
@@ -446,8 +446,8 @@ function MobileSection({
             alt="Koleksi premium Brutos ID — fashion modern"
             href="/"
             label="TENTANG KAMI"
-            entranceFlipDelay={1.0}
-            autoStartDelay={10.0}
+            entranceFlipDelay={7.0}
+            autoStartDelay={9.0}
             shouldStart={shouldAnimate}
             isMobile
           />
@@ -739,8 +739,8 @@ export default function DiscoverQuote() {
               href="/"
               label="LIHAT KOLEKSI"
               revealDelay={0.2}
-              entranceFlipDelay={2.0}
-              autoStartDelay={9.0}
+              entranceFlipDelay={7.0}
+              autoStartDelay={7.0}
               shouldStart={desktopReady}
             />
             <FlipCard
@@ -749,8 +749,8 @@ export default function DiscoverQuote() {
               href="/"
               label="TENTANG KAMI"
               revealDelay={0.2}
-              entranceFlipDelay={2.0}
-              autoStartDelay={11.0}
+              entranceFlipDelay={7.0}
+              autoStartDelay={9.0}
               shouldStart={desktopReady}
             />
           </div>
