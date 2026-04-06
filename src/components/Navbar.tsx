@@ -15,24 +15,32 @@ const NAV = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD]/95 backdrop-blur-sm border-b border-[#3B2F2F]/5">
-      <nav className="max-w-[1100px] mx-auto px-5 h-[54px] lg:h-[58px] flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD] border-b border-[#3B2F2F]/10">
+      <nav className="max-w-[1240px] mx-auto px-6 h-[70px] lg:h-[76px] flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo-head.png" alt="Brutos ID" width={36} height={36} className="w-8 h-8 lg:w-9 lg:h-9" />
-          <span className="font-serif text-[17px] lg:text-[19px] font-bold text-[#3B2F2F] tracking-[0.02em]">BRUTOS ID</span>
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image
+            src="/logo-head.png"
+            alt="Brutos ID"
+            width={44}
+            height={44}
+            className="w-[38px] h-[38px] lg:w-[44px] lg:h-[44px]"
+          />
+          <span className="font-serif text-[20px] lg:text-[22px] font-bold text-[#3B2F2F] tracking-[0.03em]">
+            BRUTOS ID
+          </span>
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-7">
+        <div className="hidden md:flex items-center gap-7 lg:gap-9">
           {NAV.map((n) => (
             <Link
               key={n.href}
               href={n.href}
               className={
                 n.active
-                  ? "text-[13.5px] text-[#3B2F2F] underline underline-offset-[5px] decoration-[1.5px]"
-                  : "text-[13.5px] text-[#8C7E74] hover:text-[#3B2F2F] transition-colors"
+                  ? "text-[14.5px] lg:text-[15px] text-[#3B2F2F] font-medium underline underline-offset-[6px] decoration-[1.5px]"
+                  : "text-[14.5px] lg:text-[15px] text-[#8C7E74] hover:text-[#3B2F2F] transition-colors"
               }
             >
               {n.label}
@@ -41,10 +49,10 @@ export default function Navbar() {
         </div>
 
         {/* Icons in pill border */}
-        <div className="hidden md:flex items-center gap-3 border border-[#3B2F2F]/20 rounded-full px-3.5 py-[5px]">
-          <FiSearch className="w-4 h-4 text-[#3B2F2F]" strokeWidth={1.8} />
-          <FiUser className="w-4 h-4 text-[#3B2F2F]" strokeWidth={1.8} />
-          <FiShoppingCart className="w-4 h-4 text-[#3B2F2F]" strokeWidth={1.8} />
+        <div className="hidden md:flex items-center gap-4 border border-[#3B2F2F]/20 rounded-full px-4 py-[7px]">
+          <FiSearch className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
+          <FiUser className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
+          <FiShoppingCart className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
         </div>
 
         {/* Mobile hamburger */}
@@ -55,7 +63,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#EDE6DD] border-t border-[#3B2F2F]/10 px-5 py-4 space-y-3">
+        <div className="md:hidden bg-[#EDE6DD] border-t border-[#3B2F2F]/10 px-6 py-4 space-y-3">
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="block text-[15px] text-[#3B2F2F]">
               {n.label}

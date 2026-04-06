@@ -21,12 +21,12 @@ const CATS = [
 
 export default function Categories() {
   return (
-    <section className="bg-[#EDE6DD] py-10 lg:py-14">
-      <div className="max-w-[1060px] mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-7 lg:gap-9">
+    <section className="bg-[#F8F5F1] py-12 lg:py-16">
+      <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-10">
           {CATS.map((c) => (
             <div key={c.title} className="text-center">
-              <div className="relative w-full aspect-[4/3] mb-5 rounded-md overflow-hidden">
+              <div className="relative w-full aspect-[5/3] mb-5 rounded-lg overflow-hidden">
                 <Image
                   src={c.img}
                   alt={c.title}
@@ -38,7 +38,7 @@ export default function Categories() {
               <h3 className="font-serif text-[20px] lg:text-[22px] italic font-semibold text-[#3B2F2F] mb-2">
                 {c.title}
               </h3>
-              <p className="text-[#8C7E74] text-[13px] lg:text-[14px] leading-[1.6] mb-5 px-1">
+              <p className="text-[#8C7E74] text-[13px] lg:text-[14px] leading-[1.6] mb-5 px-2">
                 {c.desc}
               </p>
               <Link href="/shop" className="btn-gold">SHOP NOW</Link>

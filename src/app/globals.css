@@ -26,9 +26,9 @@
     @apply inline-flex items-center justify-center font-medium uppercase rounded-full transition-colors duration-200 cursor-pointer;
     background-color: #C9A96E;
     color: #fff;
-    font-size: 12px;
-    letter-spacing: 0.13em;
-    padding: 10px 24px;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    padding: 11px 28px;
   }
   .btn-gold:hover { background-color: #B8944D; }
 }
