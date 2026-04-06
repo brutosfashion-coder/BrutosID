@@ -5,13 +5,13 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiUser, FiShoppingCart } from "react-icons/fi";
 
-const NAV = ["BERANDA", "KOLEKSI", "TENTANG", "JURNAL", "KONTAK"];
+const NAV = ["MAISON", "KOLEKSI", "TENTANG", "JURNAL", "KONTAK"];
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("BERANDA");
+  const [active, setActive] = useState("MAISON");
 
   /* Lock scroll when mobile menu is open */
   useEffect(() => {
