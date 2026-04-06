@@ -2,22 +2,30 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 
 const NAV = [
-  { href: "/", label: "Home", active: true },
-  { href: "/shop", label: "Shop" },
-  { href: "/about", label: "About" },
-  { href: "/journal", label: "Journal" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "HOME", active: true },
+  { href: "/shop", label: "SHOP" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/journal", label: "JOURNAL" },
+  { href: "/contact", label: "CONTACT" },
 ];
+
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD] border-b border-[#3B2F2F]/10">
+    <motion.header
+      className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD] border-b border-[#3B2F2F]/10"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 3.2, duration: 0.8, ease }}
+    >
       <nav className="mx-auto px-8 lg:px-12 xl:px-16 h-[68px] lg:h-[74px] flex items-center justify-between">
-        {/* Logo — natural aspect ratio (portrait 0.76:1) */}
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
@@ -31,7 +39,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop links — UPPERCASE + BOLD */}
         <div className="hidden md:flex items-center gap-8 lg:gap-10">
           {NAV.map((n) => (
             <Link
@@ -39,8 +47,8 @@ export default function Navbar() {
               href={n.href}
               className={
                 n.active
-                  ? "text-[14.5px] lg:text-[15px] text-[#3B2F2F] font-medium underline underline-offset-[6px] decoration-[1.5px]"
-                  : "text-[14.5px] lg:text-[15px] text-[#8C7E74] hover:text-[#3B2F2F] transition-colors"
+                  ? "text-[13px] lg:text-[13.5px] text-[#3B2F2F] font-bold uppercase tracking-[0.08em] underline underline-offset-[6px] decoration-[1.5px]"
+                  : "text-[13px] lg:text-[13.5px] text-[#8C7E74] font-bold uppercase tracking-[0.08em] hover:text-[#3B2F2F] transition-colors"
               }
             >
               {n.label}
@@ -48,7 +56,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Icons in pill border */}
+        {/* Icons pill */}
         <div className="hidden md:flex items-center gap-4 border border-[#3B2F2F]/20 rounded-full px-5 py-2">
           <FiSearch className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
           <FiUser className="w-[18px] h-[18px] text-[#3B2F2F]" strokeWidth={1.7} />
@@ -61,11 +69,16 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — UPPERCASE + BOLD */}
       {open && (
         <div className="md:hidden bg-[#EDE6DD] border-t border-[#3B2F2F]/10 px-6 py-4 space-y-3">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="block text-[15px] text-[#3B2F2F]">
+            <Link
+              key={n.href}
+              href={n.href}
+              onClick={() => setOpen(false)}
+              className="block text-[13px] text-[#3B2F2F] font-bold uppercase tracking-[0.08em]"
+            >
               {n.label}
             </Link>
           ))}
@@ -76,6 +89,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 }

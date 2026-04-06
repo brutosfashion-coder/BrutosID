@@ -1,19 +1,29 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 
 const LINKS = [
-  { href: "/shop", label: "Shop" },
-  { href: "/about", label: "About" },
-  { href: "/journal", label: "Journal" },
-  { href: "/contact", label: "Contact" },
+  { href: "/shop", label: "SHOP" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/journal", label: "JOURNAL" },
+  { href: "/contact", label: "CONTACT" },
 ];
+
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function Footer() {
   return (
-    <footer className="bg-[#2C1E16]">
+    <motion.footer
+      className="bg-[#2C1E16]"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, ease }}
+    >
       <div className="max-w-[1100px] mx-auto px-5 h-[68px] lg:h-[76px] flex items-center justify-between">
-        {/* Logo — using high-res logo-head.png, inverted for dark bg */}
+        {/* Logo — NOT TOUCHED */}
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/logo-head.png"
@@ -27,13 +37,13 @@ export default function Footer() {
           </span>
         </Link>
 
-        {/* Desktop: Nav links + separator + socials */}
+        {/* Desktop: Nav links + socials — UPPERCASE + BOLD */}
         <div className="hidden sm:flex items-center gap-5">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="text-[13px] text-[#C5B9A8] hover:text-[#F5F0EB] transition-colors"
+              className="text-[11.5px] text-[#C5B9A8] font-bold uppercase tracking-[0.08em] hover:text-[#F5F0EB] transition-colors"
             >
               {l.label}
             </Link>
@@ -65,6 +75,6 @@ export default function Footer() {
           </a>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
