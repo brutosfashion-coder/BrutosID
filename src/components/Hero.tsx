@@ -128,7 +128,8 @@ export default function Hero() {
 
             {/* H1 — dark text, serif, elegant */}
             <motion.h1
-              className="font-serif text-[28px] sm:text-[34px] font-bold italic text-[#3B2F2F] leading-[1.1] mb-3 gpu-layer"
+              className="font-serif text-[28px] sm:text-[34px] font-bold italic text-[#2A2020] leading-[1.1] mb-3 gpu-layer"
+              style={{ textShadow: "0 1px 8px rgba(245,240,235,0.8), 0 0 20px rgba(245,240,235,0.5)" }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 4.7, duration: 1, ease: lux }}
@@ -140,7 +141,8 @@ export default function Hero() {
 
             {/* Description — dark muted text */}
             <motion.p
-              className="text-[#6B5E54] text-[12px] sm:text-[13px] leading-[1.65] mb-5 max-w-[220px] gpu-layer"
+              className="text-[#4A3F37] text-[12px] sm:text-[13px] leading-[1.65] mb-5 max-w-[220px] font-medium gpu-layer"
+              style={{ textShadow: "0 1px 6px rgba(245,240,235,0.7)" }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 5.0, duration: 0.8, ease: lux }}
