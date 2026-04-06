@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 
-const LINKS = ["KOLEKSI", "TENTANG", "JURNAL", "KONTAK"];
+const LINKS = ["MANOR", "COLLECTION", "INSPIRATION", "ABOUT", "CONTACT"];
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
