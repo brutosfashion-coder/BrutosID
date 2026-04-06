@@ -108,7 +108,7 @@ export default function Hero() {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "linear-gradient(to left, rgba(245,240,235,0.55) 35%, transparent 75%)",
+            background: "linear-gradient(to left, rgba(245,240,235,0.92) 0%, rgba(245,240,235,0.85) 30%, rgba(245,240,235,0.45) 60%, transparent 85%)",
           }}
         />
 
