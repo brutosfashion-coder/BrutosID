@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiUser, FiShoppingCart } from "react-icons/fi";
+import { useLoading } from "./LoadingContext";
 
 const NAV = ["MANOR", "COLLECTION", "INSPIRATION", "ABOUT", "CONTACT"];
 
@@ -12,6 +13,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("MANOR");
+  const { isLoaded } = useLoading();
 
   /* Lock scroll when mobile menu is open */
   useEffect(() => {
@@ -24,8 +26,8 @@ export default function Navbar() {
       <motion.header
         className="fixed top-0 left-0 right-0 z-50 bg-[#EDE6DD]/95 backdrop-blur-md border-b border-[#3B2F2F]/8"
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 4.6, duration: 1, ease }}
+        animate={isLoaded ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
+        transition={{ delay: 0.3, duration: 1, ease }}
       >
         <nav className="mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 h-[60px] sm:h-[68px] lg:h-[74px] flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">

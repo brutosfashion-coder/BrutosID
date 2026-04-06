@@ -2,12 +2,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLoading } from "./LoadingContext";
 
 const lux: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const exitEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
 export default function LoadingScreen() {
   const [show, setShow] = useState(true);
+  const { onLoadComplete } = useLoading();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -22,7 +24,7 @@ export default function LoadingScreen() {
   }, []);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={onLoadComplete}>
       {show && (
         <motion.div
           key="loader"
