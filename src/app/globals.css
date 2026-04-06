@@ -134,7 +134,7 @@
 
   /* ═══ CARD FLIP — CSS-based seamless loop ═══ */
   .card-flip {
-    animation: cardFlip 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: cardFlip 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
   /* ═══ LUXURY CARD BACK ═══ */
@@ -284,8 +284,8 @@
 
 /* Seamless: 0°=360° so CSS loops perfectly */
 @keyframes cardFlip {
-  0%, 37%  { transform: rotateY(0deg); }
-  50%, 87% { transform: rotateY(180deg); }
+  0%, 40%  { transform: rotateY(0deg); }
+  50%, 90% { transform: rotateY(180deg); }
   100%     { transform: rotateY(360deg); }
 }
 
