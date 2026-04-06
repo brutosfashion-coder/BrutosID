@@ -2,24 +2,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 
 const LINKS = ["MANOR", "COLLECTION", "INSPIRATION", "ABOUT", "CONTACT"];
-
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Footer() {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <motion.footer
-      className="bg-[#2C1E16]"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease }}
-    >
+    <footer className="sticky bottom-0 bg-[#2C1E16]">
+
       {/* ── DESKTOP ── */}
       <div className="hidden sm:flex max-w-[1100px] mx-auto px-5 h-[76px] items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
@@ -123,6 +115,6 @@ export default function Footer() {
           Elegance is Never Loud
         </p>
       </div>
-    </motion.footer>
+    </footer>
   );
 }

@@ -8,11 +8,14 @@ export default function Home() {
   return (
     <>
       <LoadingScreen />
-      <Navbar />
-      <main>
-        <Hero />
-        <DiscoverQuote />
-      </main>
+      {/* Content wrapper sits above the sticky footer — scroll reveals footer seamlessly */}
+      <div className="relative z-[1]">
+        <Navbar />
+        <main>
+          <Hero />
+          <DiscoverQuote />
+        </main>
+      </div>
       <Footer />
     </>
   );
