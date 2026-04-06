@@ -118,7 +118,7 @@ export default function Hero() {
             {/* Subtle solid backdrop behind text — no blur, no glow, just clean */}
             <div
               className="rounded-sm px-5 py-6"
-              style={{ backgroundColor: "rgba(245,240,235,0.45)" }}
+              style={{ backgroundColor: "rgba(245,240,235,0.18)" }}
             >
               {/* Gold accent line */}
               <motion.div
